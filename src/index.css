@@ -1,1 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Outfit:wght@100..900&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --font-outfit: "Outfit", serif;
+}
+
+html,
+body {
+  width: 100%;
+  background-color: #0c314f;
+  color: white;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
