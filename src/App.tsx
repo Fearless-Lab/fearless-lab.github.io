@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 function App() {
   return (
     <div>
-      <Router>
+      <Router basename="/data-visualization/">
         <Navbar />
 
         <div>
