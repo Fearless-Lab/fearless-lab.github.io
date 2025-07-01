@@ -18,16 +18,14 @@ const Navbar = () => {
         backgroundColor: "transparent",
       },
       {
-        backgroundColor: "#00000050",
-        duration: 1,
-        backdropFilter: "blur(2px)",
-        // ease: "power1.inOut",
+        backdropFilter: "blur(5px)",
+        borderBottom: "1px solid #011d2e",
       }
     );
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-6 shadow-md py-5">
+    <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-6 py-5 border-b border-transparent">
       <Link to="/">
         <p className="text-3xl font-outfit">Adlit</p>
       </Link>

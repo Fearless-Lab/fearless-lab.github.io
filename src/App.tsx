@@ -17,7 +17,7 @@ function App() {
       <Router basename="/data-visualization/">
         <Navbar />
 
-        <div className="h-[1000px] pt-16">
+        <div className="h-[1000px]">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
