@@ -1,7 +1,22 @@
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
 const Hero = () => {
+  const heroRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.fromTo(
+      heroRef.current,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 2, ease: "power1.out" }
+    );
+  }, []);
+
   return (
     <>
       <div
+        ref={heroRef}
         className="flex flex-col items-center justify-center min-h-screen text-white p-4 text-center"
         style={{
           background:
