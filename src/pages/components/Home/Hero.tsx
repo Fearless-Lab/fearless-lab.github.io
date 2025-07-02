@@ -20,7 +20,7 @@ const Hero = () => {
     <>
       <div
         ref={heroRef}
-        className="flex flex-col items-center justify-center min-h-screen text-white p-4 text-center"
+        className="flex flex-col items-center justify-center py-48 px-4 text-center flex-wrap"
         style={{
           background:
             "radial-gradient(ellipse at top, #1a3a5e 0%, #0a1f33 40%, #050d18 60%)",

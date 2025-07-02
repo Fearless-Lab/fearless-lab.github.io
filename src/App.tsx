@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import About from "./pages/About";
-import Solution from "./pages/Solution";
+import Solution from "./pages/components/Home/Solution";
 import News from "./pages/News";
 
 import gsap from "gsap";
@@ -13,11 +13,11 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 
 function App() {
   return (
-    <div>
+    <div className="relative overflow-hidden">
       <Router basename="/data-visualization/">
         <Navbar />
 
-        <div className="h-[1000px]">
+        <div>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
