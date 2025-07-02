@@ -37,7 +37,7 @@ const Hero = () => {
         </p>
 
         <div className="mb-6">
-          <p className="text-2xl sm:text-5xl md:text-6xl font-bold leading-tight">
+          <p className="text-2xl md:text-5xl font-bold leading-tight">
             AI 기반 최적화 솔루션으로
             <br />
             비즈니스 효율성을 극대화하세요
@@ -45,7 +45,7 @@ const Hero = () => {
         </div>
 
         <div className="mb-8 max-w-2xl">
-          <p className="text-base sm:text-xl text-gray-300 leading-relaxed">
+          <p className="text-md md:text-2xl text-gray-300 leading-relaxed">
             맞춤형 AI 솔루션으로 다양한 산업의 의사결정을 최적화하고
             <br />
             비즈니스를 혁신하세요
