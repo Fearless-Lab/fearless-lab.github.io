@@ -7,7 +7,6 @@ import News from "./pages/News";
 
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
-import Footer from "./components/Footer";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -25,8 +24,6 @@ function App() {
             <Route path="/news" element={<News />} />
           </Routes>
         </div>
-
-        {/* <Footer /> */}
       </Router>
     </div>
   );
