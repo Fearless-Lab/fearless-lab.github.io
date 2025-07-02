@@ -1,7 +1,15 @@
-const Review = () => {
+import { solutionData } from "../../../../../constants/solutionData";
+
+const Review = ({ id }: { id: number }) => {
+  const { review } = solutionData[id];
+
   return (
     <>
-      <h1>Review Component</h1>
+      <div className="solution-bg p-4 mt-auto text-sm/6 border border-[#02616d]">
+        <p>고객 후기</p>
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/60 to-transparent my-2" />
+        <p>{review}</p>
+      </div>
     </>
   );
 };

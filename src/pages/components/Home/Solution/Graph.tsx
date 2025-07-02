@@ -1,7 +1,7 @@
 const Graph = () => {
   return (
     <>
-      <h1>Graph Component</h1>
+      <div className="solution-bg border border-[#02616d]">Graph Component</div>
     </>
   );
 };

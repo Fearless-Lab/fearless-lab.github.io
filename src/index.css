@@ -5,6 +5,10 @@
   --font-outfit: "Outfit", serif;
 }
 
+@utility solution-bg {
+  @apply w-full rounded-[19px] bg-gradient-to-tl from-[#027088cc] to-[#00232a33];
+}
+
 html,
 body {
   width: 100%;
