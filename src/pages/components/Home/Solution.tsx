@@ -3,6 +3,7 @@ import HighlightBadge from "../../../components/HighlightBadge";
 import Infopill from "../../../components/Infopill";
 import SubInfopill from "../../../components/SubInfopill";
 import { useScrollReveal } from "../../../hooks/animation/useScrollReveal";
+import SolutionDetail from "./Solution/SolutionDetail";
 
 const Solution = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -11,7 +12,7 @@ const Solution = () => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center py-48 px-4 text-center flex-wrap"
+      className="flex flex-col items-center justify-center my-48 px-4 text-center flex-wrap"
       ref={containerRef}
     >
       <HighlightBadge>AI의 힘을 발견하세요</HighlightBadge>
@@ -23,7 +24,7 @@ const Solution = () => {
         확인하세요.
       </SubInfopill>
 
-      {/* Solution Detail */}
+      <SolutionDetail />
     </div>
   );
 };
