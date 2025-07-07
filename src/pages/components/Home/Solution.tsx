@@ -15,17 +15,19 @@ const Solution = () => {
       className="flex flex-col items-center justify-center my-48 px-4 text-center flex-wrap"
       ref={containerRef}
     >
-      <HighlightBadge>AI의 힘을 발견하세요</HighlightBadge>
+      <HighlightBadge>Lorem ipsum dolor</HighlightBadge>
 
-      <Infopill>비즈니스 성장을 위한 AI 솔루션</Infopill>
+      <Infopill>Consectetur adipiscing elit</Infopill>
 
       <SubInfopill>
-        AI 솔루션을 확인하고, 사용자들의 의견을 듣고, 작동 방식을 직접
-        확인하세요.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        <br />
+        laboris nisi ut aliquip ex ea commodo consequat.
       </SubInfopill>
 
       <SolutionDetail />
     </div>
   );
 };
+
 export default Solution;

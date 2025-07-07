@@ -27,23 +27,23 @@ const Hero = () => {
           backgroundColor: "#050d18",
         }}
       >
-        <HighlightBadge>의사결정의 혁신</HighlightBadge>
+        <HighlightBadge>Lorem ipsum dolor</HighlightBadge>
 
         <Infopill>
-          AI 기반 최적화 솔루션으로
+          Lorem ipsum dolor sit amet,
           <br />
-          비즈니스 효율성을 극대화하세요
+          consectetur adipiscing elit
         </Infopill>
 
         <SubInfopill>
-          맞춤형 AI 솔루션으로 다양한 산업의 의사결정을 최적화하고
+          Ut enim ad minim veniam, quis nostrud exercitation
           <br />
-          비즈니스를 혁신하세요
+          ullamco laboris nisi ut aliquip ex ea commodo
         </SubInfopill>
 
         <button className="px-8 py-3 bg-[#027088] font-semibold rounded-lg transform transition duration-300 shadow-xl border border-transparent hover:brightness-90 relative">
           <span className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none rounded-lg"></span>{" "}
-          지금 시작하기
+          시작하기
         </button>
       </div>
     </>
