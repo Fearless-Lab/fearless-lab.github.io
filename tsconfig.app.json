@@ -26,9 +26,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@commonComponents/*": ["src/components/*"],
-      "@animationHooks/*": ["src/hooks/animation/*"],
-      "@componentsAboutHome/*": ["src/pages/components/Home/*"]
+      "@constants/*": ["./constants/*"],
+      "@commonComponents/*": ["./src/components/*"],
+      "@animationHooks/*": ["./src/hooks/animation/*"],
+      "@componentsAboutHome/*": ["./src/pages/components/Home/*"]
     }
   },
   "include": ["src"]

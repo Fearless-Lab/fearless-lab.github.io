@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { companies } from "constants/navLinks";
+import { companies } from "@constants/navLinks";
 import { useScrollReveal } from "@animationHooks/useScrollReveal";
 
 const SlidingSection = () => {
