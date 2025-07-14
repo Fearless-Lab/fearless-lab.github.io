@@ -20,8 +20,18 @@ const Navbar = () => {
       {
         backdropFilter: "blur(5px)",
         borderBottom: "1px solid #011d2e",
+        duration: 0.3,
       }
     );
+
+    // 스크롤이 top이 아닌 상태에서 새로고침 시 초기 스타일 수동 적용
+    if (window.scrollY > 0) {
+      gsap.set("nav", {
+        backdropFilter: "blur(5px)",
+        borderBottom: "1px solid #011d2e",
+        duration: 0.3,
+      });
+    }
   }, []);
 
   return (
