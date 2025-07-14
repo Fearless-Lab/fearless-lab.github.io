@@ -1,6 +1,6 @@
-import Hero from "./components/Home/Hero";
-import SlidingSection from "./components/Home/SlidingSection";
-import Solution from "./components/Home/Solution";
+import Hero from "@componentsAboutHome/Hero";
+import SlidingSection from "@componentsAboutHome/SlidingSection";
+import Solution from "@componentsAboutHome/Solution";
 
 const Home = () => {
   return (

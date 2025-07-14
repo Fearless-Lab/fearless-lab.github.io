@@ -1,4 +1,4 @@
-import SimpleLineChart from "../../../../components/SimpleLineChart";
+import SimpleLineChart from "@commonComponents/SimpleLineChart";
 
 const Graph = () => {
   return (

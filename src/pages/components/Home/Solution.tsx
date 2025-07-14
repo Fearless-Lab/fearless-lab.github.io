@@ -1,8 +1,8 @@
+import HighlightBadge from "@commonComponents/HighlightBadge";
+import Infopill from "@commonComponents/Infopill";
+import SubInfopill from "@commonComponents/SubInfopill";
+import { useScrollReveal } from "@animationHooks/useScrollReveal";
 import { useRef } from "react";
-import HighlightBadge from "../../../components/HighlightBadge";
-import Infopill from "../../../components/Infopill";
-import SubInfopill from "../../../components/SubInfopill";
-import { useScrollReveal } from "../../../hooks/animation/useScrollReveal";
 import SolutionDetail from "./Solution/SolutionDetail";
 
 const Solution = () => {

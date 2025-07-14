@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
-import About from "./pages/About";
 import Solution from "./pages/components/Home/Solution";
 import News from "./pages/News";
 
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
+import Home from "@/pages/Home";
+import About from "@/pages/About";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 

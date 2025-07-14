@@ -1,4 +1,4 @@
-import { solutionData } from "../../../../../constants/solutionData";
+import { solutionData } from "constants/solutionData";
 
 const Review = ({ id }: { id: number }) => {
   const { review } = solutionData[id];

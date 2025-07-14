@@ -1,7 +1,4 @@
-import {
-  solutionCategory,
-  solutionData,
-} from "../../../../../constants/solutionData";
+import { solutionCategory, solutionData } from "constants/solutionData";
 
 const Goal = ({ id }: { id: number }) => {
   const { title, detail, results } = solutionData[id];

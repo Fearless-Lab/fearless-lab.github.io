@@ -2,7 +2,7 @@ import { useState } from "react";
 import Goal from "./Goal";
 import Graph from "./Graph";
 import Review from "./Review";
-import { solutionCategory } from "./../../../../../constants/solutionData";
+import { solutionCategory } from "constants/solutionData";
 
 const SolutionDetail = () => {
   const [categoryId, setCategoryId] = useState(0);
