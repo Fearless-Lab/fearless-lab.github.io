@@ -1,7 +1,20 @@
 const Footer = () => {
   return (
     <>
-      <h1>Footer Component</h1>
+      <footer className="w-full py-4 text-center text-sm text-gray-500">
+        <div>
+          © {new Date().getFullYear()} Jinyoung Kim. All rights reserved.
+        </div>
+        <div>
+          Contact me:{" "}
+          <a
+            href="mailto:your.email@example.com"
+            className="text-blue-500 hover:underline"
+          >
+            jyk41993@gmail.com
+          </a>
+        </div>
+      </footer>
     </>
   );
 };
