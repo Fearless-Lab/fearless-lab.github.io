@@ -9,7 +9,7 @@ const Footer = () => {
           Contact me:{" "}
           <a
             href="mailto:your.email@example.com"
-            className="text-blue-500 hover:underline"
+            className="text-[#027b96] hover:underline"
           >
             jyk41993@gmail.com
           </a>
