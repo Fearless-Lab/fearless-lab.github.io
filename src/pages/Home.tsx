@@ -1,13 +1,11 @@
 import Hero from "@componentsAboutHome/Hero";
-import SlidingSection from "@componentsAboutHome/SlidingSection";
-import Solution from "@componentsAboutHome/Solution";
+import Community from "@/pages/components/Home/Community";
 
 const Home = () => {
   return (
     <>
       <Hero />
-      <SlidingSection />
-      <Solution />
+      <Community />
     </>
   );
 };
