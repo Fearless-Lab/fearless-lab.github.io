@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { solutionCategory, posts } from "@constants/solutionData";
+import { category, posts } from "@constants/solutionData";
 import { CheckCircleIcon, SparklesIcon } from "@heroicons/react/24/solid";
 
 const SolutionDetail = () => {
@@ -9,7 +9,7 @@ const SolutionDetail = () => {
     <div className="flex flex-col gap-6 py-6 mx-auto">
       {/* 카테고리 버튼 */}
       <div className="flex gap-3 flex-nowrap justify-center">
-        {solutionCategory.map((c, index) => {
+        {category.map((c, index) => {
           const isSelected = selectedCategory === index;
           return (
             <button

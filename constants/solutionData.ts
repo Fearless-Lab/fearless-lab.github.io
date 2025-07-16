@@ -1,4 +1,4 @@
-export const solutionCategory = ["스크림", "듀오", "자유 랭크", "자유"];
+export const category = ["스크림", "듀오", "자유 랭크", "자유"];
 
 export type TSolutionData = {
   title: string;
