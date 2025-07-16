@@ -18,7 +18,7 @@ const SolutionDetail = () => {
               className={`relative flex items-center px-3 py-2 rounded-xl border transition-all duration-300 ease-out text-sm font-medium
                 ${
                   isSelected
-                    ? "bg-gradient-to-r from-cyan-700 to-cyan-500 text-white shadow-xl ring-2 ring-white/40 scale-[1.05]"
+                    ? "bg-gradient-to-r from-cyan-700 to-cyan-500 text-white shadow-xl ring-2 ring-white/40"
                     : "bg-sky-100 text-sky-800 hover:bg-sky-200"
                 }
               `}
@@ -43,8 +43,8 @@ const SolutionDetail = () => {
           <thead>
             <tr className="text-left text-sm text-gray-400 border-b border-gray-700">
               <th className="py-3 px-3 font-medium w-1/6">분류</th>
-              <th className="py-3 px-3 font-medium w-auto sm:w-1/2">제목</th>
-              <th className="py-3 px-3 font-medium w-1/6">작성자</th>
+              <th className="py-3 px-3 font-medium w-2/5 ">제목</th>
+              <th className="py-3 px-3 font-medium w-1/5">작성자</th>
               <th className="py-3 px-3 font-medium w-auto sm:w-1/6">
                 작성일자
               </th>
