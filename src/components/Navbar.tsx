@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { navLinks } from "@constants/navLinks";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   useGSAP(() => {
@@ -35,9 +36,9 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-6 py-5 border-b border-transparent z-999">
-      <a href="/">
+      <Link to="/">
         <p className="text-3xl">Fearless</p>
-      </a>
+      </Link>
 
       <ul className="lg:flex space-x-8">
         {navLinks.map((link) => (
@@ -45,7 +46,7 @@ const Navbar = () => {
             key={link.id}
             className="px-3 py-1 rounded-md transition-all duration-50 hover:border hover:border-white"
           >
-            <a href={link.src}>{link.title}</a>
+            <Link to={link.src}>{link.title}</Link>
           </li>
         ))}
       </ul>
