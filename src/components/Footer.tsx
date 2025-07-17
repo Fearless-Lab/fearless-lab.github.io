@@ -8,7 +8,7 @@ const Footer = () => {
         <div>
           Contact me:{" "}
           <a
-            href="mailto:your.email@example.com"
+            href="mailto:jyk41993@gmail.com"
             className="text-[#027b96] hover:underline"
           >
             jyk41993@gmail.com
