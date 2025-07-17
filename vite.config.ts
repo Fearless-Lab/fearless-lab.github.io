@@ -17,6 +17,7 @@ export default defineConfig({
         "./src/pages/components/Home"
       ),
       "@animationHooks": path.resolve(__dirname, "./src/hooks/animation"),
+      "@utils": path.resolve(__dirname, "./src/utils"),
     },
   },
 });

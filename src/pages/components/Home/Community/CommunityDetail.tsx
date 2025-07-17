@@ -1,7 +1,10 @@
 import CategoryButton from "@/pages/components/Home/Community/CategoryButton";
-import { category, posts } from "@constants/category";
+import { category } from "@constants/category";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import CommunityWriteModal from "./CommunityWriteModal";
+import { usePosts } from "@/hooks/posts/usePost";
+import PostRow from "./PostRow";
+import PostLoading from "./PostLoading";
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
@@ -18,6 +21,8 @@ const CommunityDetail = () => {
     navigate(`/community/${category[index].key}`);
   };
 
+  const { data: posts = [], isLoading } = usePosts(currentCategory);
+  console.log(posts);
   return (
     <div className="flex flex-col gap-6 py-6 mx-auto">
       {/* 카테고리 버튼 */}
@@ -35,8 +40,9 @@ const CommunityDetail = () => {
           );
         })}
       </div>
+
       <CommunityWriteModal />
-      {/* 게시글 테이블, 추후 컴포넌트 분리 및 props 타입 지정 */}
+
       <div className="w-full max-w-5xl mx-auto">
         <table className="w-full table-fixed border-collapse">
           <thead>
@@ -49,26 +55,13 @@ const CommunityDetail = () => {
               </th>
             </tr>
           </thead>
+
           <tbody>
-            {posts.map((post, idx) => (
-              <tr
-                key={idx}
-                className="text-left text-xs text-white border-b border-gray-800 hover:bg-neutral-800 transition cursor-pointer"
-              >
-                <td className="py-3 px-3 text-cyan-300 font-medium whitespace-nowrap">
-                  {post.category}
-                </td>
-                <td className="py-3 px-3 truncate whitespace-nowrap">
-                  {post.title}
-                </td>
-                <td className="py-3 px-3 truncate whitespace-nowrap">
-                  {post.presenter}
-                </td>
-                <td className="py-3 px-3 truncate whitespace-nowrap text-gray-400">
-                  {post.date}
-                </td>
-              </tr>
-            ))}
+            {isLoading ? (
+              <PostLoading />
+            ) : (
+              posts.map((post) => <PostRow key={post.id} post={post} />)
+            )}
           </tbody>
         </table>
       </div>

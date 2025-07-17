@@ -20,6 +20,13 @@ export const categoryOptions: Record<string, string[]> = {
   free: ["자유"],
 };
 
+export const categoryGuideText = {
+  scrim: "함께 연습할 스크림 팀을 구해보세요! ",
+  duo: "비슷한 티어의 든든한 듀오를 찾아보세요! ",
+  flexQueue: "자유랭크 팀원을 모집해보세요!",
+  free: "자유롭게 이야기를 나눠보세요. 게임에 대한 잡담이나 일상 공유도 환영이에요!",
+};
+
 export const posts = [
   {
     category: "다이아몬드",

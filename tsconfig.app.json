@@ -29,7 +29,8 @@
       "@constants/*": ["./constants/*"],
       "@commonComponents/*": ["./src/components/*"],
       "@animationHooks/*": ["./src/hooks/animation/*"],
-      "@componentsAboutHome/*": ["./src/pages/components/Home/*"]
+      "@componentsAboutHome/*": ["./src/pages/components/Home/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": ["src"]
