@@ -96,7 +96,6 @@ const CommunityWriteModal = () => {
 
       setIsOpen(false);
     } catch (error) {
-      console.log(error);
       Swal.fire({
         icon: "error",
         title: "게시글 등록 실패",
