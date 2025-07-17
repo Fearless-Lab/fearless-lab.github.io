@@ -1,42 +1,41 @@
-import { useState } from "react";
-import { category, posts } from "@constants/solutionData";
-import { CheckCircleIcon, SparklesIcon } from "@heroicons/react/24/solid";
+import CategoryButton from "@/pages/components/Home/Community/CategoryButton";
+import { category, posts } from "@constants/category";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import CommunityWriteModal from "./CommunityWriteModal";
 
-const SolutionDetail = () => {
-  const [selectedCategory, setSelectedCategory] = useState(0);
+const CommunityDetail = () => {
+  const navigate = useNavigate();
+  const { category: currentCategory } = useParams();
+
+  const selectedIndex = category.findIndex((c) => c.key === currentCategory);
+
+  // 유효하지 않은 category면 404 페이지로 리다이렉트
+  if (selectedIndex === -1) return <Navigate to="/404" replace />;
+
+  const index = selectedIndex === -1 ? 0 : selectedIndex;
+
+  const handleCategoryClick = (index: number) => {
+    navigate(`/community/${category[index].key}`);
+  };
 
   return (
     <div className="flex flex-col gap-6 py-6 mx-auto">
       {/* 카테고리 버튼 */}
       <div className="flex gap-3 flex-nowrap justify-center">
-        {category.map((c, index) => {
-          const isSelected = selectedCategory === index;
+        {category.map(({ key, label }, i) => {
+          const isSelected = i === index;
+
           return (
-            <button
-              key={c}
-              onClick={() => setSelectedCategory(index)}
-              className={`relative flex items-center px-3 py-2 rounded-xl border transition-all duration-300 ease-out text-sm font-medium
-                ${
-                  isSelected
-                    ? "bg-gradient-to-r from-cyan-700 to-cyan-500 text-white shadow-xl ring-2 ring-white/40"
-                    : "bg-sky-100 text-sky-800 hover:bg-sky-200"
-                }
-              `}
-            >
-              {isSelected ? (
-                <CheckCircleIcon className="w-4 h-4 text-white" />
-              ) : (
-                <SparklesIcon className="w-4 h-4 text-cyan-500 group-hover:animate-ping" />
-              )}
-              <span className="whitespace-nowrap">{c}</span>
-              {isSelected && (
-                <span className="absolute inset-0 bg-white/10 rounded-xl pointer-events-none" />
-              )}
-            </button>
+            <CategoryButton
+              key={key}
+              label={label}
+              isSelected={isSelected}
+              onClick={() => handleCategoryClick(i)}
+            />
           );
         })}
       </div>
-
+      <CommunityWriteModal />
       {/* 게시글 테이블, 추후 컴포넌트 분리 및 props 타입 지정 */}
       <div className="w-full max-w-5xl mx-auto">
         <table className="w-full table-fixed border-collapse">
@@ -54,12 +53,12 @@ const SolutionDetail = () => {
             {posts.map((post, idx) => (
               <tr
                 key={idx}
-                className="text-left text-xs text-white border-b border-gray-800 hover:bg-neutral-800 transition"
+                className="text-left text-xs text-white border-b border-gray-800 hover:bg-neutral-800 transition cursor-pointer"
               >
                 <td className="py-3 px-3 text-cyan-300 font-medium whitespace-nowrap">
                   {post.category}
                 </td>
-                <td className="py-3 px-3 truncate whitespace-nowrap cursor-pointer">
+                <td className="py-3 px-3 truncate whitespace-nowrap">
                   {post.title}
                 </td>
                 <td className="py-3 px-3 truncate whitespace-nowrap">
@@ -77,4 +76,4 @@ const SolutionDetail = () => {
   );
 };
 
-export default SolutionDetail;
+export default CommunityDetail;

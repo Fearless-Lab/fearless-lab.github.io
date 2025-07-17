@@ -1,6 +1,6 @@
 import HighlightBadge from "@commonComponents/HighlightBadge";
 import Infopill from "@commonComponents/Infopill";
-import SolutionDetail from "./Solution/SolutionDetail";
+import CommunityDetail from "./Community/CommunityDetail";
 
 const Community = () => {
   return (
@@ -12,7 +12,7 @@ const Community = () => {
 
       <Infopill>함께 할 소환사를 구해보세요</Infopill>
 
-      <SolutionDetail />
+      <CommunityDetail />
     </section>
   );
 };

@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 
 import gsap from "gsap";
@@ -28,7 +33,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/banPick" element={<BanPick />} />
-            <Route path="/community" element={<Community />} />
+
+            <Route
+              path="/community"
+              element={<Navigate to="/community/scrim" replace />}
+            />
+            <Route path="/community/:category" element={<Community />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
