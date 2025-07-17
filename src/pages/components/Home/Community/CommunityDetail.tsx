@@ -22,7 +22,7 @@ const CommunityDetail = () => {
   };
 
   const { data: posts = [], isLoading } = usePosts(currentCategory);
-  console.log(posts);
+
   return (
     <div className="flex flex-col gap-6 py-6 mx-auto">
       {/* 카테고리 버튼 */}
