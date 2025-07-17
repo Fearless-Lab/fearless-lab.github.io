@@ -21,10 +21,10 @@ function App() {
         backgroundColor: "#050d18",
       }}
     >
-      <Navbar />
+      <Router basename="/data-visualization/">
+        <Navbar />
 
-      <main className="flex-grow">
-        <Router basename="/data-visualization/">
+        <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/banPick" element={<BanPick />} />
@@ -32,8 +32,8 @@ function App() {
 
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Router>
-      </main>
+        </main>
+      </Router>
 
       <Footer />
     </div>
