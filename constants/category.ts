@@ -28,4 +28,4 @@ export const categoryGuideText = {
 게임에 대한 잡담이나 일상 공유도 환영이에요!`,
 };
 
-export const PAGE_SIZE = 3;
+export const PAGE_SIZE = 7;
