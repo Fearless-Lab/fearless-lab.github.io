@@ -117,16 +117,14 @@ const CommunityWriteModal = () => {
         </DialogTrigger>
 
         <DialogContent
-          className="bg-neutral-900 border border-neutral-700 text-white max-h-[90vh] overflow-auto"
+          className="bg-neutral-900 border border-neutral-700 text-white max-h-[90vh] overflow-auto z-100"
           style={{ minWidth: 320 }}
         >
           <DialogHeader>
             <DialogTitle className="text-lg">글 작성</DialogTitle>
 
             <DialogDescription>
-              {category && category in categoryGuideText
-                ? categoryGuideText[category as keyof typeof categoryGuideText]
-                : "게시글을 작성해주세요."}
+              {categoryGuideText[category as keyof typeof categoryGuideText]}
             </DialogDescription>
           </DialogHeader>
 
