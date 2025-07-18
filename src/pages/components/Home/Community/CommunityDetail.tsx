@@ -49,7 +49,7 @@ const CommunityDetail = () => {
 
       <CommunityWriteModal />
 
-      <div className="w-full max-w-5xl mx-auto">
+      <div className="w-full max-w-5xl mx-auto relative">
         <table className="w-full table-fixed border-collapse">
           <thead>
             <tr className="text-left text-sm text-gray-400 border-b border-gray-700">
@@ -111,7 +111,7 @@ const CommunityDetail = () => {
 
         <button
           onClick={() => window.scrollTo({ top: 0 })}
-          className="fixed bottom-5 right-8 w-10 h-10 rounded-full bg-gradient-to-tr from-[#152c3b] via-[#224556] to-[#2a5b6f] hover:brightness-110 transition flex items-center justify-center shadow-lg ring-1 ring-white/30 z-50"
+          className="absolute bottom-0 right-1 w-10 h-10 rounded-full bg-gradient-to-tr from-[#152c3b] via-[#224556] to-[#2a5b6f] hover:brightness-110 transition flex items-center justify-center shadow-lg ring-1 ring-white/30"
           aria-label="Scroll to top"
         >
           <ChevronUpIcon className="w-6 h-6 text-white" />
