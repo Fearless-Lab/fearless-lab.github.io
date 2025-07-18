@@ -1,4 +1,3 @@
-// src/hooks/useScrollReveal.ts
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import type { RefObject } from "react";

@@ -1,13 +1,20 @@
 import CTAButton from "@/components/CTAButton";
+import { useScrollReveal } from "@/hooks/animation/useScrollReveal";
 import HighlightBadge from "@commonComponents/HighlightBadge";
 import Infopill from "@commonComponents/Infopill";
 import SubInfopill from "@commonComponents/SubInfopill";
+import { useRef } from "react";
 
 const Hero = () => {
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useScrollReveal(sectionRef);
+
   return (
     <>
       <section
         id="main"
+        ref={sectionRef}
         className="flex flex-col items-center justify-center px-4 text-center flex-grow pt-50"
       >
         <HighlightBadge>LOL Ban · Pick Simulation</HighlightBadge>

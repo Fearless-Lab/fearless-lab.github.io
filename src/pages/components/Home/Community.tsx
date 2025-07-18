@@ -4,14 +4,21 @@ import CommunityDetail from "./Community/CommunityDetail";
 import { useParams } from "react-router-dom";
 import SubInfopill from "@/components/SubInfopill";
 import { categoryGuideText } from "@constants/category";
+import { useRef } from "react";
+import { useScrollReveal } from "@/hooks/animation/useScrollReveal";
 
 const Community = () => {
   const { category } = useParams();
 
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useScrollReveal(sectionRef);
+
   return (
     <section
-      className="flex flex-col items-center justify-center my-48 text-center scroll-mt-20"
       id="community"
+      ref={sectionRef}
+      className="flex flex-col items-center justify-center my-48 text-center scroll-mt-20"
     >
       <HighlightBadge>Community</HighlightBadge>
 
