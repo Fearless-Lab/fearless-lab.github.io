@@ -23,12 +23,12 @@ import { useEffect, useState } from "react";
 import CTAButton from "@/components/CTAButton";
 import { categoryGuideText, categoryOptions } from "@constants/category";
 
-import Swal from "sweetalert2";
-import { handleSubmitPost } from "@/apis/service/post";
+import { useCreatePost } from "@/hooks/posts/usePost";
 
+// 나중에 분리할 필요가 있음
 const CommunityWriteModal = () => {
   const { category } = useParams();
-  const options = categoryOptions[category || ""] || [];
+  const options = categoryOptions[category as string];
 
   const [selectedOption, setSelectedOption] = useState("");
   const [title, setTitle] = useState("");
@@ -36,7 +36,6 @@ const CommunityWriteModal = () => {
   const [password, setPassword] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  // 에러 상태
   const [errors, setErrors] = useState({
     selectedOption: "",
     title: "",
@@ -74,36 +73,19 @@ const CommunityWriteModal = () => {
     return valid;
   };
 
+  const mutation = useCreatePost(category as string, () => setIsOpen(false));
+
   const onSubmit = async () => {
     if (!validate()) return;
 
-    try {
-      await handleSubmitPost({
-        category: category as string,
-        subCategory: selectedOption,
-        title,
-        content,
-        author: "의문의 자르반 4세", // 나중에 로그인 유저로 대체 가능
-        rawPassword: password,
-      });
-
-      Swal.fire({
-        icon: "success",
-        title: "게시글 등록 완료!",
-        timer: 1500,
-        showConfirmButton: false,
-      });
-
-      setIsOpen(false);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "게시글 등록 실패",
-        text: "문제가 발생했습니다. 다시 시도해주세요.",
-      });
-
-      setIsOpen(false);
-    }
+    mutation.mutate({
+      category: category as string,
+      subCategory: selectedOption,
+      title,
+      content,
+      author: "의문의 자르반 4세",
+      rawPassword: password,
+    });
   };
 
   useEffect(() => {

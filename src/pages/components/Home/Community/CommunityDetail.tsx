@@ -21,7 +21,7 @@ const CommunityDetail = () => {
     navigate(`/community/${category[index].key}`);
   };
 
-  const { data: posts = [], isLoading } = usePosts(currentCategory);
+  const { data: posts = [], isLoading } = usePosts(currentCategory as string);
 
   return (
     <div className="flex flex-col gap-6 py-6 mx-auto">
