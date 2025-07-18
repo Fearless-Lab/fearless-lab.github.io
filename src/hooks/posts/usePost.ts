@@ -2,17 +2,28 @@
 
 import { fetchPostsByCategory } from "@/apis/firebase/postFirestore";
 import { handleSubmitPost } from "@/apis/service/post";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { PAGE_SIZE } from "@constants/category";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import type { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import Swal from "sweetalert2";
 
-export const usePosts = (category: string) => {
-  return useQuery({
+export const usePostsInfiniteQuery = (category: string) => {
+  return useInfiniteQuery({
     queryKey: ["posts", category],
-    queryFn: () => {
-      if (!category) return Promise.resolve([]);
-      return fetchPostsByCategory(category);
+    queryFn: async ({ pageParam }) => {
+      const { posts, lastVisible } = await fetchPostsByCategory(
+        category,
+        PAGE_SIZE,
+        pageParam
+      );
+      return { posts, nextCursor: lastVisible };
     },
-    enabled: Boolean(category),
+    initialPageParam: null as QueryDocumentSnapshot<DocumentData> | null,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
 };
 

@@ -79,6 +79,7 @@ const CommunityWriteModal = () => {
   const mutation = useCreatePost(category as string, () => setIsOpen(false));
 
   const onSubmit = async () => {
+    if (mutation.isPending) return; // 이미 요청 중이면 무시
     if (!validate()) return;
 
     let authorNickname = nickname;
@@ -264,6 +265,7 @@ const CommunityWriteModal = () => {
             <Button
               className="bg-cyan-600 hover:bg-cyan-700 text-white"
               onClick={onSubmit}
+              disabled={mutation.isPending}
             >
               작성 완료
             </Button>

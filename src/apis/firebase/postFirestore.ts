@@ -9,6 +9,8 @@ import {
   query,
   orderBy,
   getDocs,
+  startAfter,
+  limit,
 } from "firebase/firestore";
 
 interface CreatePostParams {
@@ -45,9 +47,29 @@ export const createPost = async ({
   return docRef.id;
 };
 
-export const fetchPostsByCategory = async (category: string) => {
+import type { QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
+
+export const fetchPostsByCategory = async (
+  category: string,
+  limitSize: number,
+  cursor?: QueryDocumentSnapshot<DocumentData> | null
+): Promise<{
+  posts: PostData[];
+  lastVisible: QueryDocumentSnapshot<DocumentData> | null;
+}> => {
   const postsRef = collection(db, "posts", category, "items");
-  const q = query(postsRef, orderBy("createdAt", "desc"));
+
+  let q = query(postsRef, orderBy("createdAt", "desc"), limit(limitSize));
+
+  if (cursor) {
+    q = query(
+      postsRef,
+      orderBy("createdAt", "desc"),
+      startAfter(cursor),
+      limit(limitSize)
+    );
+  }
+
   const querySnapshot = await getDocs(q);
 
   const posts = querySnapshot.docs.map((doc) => ({
@@ -55,5 +77,10 @@ export const fetchPostsByCategory = async (category: string) => {
     ...doc.data(),
   })) as PostData[];
 
-  return posts;
+  const lastVisible =
+    querySnapshot.docs.length > 0
+      ? querySnapshot.docs[querySnapshot.docs.length - 1]
+      : null;
+
+  return { posts, lastVisible };
 };
