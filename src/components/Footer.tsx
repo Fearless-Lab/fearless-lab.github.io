@@ -13,6 +13,13 @@ const Footer = () => {
           >
             jyk41993@gmail.com
           </a>
+          <p className="my-2">
+            This site is not affiliated with or endorsed by Riot Games.
+          </p>
+          <p>
+            Riot Games, League of Legends and all associated properties are
+            trademarks or registered trademarks of Riot Games, Inc.
+          </p>
         </div>
       </footer>
     </>

@@ -24,11 +24,14 @@ import CTAButton from "@/components/CTAButton";
 import { categoryGuideText, categoryOptions } from "@constants/category";
 
 import { useCreatePost } from "@/hooks/posts/usePost";
+import { useNickname } from "@/hooks/nickname/useNickname";
+import { getOrCreateNickname } from "@/utils/generateRandomNickname";
 
 // 나중에 분리할 필요가 있음
 const CommunityWriteModal = () => {
   const { category } = useParams();
   const options = categoryOptions[category as string];
+  const nickname = useNickname();
 
   const [selectedOption, setSelectedOption] = useState("");
   const [title, setTitle] = useState("");
@@ -78,12 +81,18 @@ const CommunityWriteModal = () => {
   const onSubmit = async () => {
     if (!validate()) return;
 
+    let authorNickname = nickname;
+
+    if (!authorNickname) {
+      authorNickname = await getOrCreateNickname();
+    }
+
     mutation.mutate({
       category: category as string,
       subCategory: selectedOption,
       title,
       content,
-      author: "의문의 자르반 4세",
+      author: authorNickname,
       rawPassword: password,
     });
   };
