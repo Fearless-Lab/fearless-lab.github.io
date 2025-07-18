@@ -6,7 +6,10 @@ import PostRow from "./PostRow";
 import PostLoading from "./PostLoading";
 import { usePostsInfiniteQuery } from "@/hooks/posts/usePost";
 import CTAButton from "@/components/CTAButton";
-import { ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { useState } from "react";
+import PostDetailModal from "./PostDetailModal";
+import type { PostDataType } from "@/utils/type/post";
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
@@ -15,6 +18,8 @@ const CommunityDetail = () => {
   // 존재하지 않는 카테고리라면 404로 리다이렉트
   const categoryIndex = category.findIndex((c) => c.key === currentCategory);
   if (categoryIndex === -1) return <Navigate to="/404" replace />;
+
+  const [selectedPost, setSelectedPost] = useState<PostDataType | null>(null);
 
   const handleCategoryClick = (index: number) => {
     navigate(`/community/${category[index].key}`);
@@ -60,14 +65,29 @@ const CommunityDetail = () => {
             {isLoading ? (
               <PostLoading />
             ) : (
-              posts.map((post) => <PostRow key={post.id} post={post} />)
+              posts.map((post) => (
+                <PostRow
+                  key={post.id}
+                  post={post}
+                  onClick={() => setSelectedPost(post)}
+                />
+              ))
             )}
           </tbody>
+
+          {/* 모달 */}
+          {selectedPost && (
+            <PostDetailModal
+              open={!!selectedPost}
+              onClose={() => setSelectedPost(null)}
+              post={selectedPost}
+            />
+          )}
         </table>
 
         {/* 더보기 버튼 */}
         {!isLoading && (
-          <div className="flex flex-col items-center mt-8 gap-2">
+          <div className="flex flex-col items-center mt-8 gap-4">
             {isFetchingNextPage ? (
               <p className="text-gray-500 text-sm select-none">
                 게시글을 불러오고 있어요! ⏳
@@ -82,12 +102,20 @@ const CommunityDetail = () => {
                 <ChevronDownIcon className="w-5 h-5" />
               </CTAButton>
             ) : (
-              <p className="text-gray-500 text-sm select-none">
+              <p className="text-gray-500 text-sm select-none h-10">
                 마지막 페이지네요! 🎉
               </p>
             )}
           </div>
         )}
+
+        <button
+          onClick={() => window.scrollTo({ top: 0 })}
+          className="fixed bottom-5 right-8 w-10 h-10 rounded-full bg-gradient-to-tr from-[#152c3b] via-[#224556] to-[#2a5b6f] hover:brightness-110 transition flex items-center justify-center shadow-lg ring-1 ring-white/30 z-50"
+          aria-label="Scroll to top"
+        >
+          <ChevronUpIcon className="w-6 h-6 text-white" />
+        </button>
       </div>
     </div>
   );

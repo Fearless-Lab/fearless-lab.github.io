@@ -1,5 +1,5 @@
 import { db } from "@/firebase";
-import type { PostData } from "@/utils/type/post";
+import type { PostDataType } from "@/utils/type/post";
 import {
   collection,
   doc,
@@ -13,7 +13,7 @@ import {
   limit,
 } from "firebase/firestore";
 
-interface CreatePostParams {
+export interface PostType {
   category: string;
   subCategory: string;
   title: string;
@@ -29,7 +29,7 @@ export const createPost = async ({
   content,
   author,
   password,
-}: CreatePostParams): Promise<string> => {
+}: PostType): Promise<string> => {
   const categoryDocRef = doc(db, "posts", category); //  posts/{category} 문서 참조
   const itemsColRef = collection(categoryDocRef, "items"); //  하위 컬렉션 posts/{category}/items
 
@@ -54,7 +54,7 @@ export const fetchPostsByCategory = async (
   limitSize: number,
   cursor?: QueryDocumentSnapshot<DocumentData> | null
 ): Promise<{
-  posts: PostData[];
+  posts: PostDataType[];
   lastVisible: QueryDocumentSnapshot<DocumentData> | null;
 }> => {
   const postsRef = collection(db, "posts", category, "items");
@@ -75,7 +75,7 @@ export const fetchPostsByCategory = async (
   const posts = querySnapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
-  })) as PostData[];
+  })) as PostDataType[];
 
   const lastVisible =
     querySnapshot.docs.length > 0

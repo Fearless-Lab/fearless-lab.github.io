@@ -1,6 +1,6 @@
 import type { Timestamp } from "firebase/firestore";
 
-export interface PostData {
+export interface PostDataType {
   id: string;
   author: string;
   content: string;

@@ -1,15 +1,17 @@
 import { formatPostDate } from "@/utils/dayjs";
-import type { PostData } from "@/utils/type/post";
+import type { PostDataType } from "@/utils/type/post";
 
 export interface PostRowProps {
-  post: PostData;
+  post: PostDataType;
+  onClick: () => void;
 }
 
-const PostRow = ({ post }: PostRowProps) => {
+const PostRow = ({ post, onClick }: PostRowProps) => {
   return (
     <tr
       key={post.id}
       className="text-left text-[9px] text-white border-b border-gray-800 hover:bg-neutral-800 transition cursor-pointer sm:text-xs"
+      onClick={onClick}
     >
       <td className="py-3 px-3 text-cyan-300 font-medium truncate whitespace-nowrap sm:text-xs">
         {post.subCategory}
