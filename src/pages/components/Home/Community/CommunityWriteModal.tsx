@@ -206,7 +206,7 @@ const CommunityWriteModal = () => {
               )}
             </Label>
             <Textarea
-              className={`bg-neutral-800 text-white border resize-none h-[120px] max-h-[150px] ${
+              className={`bg-neutral-800 text-white border h-[120px] ${
                 errors.content
                   ? "border-red-500 focus-visible:ring-red-500"
                   : "border-neutral-700"
