@@ -11,7 +11,6 @@ import { ChevronDownIcon } from "lucide-react";
 const CommunityDetail = () => {
   const navigate = useNavigate();
   const { category: currentCategory } = useParams();
-  console.log(currentCategory);
 
   // 존재하지 않는 카테고리라면 404로 리다이렉트
   const categoryIndex = category.findIndex((c) => c.key === currentCategory);
@@ -23,7 +22,6 @@ const CommunityDetail = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     usePostsInfiniteQuery(currentCategory as string);
-
   const posts = data?.pages.flatMap((page) => page.posts) ?? [];
 
   return (
@@ -71,7 +69,9 @@ const CommunityDetail = () => {
         {!isLoading && (
           <div className="flex flex-col items-center mt-8 gap-2">
             {isFetchingNextPage ? (
-              <PostLoading />
+              <p className="text-gray-500 text-sm select-none">
+                게시글을 불러오고 있어요! ⏳
+              </p>
             ) : hasNextPage ? (
               <CTAButton
                 onClick={() => fetchNextPage()}
