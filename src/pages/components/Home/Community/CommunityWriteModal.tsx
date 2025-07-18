@@ -107,7 +107,7 @@ const CommunityWriteModal = () => {
     if (options.length === 1) {
       setSelectedOption(options[0]);
     }
-  }, [options]);
+  }, [category]);
 
   return (
     <div className="flex justify-end px-6 max-w-5xl mx-auto">
@@ -158,7 +158,7 @@ const CommunityWriteModal = () => {
                   <SelectValue placeholder="분류 선택" />
                 </SelectTrigger>
 
-                <SelectContent className="bg-neutral-900 border-neutral-700 text-white">
+                <SelectContent className="bg-neutral-900 border-neutral-700 text-white z-101">
                   {options.map((option) => (
                     <SelectItem key={option} value={option}>
                       {option}
