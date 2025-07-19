@@ -4,9 +4,11 @@ import HighlightBadge from "@commonComponents/HighlightBadge";
 import Infopill from "@commonComponents/Infopill";
 import SubInfopill from "@commonComponents/SubInfopill";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const navigate = useNavigate();
 
   useScrollReveal(sectionRef);
 
@@ -31,7 +33,7 @@ const Hero = () => {
           전략 수립 및 팀 커뮤니케이션을 효율적으로 연습해보세요.
         </SubInfopill>
 
-        <CTAButton>시작하기</CTAButton>
+        <CTAButton onClick={() => navigate("./banPick")}>시작하기</CTAButton>
       </section>
     </>
   );
