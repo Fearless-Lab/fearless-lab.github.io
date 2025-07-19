@@ -17,7 +17,7 @@ const Hero = () => {
       <section
         id="main"
         ref={sectionRef}
-        className="flex flex-col items-center justify-center px-4 text-center flex-grow pt-50"
+        className="flex flex-col items-center justify-center px-4 text-center flex-grow pt-40"
       >
         <HighlightBadge>LOL Ban · Pick Simulation</HighlightBadge>
 
