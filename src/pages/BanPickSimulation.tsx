@@ -7,6 +7,7 @@ import {
 import { useEffect, useState } from "react";
 import PositionRow from "./components/BanPickSimulation/PositionRow";
 import { Input } from "@/components/ui/input";
+import ChampionGrid from "./components/BanPickSimulation/ChampionGrid";
 
 const TOTAL_TIME = 26;
 
@@ -99,23 +100,11 @@ const BanPickSimulation = () => {
                   />
                 </div>
               </div>
+
               <div className="h-80 overflow-auto">
-                <div
-                  className="grid justify-center auto-rows-[64px] grid-flow-row gap-2"
-                  style={{
-                    gridTemplateColumns: "repeat(auto-fit, 64px)",
-                  }}
-                >
-                  {Array.from({ length: 100 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-16 h-16 bg-gray-300 flex items-center justify-center cursor-pointer"
-                    >
-                      {i + 1}
-                    </div>
-                  ))}
-                </div>
+                <ChampionGrid />
               </div>
+
               <CTAButton>선택 완료</CTAButton>
             </div>
 
@@ -137,21 +126,10 @@ const BanPickSimulation = () => {
                 className="w-40 rounded-none border border-gray-300 mt-4"
               />
             </div>
+
             <div className="min-h-84">
               <div className="h-80 overflow-auto">
-                <div
-                  className="grid gap-2 justify-center"
-                  style={{ gridTemplateColumns: "repeat(auto-fit, 64px)" }}
-                >
-                  {Array.from({ length: 100 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-16 h-16 bg-gray-300 flex items-center justify-center cursor-pointer"
-                    >
-                      {i + 1}
-                    </div>
-                  ))}
-                </div>
+                <ChampionGrid />
               </div>
             </div>
             <CTAButton>선택 완료</CTAButton>

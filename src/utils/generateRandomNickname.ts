@@ -1,9 +1,9 @@
 import { adjectives } from "./../../constants/adjectives";
 const NICKNAME_KEY = "userNickname";
 
-interface Champion {
+export interface Champion {
+  id: string;
   name: string;
-  // 필요한 다른 프로퍼티가 있다면 추가
 }
 
 interface ChampionResponse {
@@ -42,4 +42,26 @@ export const getOrCreateNickname = async (): Promise<string> => {
   const nickname = generateNickname(champions);
   localStorage.setItem(NICKNAME_KEY, nickname);
   return nickname;
+};
+
+// 챔피언 data fetch
+export const fetchChampions = async (): Promise<{
+  version: string;
+  champions: Champion[];
+}> => {
+  const versionRes = await fetch(
+    "https://ddragon.leagueoflegends.com/api/versions.json"
+  );
+  const versions: string[] = await versionRes.json();
+  const latestVersion = versions[0];
+
+  const champRes = await fetch(
+    `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/ko_KR/champion.json`
+  );
+  const data = (await champRes.json()) as ChampionResponse;
+
+  const champions = Object.values(data.data);
+  champions.sort((a, b) => a.name.localeCompare(b.name, "ko"));
+
+  return { version: latestVersion, champions };
 };
