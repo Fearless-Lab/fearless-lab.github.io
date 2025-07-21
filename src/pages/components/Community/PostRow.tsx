@@ -1,5 +1,5 @@
 import { formatPostDate } from "@/utils/dayjs";
-import type { PostDataType } from "@/utils/type/post";
+import type { PostDataType } from "@/types/post";
 
 export interface PostRowProps {
   post: PostDataType;

@@ -20,12 +20,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 
 function App() {
   return (
-    <div
-      className="min-h-screen flex flex-col"
-      style={{
-        backgroundColor: "#050d18",
-      }}
-    >
+    <div className="min-h-screen flex flex-col bg-[#050d18]">
       <Router basename={BASE_URL}>
         <Navbar />
 

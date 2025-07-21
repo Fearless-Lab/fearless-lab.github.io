@@ -49,7 +49,7 @@ const BanPickSimulation = () => {
             {[...Array(5)].map((_, i) => (
               <div
                 key={`blue-ban-${i}`}
-                className="w-10 h-10 border border-blue-400 bg-neutral-900 rounded-sm"
+                className="w-10 h-10 border border-blue-400 bg-neutral-900"
               />
             ))}
           </div>
@@ -57,7 +57,7 @@ const BanPickSimulation = () => {
             {[...Array(5)].map((_, i) => (
               <div
                 key={`red-ban-${i}`}
-                className="w-10 h-10 border border-red-400 bg-neutral-900 rounded-sm"
+                className="w-10 h-10 border border-red-400 bg-neutral-900"
               />
             ))}
           </div>
@@ -66,17 +66,18 @@ const BanPickSimulation = () => {
         {/* main section */}
         <div className="max-w-6xl mx-auto mt-4 w-full">
           {/* md 이상 레이아웃 */}
-          <div className="hidden md:grid md:grid-cols-11 md:gap-8 w-full">
+          <div className="hidden md:grid md:grid-cols-9 md:gap-10 w-full">
             {/* 왼쪽 챔피언 목록 */}
-            <div className="md:col-span-3 border p-2 min-h-96 flex flex-col divide-y">
+            <div className="md:col-span-2 border min-h-92 flex flex-col divide-y">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div key={i} className="flex-1" />
               ))}
             </div>
 
             {/* 가운데 선택 영역 */}
-            <div className="md:col-span-5 flex flex-col gap-4">
-              <div className="border p-4 min-h-84 self-start">
+            <div className="md:col-span-5 flex flex-col gap-2">
+              <div className="border p-4">포지션 선택 필터, 검색창</div>
+              <div className="border p-4 min-h-80 self-start">
                 <div className="text-sm font-semibold mb-2">
                   챔피언 선택 영역 챔피언 선택 영역 챔피언 선택 영역 챔피언 선택
                   영역 챔피언 선택 영역 챔피언 선택 영역
@@ -84,9 +85,8 @@ const BanPickSimulation = () => {
               </div>
               <CTAButton>선택 완료</CTAButton>
             </div>
-
             {/* 오른쪽 챔피언 목록 */}
-            <div className="md:col-span-3 border p-2 min-h-96 flex flex-col divide-y">
+            <div className="md:col-span-2 border min-h-92 flex flex-col divide-y">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div key={i} className="flex-1" />
               ))}
@@ -94,21 +94,22 @@ const BanPickSimulation = () => {
           </div>
 
           {/* md 이하 레이아웃 */}
-          <div className="flex flex-col md:hidden w-full gap-4">
+          <div className="flex flex-col md:hidden gap-4 w-[90%] mx-auto">
+            <div className="border p-4">포지션 선택 필터, 검색창</div>
             <div className="border p-4 min-h-84">
               <div className="text-sm font-semibold mb-2">챔피언 선택 영역</div>
             </div>
             <CTAButton>선택 완료</CTAButton>
-            <div className="flex w-full gap-4 items-start">
+            <div className="flex w-[90%] gap-4 justify-evenly mx-auto">
               {/* 왼쪽 챔피언 목록 */}
-              <div className="flex-1 border p-2 min-h-80 flex flex-col divide-y">
+              <div className="flex-1 border min-h-84 flex flex-col divide-y">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <div key={i} className="flex-1" />
                 ))}
               </div>
 
               {/* 오른쪽 챔피언 목록 */}
-              <div className="flex-1 border p-2 min-h-80 flex flex-col divide-y">
+              <div className="flex-1 border min-h-84 flex flex-col divide-y">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <div key={i} className="flex-1" />
                 ))}

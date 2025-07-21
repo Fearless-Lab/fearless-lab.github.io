@@ -1,5 +1,5 @@
 import { db } from "@/firebase";
-import type { PostDataType } from "@/utils/type/post";
+import type { PostDataType } from "@/types/post";
 import {
   collection,
   doc,

@@ -9,7 +9,7 @@ import CTAButton from "@/components/CTAButton";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { useState } from "react";
 import PostDetailModal from "./PostDetailModal";
-import type { PostDataType } from "@/utils/type/post";
+import type { PostDataType } from "@/types/post";
 
 const CommunityDetail = () => {
   const navigate = useNavigate();

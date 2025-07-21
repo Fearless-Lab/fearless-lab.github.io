@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea"; // shadcn Textarea import
-import type { PostDataType } from "@/utils/type/post";
+import type { PostDataType } from "@/types/post";
 
 type PostDetailModalProps = {
   open: boolean;

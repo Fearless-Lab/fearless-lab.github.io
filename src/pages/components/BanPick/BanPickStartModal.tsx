@@ -32,7 +32,7 @@ const BanPickNoticeModal = ({
 
   const handleCopy = (team: "blue" | "red") => {
     const teamName = team === "blue" ? blueTeamName : redTeamName;
-    const basePath = `${window.location.origin}/${BASE_URL}`;
+    const basePath = `${window.location.origin}${BASE_URL}`;
     const url = `${basePath}/banPickSimulation?matchId=${matchId}&teamName=${encodeURIComponent(
       teamName
     )}&mode=${koreanModeToEnglish[mode]}&initialTeam=${team}`;

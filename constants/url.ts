@@ -1,1 +1,1 @@
-export const BASE_URL = "data-visualization";
+export const BASE_URL = "/data-visualization";
