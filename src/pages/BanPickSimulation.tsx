@@ -1,3 +1,4 @@
+import CTAButton from "@/components/CTAButton";
 import { useEffect, useState } from "react";
 
 const TOTAL_TIME = 26;
@@ -27,7 +28,7 @@ const BanPickSimulation = () => {
   }, [isBlueTurn]);
 
   return (
-    <div className="min-h-screen flex flex-col mt-24">
+    <div className="min-h-screen flex flex-col mt-20 md:mt-24">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
         {/* 상단 바 */}
         <div className="flex w-full h-16 rounded-tl-md rounded-tr-md overflow-hidden">
@@ -62,45 +63,55 @@ const BanPickSimulation = () => {
           </div>
         </div>
 
+        {/* main section */}
         <div className="max-w-6xl mx-auto mt-4 w-full">
-          {/* md 이상 그리드 레이아웃 */}
-          <div className="hidden md:grid md:grid-cols-11 md:gap-4 max-w-6xl mx-auto mt-4 w-full">
-            {/* 왼쪽 2칸 */}
-            <div className="md:col-span-3 bg-blue-500 text-white p-4 rounded-md min-h-100">
-              BLUE TEAM CHAMP
+          {/* md 이상 레이아웃 */}
+          <div className="hidden md:grid md:grid-cols-11 md:gap-8 w-full">
+            {/* 왼쪽 챔피언 목록 */}
+            <div className="md:col-span-3 border p-2 min-h-96 flex flex-col divide-y">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex-1" />
+              ))}
             </div>
 
-            {/* 가운데 5칸 - flex-col로 세로배치 */}
+            {/* 가운데 선택 영역 */}
             <div className="md:col-span-5 flex flex-col gap-4">
-              <div className="bg-green-500 text-white p-4 rounded-md min-h-84 self-start">
-                챔피언 선택 영역 챔피언 선택 영역 챔피언 선택 영역 챔피언 선택
-                영역 챔피언 선택 영역 챔피언 선택 영역
+              <div className="border p-4 min-h-84 self-start">
+                <div className="text-sm font-semibold mb-2">
+                  챔피언 선택 영역 챔피언 선택 영역 챔피언 선택 영역 챔피언 선택
+                  영역 챔피언 선택 영역 챔피언 선택 영역
+                </div>
               </div>
-              <button className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-md text-white">
-                선택 완료
-              </button>
+              <CTAButton>선택 완료</CTAButton>
             </div>
 
-            {/* 오른쪽 2칸 */}
-            <div className="md:col-span-3 bg-red-500 text-white p-4 rounded-md min-h-100">
-              RED TEAM CHAMP
+            {/* 오른쪽 챔피언 목록 */}
+            <div className="md:col-span-3 border p-2 min-h-96 flex flex-col divide-y">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex-1" />
+              ))}
             </div>
           </div>
 
           {/* md 이하 레이아웃 */}
           <div className="flex flex-col md:hidden w-full gap-4">
-            <div className="bg-green-500 text-white p-4 rounded-md min-h-96">
-              챔피언 선택 영역
+            <div className="border p-4 min-h-84">
+              <div className="text-sm font-semibold mb-2">챔피언 선택 영역</div>
             </div>
-            <button className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-md text-white max-w-md mx-auto">
-              선택 완료
-            </button>
+            <CTAButton>선택 완료</CTAButton>
             <div className="flex w-full gap-4 items-start">
-              <div className="bg-blue-500 text-white p-4 flex-1 rounded-md min-h-80">
-                BLUE TEAM CHAMP
+              {/* 왼쪽 챔피언 목록 */}
+              <div className="flex-1 border p-2 min-h-80 flex flex-col divide-y">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="flex-1" />
+                ))}
               </div>
-              <div className="bg-red-500 text-white p-4 flex-1 rounded-md min-h-80">
-                RED TEAM CHAMP
+
+              {/* 오른쪽 챔피언 목록 */}
+              <div className="flex-1 border p-2 min-h-80 flex flex-col divide-y">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="flex-1" />
+                ))}
               </div>
             </div>
           </div>
