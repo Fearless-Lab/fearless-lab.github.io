@@ -2,11 +2,13 @@ import HighlightBadge from "@/components/HighlightBadge";
 import Infopill from "@/components/Infopill";
 import SubInfopill from "@/components/SubInfopill";
 import { gameMode, modeDescription } from "@constants/category";
-import { useState } from "react";
-import CategoryButton from "./components/Home/Community/CategoryButton";
+import { useRef, useState } from "react";
+import CategoryButton from "./components/Community/CategoryButton";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import CTAButton from "@/components/CTAButton";
+import { useScrollReveal } from "@/hooks/animation/useScrollReveal";
+import BanPickNoticeModal from "@componentsAboutBanPick/BanPickStartModal";
 
 const BanPick = () => {
   const [selectedMode, setSelectedMode] = useState(gameMode[0]);
@@ -14,70 +16,111 @@ const BanPick = () => {
   const [blueTeamName, setBlueTeamName] = useState("");
   const [redTeamName, setRedTeamName] = useState("");
 
-  const handleStart = () => {
-    // const finalBlue = blueTeamName || "BLUE TEAM";
-    // const finalRed = redTeamName || "RED TEAM";
-    alert("금방 만들게요");
-  };
+  const [openNotice, setOpenNotice] = useState(false);
+
+  const [error, setError] = useState<{ blue?: string; red?: string }>({});
 
   const handleCategoryClick = (mode: string) => {
     setSelectedMode(mode);
   };
 
+  const handleStart = () => {
+    const trimmedBlue = blueTeamName.trim();
+    const trimmedRed = redTeamName.trim();
+
+    const newError: { blue?: string; red?: string } = {};
+
+    if (!trimmedBlue) newError.blue = "블루팀 이름을 입력해주세요.";
+    if (!trimmedRed) newError.red = "레드팀 이름을 입력해주세요.";
+
+    if (trimmedBlue && trimmedRed && trimmedBlue === trimmedRed) {
+      newError.blue = "블루팀과 레드팀 이름은 달라야 합니다.";
+      newError.red = "블루팀과 레드팀 이름은 달라야 합니다.";
+    }
+
+    setError(newError);
+
+    if (Object.keys(newError).length > 0) {
+      return;
+    }
+
+    setOpenNotice(true);
+  };
+
+  const sectionRef = useRef<HTMLElement | null>(null);
+  useScrollReveal(sectionRef);
+
   return (
-    <section
-      id="banPick"
-      className="flex flex-col items-center justify-center my-36 text-center scroll-mt-20"
-    >
-      <HighlightBadge>Ban · Pick Simulation</HighlightBadge>
+    <>
+      <section
+        id="banPick"
+        ref={sectionRef}
+        className="flex flex-col items-center justify-center my-28 text-center scroll-mt-20"
+      >
+        <HighlightBadge>Ban · Pick Simulation</HighlightBadge>
 
-      <Infopill>밴픽 전략을 구상해보세요 !</Infopill>
-      <SubInfopill>
-        경기는 5판 3선승제로 진행돼요
-        <br />
-        1세트의 블루 / 레드 진영은 서로 합의해서 정해주세요 !
-      </SubInfopill>
+        <Infopill>밴픽 전략을 구상해보세요</Infopill>
+        <SubInfopill>
+          경기는 5판 3선승제로 진행되며, 진 팀에게 진영 선택권이 있어요
+          <br />1 세트의 블루 · 레드 진영은 서로 합의해서 정해주세요 !
+        </SubInfopill>
 
-      <div className="flex gap-3 flex-nowrap justify-center mb-6">
-        {gameMode.map((mode) => {
-          const isSelected = mode === selectedMode;
+        <div className="flex gap-3 flex-nowrap justify-center mb-6">
+          {gameMode.map((mode) => {
+            const isSelected = mode === selectedMode;
 
-          return (
-            <CategoryButton
-              key={mode}
-              label={mode}
-              isSelected={isSelected}
-              onClick={() => handleCategoryClick(mode)}
-            />
-          );
-        })}
-      </div>
-
-      <SubInfopill>{modeDescription[selectedMode]}</SubInfopill>
-      <div className="w-[90%] md:w-full max-w-md flex flex-col gap-4 py-5">
-        <div className="flex flex-col text-left">
-          <Label className="text-white mb-2">블루팀</Label>
-          <Input
-            className="h-12 px-4 bg-blue-500 text-white placeholder:text-blue-100 placeholder:text-xs md:placeholder:text-sm shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300 hover:brightness-110 transition-all duration-200 border-none"
-            placeholder="블루팀 이름을 지어주세요! 기본값은 BLUE에요"
-            value={blueTeamName}
-            onChange={(e) => setBlueTeamName(e.target.value)}
-          />
+            return (
+              <CategoryButton
+                key={mode}
+                label={mode}
+                isSelected={isSelected}
+                onClick={() => handleCategoryClick(mode)}
+              />
+            );
+          })}
         </div>
 
-        <div className="flex flex-col text-left mb-4">
-          <Label className="text-white mb-2">레드팀</Label>
-          <Input
-            className="h-12 px-4 bg-red-500 text-white placeholder:text-red-100 placeholder:text-xs md:placeholder:text-sm shadow-lg focus:outline-none focus:ring-2 focus:ring-red-300 hover:brightness-110 transition-all duration-200 border-none"
-            placeholder="레드팀 이름을 지어주세요! 기본값은 RED에요"
-            value={redTeamName}
-            onChange={(e) => setRedTeamName(e.target.value)}
-          />
+        <SubInfopill>{modeDescription[selectedMode]}</SubInfopill>
+
+        <div className="w-[90%] md:w-full max-w-md flex gap-4 py-5">
+          <div className="flex flex-col text-left">
+            <Label className="text-white mb-2">블루팀</Label>
+            <Input
+              className="h-12 px-4 bg-blue-400 text-white placeholder:text-blue-100 placeholder:text-xs md:placeholder:text-sm shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300 hover:brightness-110 transition-all duration-200 border-none"
+              placeholder="블루팀 이름을 지어주세요 !"
+              value={blueTeamName}
+              onChange={(e) => setBlueTeamName(e.target.value)}
+            />
+            {error.blue && (
+              <p className="text-red-400 text-xs mt-1">{error.blue}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col text-left mb-4">
+            <Label className="text-white mb-2">레드팀</Label>
+            <Input
+              className="h-12 px-4 bg-red-400 text-white placeholder:text-red-100 placeholder:text-xs md:placeholder:text-sm shadow-lg focus:outline-none focus:ring-2 focus:ring-red-300 hover:brightness-110 transition-all duration-200 border-none"
+              placeholder="레드팀 이름을 지어주세요 !"
+              value={redTeamName}
+              onChange={(e) => setRedTeamName(e.target.value)}
+            />
+            {error.red && (
+              <p className="text-red-400 text-xs mt-1">{error.red}</p>
+            )}
+          </div>
         </div>
 
         <CTAButton onClick={handleStart}>시작하기</CTAButton>
-      </div>
-    </section>
+      </section>
+
+      <BanPickNoticeModal
+        open={openNotice}
+        onClose={() => setOpenNotice(false)}
+        blueTeamName={blueTeamName.trim()}
+        redTeamName={redTeamName.trim()}
+      />
+    </>
   );
 };
+
 export default BanPick;

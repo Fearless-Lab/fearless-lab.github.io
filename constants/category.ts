@@ -43,9 +43,16 @@ export const gameMode = [
 ];
 
 export const modeDescription: Record<(typeof gameMode)[number], string> = {
-  "토너먼트 드래프트": "자유롭게 선택할 수 있는 모드예요",
+  "토너먼트 드래프트": "자유롭게 선택할 수 있는 모드에요.",
   "소프트 피어리스":
     "이전 세트에서 우리 팀이 썼던 챔피언은 다시 고를 수 없어요.",
   "하드 피어리스":
     "이전 세트에서 양 팀이 썼던 챔피언 모두 다시 고를 수 없어요.",
+};
+
+export const modalDescription = {
+  error: [
+    "제한 시간 내 밴픽을 완료하지 않으면 자동으로 랜덤한 챔피언이 선택됩니다.",
+    "밴픽 실수 시에는 해당 세트를 초기화하고 처음부터 다시 진행해야 합니다.",
+  ],
 };

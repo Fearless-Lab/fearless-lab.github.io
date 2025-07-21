@@ -66,25 +66,13 @@ const PostDetailModal = ({ open, onClose, post }: PostDetailModalProps) => {
               {/* 댓글 예시 */}
               <div className="py-3 border-b border-neutral-700 last:border-b-0">
                 <div className="flex justify-between items-center">
-                  <p className="font-semibold text-white text-sm sm:text-base">
-                    익명1
+                  <p className="font-semibold text-white text-xs sm:text-sm">
+                    의문의 자르반 4세
                   </p>
-                  <p className="text-gray-500 text-xs sm:text-sm">2025-07-18</p>
+                  <p className="text-gray-500 text-xs">2025-07-18</p>
                 </div>
-                <p className="mt-1 whitespace-pre-wrap text-xs sm:text-sm text-gray-300">
-                  너무 배고파요
-                </p>
-              </div>
-
-              <div className="py-3 border-b border-neutral-700 last:border-b-0">
-                <div className="flex justify-between items-center">
-                  <p className="font-semibold text-white text-sm sm:text-base">
-                    익명1
-                  </p>
-                  <p className="text-gray-500 text-xs sm:text-sm">2025-07-18</p>
-                </div>
-                <p className="mt-1 whitespace-pre-wrap text-xs sm:text-sm text-gray-300">
-                  너무 배고파요
+                <p className="mt-1 whitespace-pre-wrap text-xs text-gray-300">
+                  언제 다 만드냐
                 </p>
               </div>
             </div>

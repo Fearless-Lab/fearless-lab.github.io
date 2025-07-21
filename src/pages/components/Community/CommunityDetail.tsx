@@ -1,6 +1,6 @@
 import { useNavigate, useParams, Navigate } from "react-router-dom";
 import { category } from "@constants/category";
-import CategoryButton from "@/pages/components/Home/Community/CategoryButton";
+import CategoryButton from "@/pages/components/Community/CategoryButton";
 import CommunityWriteModal from "./CommunityWriteModal";
 import PostRow from "./PostRow";
 import PostLoading from "./PostLoading";

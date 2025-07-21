@@ -16,6 +16,14 @@ export default defineConfig({
         __dirname,
         "./src/pages/components/Home"
       ),
+      "@componentsAboutCommunity": path.resolve(
+        __dirname,
+        "./src/pages/components/Community"
+      ),
+      "@componentsAboutBanPick": path.resolve(
+        __dirname,
+        "./src/pages/components/BanPick"
+      ),
       "@animationHooks": path.resolve(__dirname, "./src/hooks/animation"),
       "@utils": path.resolve(__dirname, "./src/utils"),
     },

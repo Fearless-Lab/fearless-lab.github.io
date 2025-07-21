@@ -11,7 +11,7 @@ import { ScrollTrigger, SplitText } from "gsap/all";
 import Home from "@/pages/Home";
 import Footer from "./components/Footer";
 import BanPick from "@/pages/BanPick";
-import Community from "./pages/components/Home/Community";
+import Community from "./pages/Community";
 import NotFound from "./pages/NotFound";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);

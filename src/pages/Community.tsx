@@ -1,6 +1,6 @@
 import HighlightBadge from "@commonComponents/HighlightBadge";
 import Infopill from "@commonComponents/Infopill";
-import CommunityDetail from "./Community/CommunityDetail";
+import CommunityDetail from "./components/Community/CommunityDetail";
 import { useParams } from "react-router-dom";
 import SubInfopill from "@/components/SubInfopill";
 import { categoryGuideText } from "@constants/category";
@@ -18,7 +18,7 @@ const Community = () => {
     <section
       id="community"
       ref={sectionRef}
-      className="flex flex-col items-center justify-center my-48 text-center scroll-mt-20"
+      className="flex flex-col items-center justify-center my-36 text-center scroll-mt-20"
     >
       <HighlightBadge>Community</HighlightBadge>
 
