@@ -5,10 +5,17 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { ExclamationCircleIcon } from "@heroicons/react/16/solid";
+import {
+  ExclamationCircleIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/16/solid";
 import { useState } from "react";
 import CopyLinkButton from "./CopyLinkButton";
-import { koreanModeToEnglish, modalDescription } from "@constants/category";
+import {
+  koreanModeToEnglish,
+  modalDescription,
+  modeDescription,
+} from "@constants/category";
 import { BASE_URL } from "@constants/url";
 
 type BanpickNoticeModalProps = {
@@ -62,6 +69,11 @@ const BanPickNoticeModal = ({
         </DialogHeader>
 
         <div className="mt-4 text-sm text-white space-y-3">
+          <div className="flex items-center gap-2 whitespace-pre-line">
+            <CheckCircleIcon className="w-5 h-5 text-green-400 shrink-0" />
+            {modeDescription[mode]}
+          </div>
+
           {modalDescription.error.map((d, i) => (
             <div
               key={i}

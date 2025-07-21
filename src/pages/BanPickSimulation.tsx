@@ -1,4 +1,9 @@
 import CTAButton from "@/components/CTAButton";
+import {
+  ClipboardDocumentListIcon,
+  ArrowPathIcon,
+} from "@heroicons/react/24/outline";
+
 import { useEffect, useState } from "react";
 
 const TOTAL_TIME = 26;
@@ -35,8 +40,14 @@ const BanPickSimulation = () => {
           <div className="flex-1 bg-blue-400 text-white flex items-center justify-start font-bold pl-2">
             BLUE TEAM
           </div>
-          <div className="w-20 bg-black text-white flex items-center justify-center font-mono font-semibold text-sm md:text-lg">
-            :{timeLeft.toString().padStart(2, "0")}
+          <div className="w-20 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
+            <div className="text-2xl">
+              :{timeLeft.toString().padStart(2, "0")}
+            </div>
+            <div className="mt-1 flex items-center gap-4">
+              <ClipboardDocumentListIcon className="w-5 h-5 cursor-pointer hover:text-gray-300" />
+              <ArrowPathIcon className="w-5 h-5 cursor-pointer hover:text-red-800 text-rose-400" />
+            </div>
           </div>
           <div className="flex-1 bg-red-400 text-white flex items-center justify-end font-bold pr-2">
             RED TEAM
@@ -76,7 +87,7 @@ const BanPickSimulation = () => {
 
             {/* 가운데 선택 영역 */}
             <div className="md:col-span-5 flex flex-col gap-2">
-              <div className="border p-4">포지션 선택 필터, 검색창</div>
+              <div className="border p-2">포지션 선택 필터, 검색창</div>
               <div className="border p-4 min-h-80 self-start">
                 <div className="text-sm font-semibold mb-2">
                   챔피언 선택 영역 챔피언 선택 영역 챔피언 선택 영역 챔피언 선택
@@ -95,21 +106,21 @@ const BanPickSimulation = () => {
 
           {/* md 이하 레이아웃 */}
           <div className="flex flex-col md:hidden gap-4 w-[90%] mx-auto">
-            <div className="border p-4">포지션 선택 필터, 검색창</div>
+            <div className="border p-2">포지션 선택 필터, 검색창</div>
             <div className="border p-4 min-h-84">
               <div className="text-sm font-semibold mb-2">챔피언 선택 영역</div>
             </div>
             <CTAButton>선택 완료</CTAButton>
-            <div className="flex w-[90%] gap-4 justify-evenly mx-auto">
+            <div className="flex w-[75%] gap-4 mx-auto">
               {/* 왼쪽 챔피언 목록 */}
-              <div className="flex-1 border min-h-84 flex flex-col divide-y">
+              <div className="flex-1 border border-blue-400 min-h-84 flex flex-col divide-y">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <div key={i} className="flex-1" />
                 ))}
               </div>
 
               {/* 오른쪽 챔피언 목록 */}
-              <div className="flex-1 border min-h-84 flex flex-col divide-y">
+              <div className="flex-1 border border-rose-400 min-h-84 flex flex-col divide-y">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <div key={i} className="flex-1" />
                 ))}
