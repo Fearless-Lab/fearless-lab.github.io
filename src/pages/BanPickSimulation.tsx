@@ -5,6 +5,8 @@ import {
 } from "@heroicons/react/24/outline";
 
 import { useEffect, useState } from "react";
+import PositionRow from "./components/BanPickSimulation/PositionRow";
+import { Input } from "@/components/ui/input";
 
 const TOTAL_TIME = 26;
 
@@ -77,27 +79,48 @@ const BanPickSimulation = () => {
         {/* main section */}
         <div className="max-w-6xl mx-auto mt-4 w-full">
           {/* md 이상 레이아웃 */}
-          <div className="hidden md:grid md:grid-cols-9 md:gap-10 w-full">
+          <div className="hidden md:grid md:grid-cols-4 gap-4 w-full">
             {/* 왼쪽 챔피언 목록 */}
-            <div className="md:col-span-2 border min-h-92 flex flex-col divide-y">
+            <div className="md:col-span-1 border min-h-92 flex flex-col divide-y">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div key={i} className="flex-1" />
               ))}
             </div>
 
             {/* 가운데 선택 영역 */}
-            <div className="md:col-span-5 flex flex-col gap-2">
-              <div className="border p-2">포지션 선택 필터, 검색창</div>
-              <div className="border p-4 min-h-80 self-start">
-                <div className="text-sm font-semibold mb-2">
-                  챔피언 선택 영역 챔피언 선택 영역 챔피언 선택 영역 챔피언 선택
-                  영역 챔피언 선택 영역 챔피언 선택 영역
+            <div className="md:col-span-2 flex flex-col gap-2 px-4">
+              <div className="px-4 py-2">
+                <div className="flex items-center justify-between gap-2">
+                  <PositionRow />
+                  <Input
+                    type="text"
+                    placeholder="챔피언 검색"
+                    className="w-36 rounded-none border border-gray-300"
+                  />
+                </div>
+              </div>
+              <div className="h-80 overflow-auto">
+                <div
+                  className="grid justify-center auto-rows-[64px] grid-flow-row gap-2"
+                  style={{
+                    gridTemplateColumns: "repeat(auto-fit, 64px)",
+                  }}
+                >
+                  {Array.from({ length: 100 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-16 h-16 bg-gray-300 flex items-center justify-center cursor-pointer"
+                    >
+                      {i + 1}
+                    </div>
+                  ))}
                 </div>
               </div>
               <CTAButton>선택 완료</CTAButton>
             </div>
+
             {/* 오른쪽 챔피언 목록 */}
-            <div className="md:col-span-2 border min-h-92 flex flex-col divide-y">
+            <div className="md:col-span-1 border min-h-92 flex flex-col divide-y">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div key={i} className="flex-1" />
               ))}
@@ -106,11 +129,33 @@ const BanPickSimulation = () => {
 
           {/* md 이하 레이아웃 */}
           <div className="flex flex-col md:hidden gap-4 w-[90%] mx-auto">
-            <div className="border p-2">포지션 선택 필터, 검색창</div>
-            <div className="border p-4 min-h-84">
-              <div className="text-sm font-semibold mb-2">챔피언 선택 영역</div>
+            <div className="px-4 py-2 flex flex-col items-center">
+              <PositionRow />
+              <Input
+                type="text"
+                placeholder="챔피언 검색"
+                className="w-40 rounded-none border border-gray-300 mt-4"
+              />
+            </div>
+            <div className="min-h-84">
+              <div className="h-80 overflow-auto">
+                <div
+                  className="grid gap-2 justify-center"
+                  style={{ gridTemplateColumns: "repeat(auto-fit, 64px)" }}
+                >
+                  {Array.from({ length: 100 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-16 h-16 bg-gray-300 flex items-center justify-center cursor-pointer"
+                    >
+                      {i + 1}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
             <CTAButton>선택 완료</CTAButton>
+
             <div className="flex w-[75%] gap-4 mx-auto">
               {/* 왼쪽 챔피언 목록 */}
               <div className="flex-1 border border-blue-400 min-h-84 flex flex-col divide-y">
