@@ -5,22 +5,19 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { XCircleIcon } from "@heroicons/react/16/solid";
+import { ExclamationCircleIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import CopyLinkButton from "./CopyLinkButton";
-
-const modalDescription = {
-  error: [
-    "제한 시간 내 밴픽을 완료하지 않으면 자동으로 랜덤한 챔피언이 선택됩니다.",
-    "밴픽 실수 시에는 해당 세트를 초기화하고 처음부터 다시 진행해야 합니다.",
-  ],
-};
+import { koreanModeToEnglish, modalDescription } from "@constants/category";
+import { BASE_URL } from "@constants/url";
 
 type BanpickNoticeModalProps = {
   open: boolean;
   onClose: () => void;
   blueTeamName: string;
   redTeamName: string;
+  matchId: string;
+  mode: string;
 };
 
 const BanPickNoticeModal = ({
@@ -28,13 +25,20 @@ const BanPickNoticeModal = ({
   onClose,
   blueTeamName,
   redTeamName,
+  matchId,
+  mode,
 }: BanpickNoticeModalProps) => {
   const [copied, setCopied] = useState<"blue" | "red" | null>(null);
-  const matchUrl = window.location.href;
 
   const handleCopy = (team: "blue" | "red") => {
-    navigator.clipboard.writeText(matchUrl);
-    setCopied(team); // 유지만 함
+    const teamName = team === "blue" ? blueTeamName : redTeamName;
+    const basePath = `${window.location.origin}/${BASE_URL}`;
+    const url = `${basePath}/banPickSimulation?matchId=${matchId}&teamName=${encodeURIComponent(
+      teamName
+    )}&mode=${koreanModeToEnglish[mode]}&initialTeam=${team}`;
+
+    navigator.clipboard.writeText(url);
+    setCopied(team);
   };
 
   return (
@@ -59,8 +63,11 @@ const BanPickNoticeModal = ({
 
         <div className="mt-4 text-sm text-white space-y-3">
           {modalDescription.error.map((d, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <XCircleIcon className="w-5 h-5 text-rose-400 shrink-0" />
+            <div
+              key={i}
+              className="flex items-center gap-2 whitespace-pre-line"
+            >
+              <ExclamationCircleIcon className="w-5 h-5 text-rose-400 shrink-0" />
               {d}
             </div>
           ))}

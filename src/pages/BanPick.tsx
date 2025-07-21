@@ -9,12 +9,14 @@ import { Input } from "@/components/ui/input";
 import CTAButton from "@/components/CTAButton";
 import { useScrollReveal } from "@/hooks/animation/useScrollReveal";
 import BanPickNoticeModal from "@componentsAboutBanPick/BanPickStartModal";
+import { v4 as uuidv4 } from "uuid";
 
 const BanPick = () => {
   const [selectedMode, setSelectedMode] = useState(gameMode[0]);
 
   const [blueTeamName, setBlueTeamName] = useState("");
   const [redTeamName, setRedTeamName] = useState("");
+  const [matchId, setMatchId] = useState("");
 
   const [openNotice, setOpenNotice] = useState(false);
 
@@ -34,8 +36,7 @@ const BanPick = () => {
     if (!trimmedRed) newError.red = "레드팀 이름을 입력해주세요.";
 
     if (trimmedBlue && trimmedRed && trimmedBlue === trimmedRed) {
-      newError.blue = "블루팀과 레드팀 이름은 달라야 합니다.";
-      newError.red = "블루팀과 레드팀 이름은 달라야 합니다.";
+      newError.blue = newError.red = "팀 이름은 서로 달라야 합니다.";
     }
 
     setError(newError);
@@ -44,6 +45,8 @@ const BanPick = () => {
       return;
     }
 
+    const newMatchId = uuidv4();
+    setMatchId(newMatchId);
     setOpenNotice(true);
   };
 
@@ -86,7 +89,7 @@ const BanPick = () => {
           <div className="flex flex-col text-left">
             <Label className="text-white mb-2">블루팀</Label>
             <Input
-              className="h-12 px-4 bg-blue-400 text-white placeholder:text-blue-100 placeholder:text-xs md:placeholder:text-sm shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300 hover:brightness-110 transition-all duration-200 border-none"
+              className="h-12 px-4 text-sm bg-blue-400 text-white placeholder:text-blue-100 placeholder:text-xs md:placeholder:text-sm shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300 hover:brightness-110 transition-all duration-200 border-none"
               placeholder="블루팀 이름을 지어주세요 !"
               value={blueTeamName}
               onChange={(e) => setBlueTeamName(e.target.value)}
@@ -99,7 +102,7 @@ const BanPick = () => {
           <div className="flex flex-col text-left mb-4">
             <Label className="text-white mb-2">레드팀</Label>
             <Input
-              className="h-12 px-4 bg-red-400 text-white placeholder:text-red-100 placeholder:text-xs md:placeholder:text-sm shadow-lg focus:outline-none focus:ring-2 focus:ring-red-300 hover:brightness-110 transition-all duration-200 border-none"
+              className="h-12 px-4 text-sm bg-red-400 text-white placeholder:text-red-100 placeholder:text-xs md:placeholder:text-sm shadow-lg focus:outline-none focus:ring-2 focus:ring-red-300 hover:brightness-110 transition-all duration-200 border-none"
               placeholder="레드팀 이름을 지어주세요 !"
               value={redTeamName}
               onChange={(e) => setRedTeamName(e.target.value)}
@@ -118,6 +121,8 @@ const BanPick = () => {
         onClose={() => setOpenNotice(false)}
         blueTeamName={blueTeamName.trim()}
         redTeamName={redTeamName.trim()}
+        matchId={matchId}
+        mode={selectedMode}
       />
     </>
   );

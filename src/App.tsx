@@ -13,6 +13,8 @@ import Footer from "./components/Footer";
 import BanPick from "@/pages/BanPick";
 import Community from "./pages/Community";
 import NotFound from "./pages/NotFound";
+import { BASE_URL } from "./../constants/url";
+import BanPickSimulation from "./pages/BanPickSimulation";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -21,18 +23,17 @@ function App() {
     <div
       className="min-h-screen flex flex-col"
       style={{
-        background:
-          "radial-gradient(ellipse at top, #1a3a5e 0%, #0a1f33 40%, #050d18 60%)",
         backgroundColor: "#050d18",
       }}
     >
-      <Router basename="/data-visualization/">
+      <Router basename={BASE_URL}>
         <Navbar />
 
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/banPick" element={<BanPick />} />
+            <Route path="/banPickSimulation" element={<BanPickSimulation />} />
 
             <Route
               path="/community"

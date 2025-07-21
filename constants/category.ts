@@ -50,9 +50,16 @@ export const modeDescription: Record<(typeof gameMode)[number], string> = {
     "이전 세트에서 양 팀이 썼던 챔피언 모두 다시 고를 수 없어요.",
 };
 
+export const koreanModeToEnglish: Record<string, string> = {
+  "토너먼트 드래프트": "normal",
+  "소프트 피어리스": "fearless",
+  "하드 피어리스": "hardFearless",
+};
+
 export const modalDescription = {
   error: [
     "제한 시간 내 밴픽을 완료하지 않으면 자동으로 랜덤한 챔피언이 선택됩니다.",
-    "밴픽 실수 시에는 해당 세트를 초기화하고 처음부터 다시 진행해야 합니다.",
+    `밴픽 실수 시에는 해당 세트를 초기화하고 처음부터 다시 진행해야 합니다.
+특정 밴 혹은 픽만 바꿀 수 없어요!`,
   ],
 };
