@@ -1,14 +1,10 @@
-import { useTurnTimer } from "@/hooks/animation/useTurnTimer";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const TOTAL_TIME = 26;
 
 const BanPickSimulation = () => {
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
   const [isBlueTurn, setIsBlueTurn] = useState(true);
-  const barRef = useRef<HTMLDivElement>(null);
-
-  useTurnTimer({ totalTime: TOTAL_TIME, isBlueTurn, barRef });
 
   useEffect(() => {
     setTimeLeft(TOTAL_TIME);
@@ -44,16 +40,6 @@ const BanPickSimulation = () => {
           <div className="flex-1 bg-red-400 text-white flex items-center justify-end font-bold pr-2">
             RED TEAM
           </div>
-        </div>
-
-        {/* 진행 막대 */}
-        <div className="relative w-full h-2 bg-neutral-700 overflow-hidden border-t-2">
-          <div
-            ref={barRef}
-            className={`absolute top-0 left-0 h-full w-full origin-center ${
-              isBlueTurn ? "bg-blue-400" : "bg-red-400"
-            }`}
-          />
         </div>
 
         {/* 밴 슬롯 */}
