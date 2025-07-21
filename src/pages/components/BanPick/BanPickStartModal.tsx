@@ -3,13 +3,11 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog";
 import { XCircleIcon } from "@heroicons/react/16/solid";
-import { LinkIcon, CheckIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import clsx from "clsx";
+import CopyLinkButton from "./CopyLinkButton";
 
 const modalDescription = {
   error: [
@@ -40,7 +38,15 @@ const BanPickNoticeModal = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={(open) => !open && onClose()}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) {
+          setCopied(null);
+          onClose();
+        }
+      }}
+    >
       <DialogContent className="bg-neutral-900 border border-neutral-700 text-white w-full max-w-[calc(100%-2rem)] mx-auto z-100">
         <DialogHeader className="text-left">
           <DialogTitle className="text-lg md:text-xl">
@@ -61,56 +67,24 @@ const BanPickNoticeModal = ({
         </div>
 
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2 text-xs md:text-sm">
-          <button
-            onClick={() => handleCopy("blue")}
-            className={clsx(
-              "flex items-center justify-center gap-1 py-2 rounded-md transition-all",
-              copied === "blue"
-                ? "bg-gray-100 text-gray-500"
-                : "bg-blue-400 text-white hover:brightness-110"
-            )}
-          >
-            {copied === "blue" ? (
-              <>
-                <CheckIcon className="w-4 h-4" />
-                {blueTeamName}팀 링크 복사 완료 !
-              </>
-            ) : (
-              <>
-                <LinkIcon className="w-4 h-4" />
-                {blueTeamName}팀 링크 복사
-              </>
-            )}
-          </button>
-
-          <button
-            onClick={() => handleCopy("red")}
-            className={clsx(
-              "flex items-center justify-center gap-1 py-2 rounded-md transition-all",
-              copied === "red"
-                ? "bg-gray-100 text-gray-500"
-                : "bg-red-400 text-white hover:brightness-110"
-            )}
-          >
-            {copied === "red" ? (
-              <>
-                <CheckIcon className="w-4 h-4" />
-                {redTeamName}팀 링크 복사 완료 !
-              </>
-            ) : (
-              <>
-                <LinkIcon className="w-4 h-4" />
-                {redTeamName}팀 링크 복사
-              </>
-            )}
-          </button>
+          <CopyLinkButton
+            team="blue"
+            copied={copied}
+            teamName={blueTeamName}
+            onCopy={handleCopy}
+          />
+          <CopyLinkButton
+            team="red"
+            copied={copied}
+            teamName={redTeamName}
+            onCopy={handleCopy}
+          />
         </div>
 
-        <DialogFooter className="mt-6">
-          <DialogDescription className="text-gray-400 mt-2 text-sm">
-            상대 팀에게 URL을 공유해주세요 !
-          </DialogDescription>
-        </DialogFooter>
+        <DialogDescription className="text-gray-400 mt-2 text-sm">
+          밴픽을 진행할 팀별 전용 URL입니다.
+          <br />각 팀은 해당 URL로 접속하여 밴픽을 진행해주세요!
+        </DialogDescription>
       </DialogContent>
     </Dialog>
   );
