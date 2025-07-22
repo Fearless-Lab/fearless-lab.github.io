@@ -22,7 +22,7 @@ export default function ChampionGrid() {
 
   return (
     <div
-      className="grid justify-center auto-rows-[64px] grid-flow-row gap-8"
+      className="grid justify-center auto-rows-[64px] grid-flow-row gap-6"
       style={{ gridTemplateColumns: "repeat(auto-fit, 64px)" }}
     >
       {champions.map((champ) => (
@@ -35,7 +35,7 @@ export default function ChampionGrid() {
             alt={champ.name}
             className="w-16 h-16 object-cover"
           />
-          <div className="text-[9px] text-center mt-1 w-full">{champ.name}</div>
+          <div className="text-[9px] text-center w-full">{champ.name}</div>
         </div>
       ))}
     </div>

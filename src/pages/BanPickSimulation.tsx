@@ -5,17 +5,71 @@ import {
 } from "@heroicons/react/24/outline";
 
 import { useEffect, useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+
 import PositionRow from "./components/BanPickSimulation/PositionRow";
 import { Input } from "@/components/ui/input";
 import ChampionGrid from "./components/BanPickSimulation/ChampionGrid";
+import ReadyCheckModal from "./components/BanPickSimulation/ReadyCheckModal";
+import { useBanPickInit } from "@/hooks/banPick/useBanPickInit";
 
 const TOTAL_TIME = 26;
 
 const BanPickSimulation = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  // URL 쿼리 파라미터
+  const matchId = searchParams.get("matchId") ?? "";
+  const teamName = searchParams.get("teamName") ?? "";
+  const mode = searchParams.get("mode") ?? "normal";
+  const initialTeam = (searchParams.get("initialTeam") ?? "blue") as
+    | "blue"
+    | "red";
+
+  // Firestore 관련 훅
+  const { initializeDoc, subscribeToStart, markAsReady } = useBanPickInit({
+    matchId,
+    teamName,
+    mode,
+    initialTeam,
+  });
+
+  // 로컬 상태
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
   const [isBlueTurn, setIsBlueTurn] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isReady, setIsReady] = useState(false);
 
+  // 필수 파라미터 없으면 리다이렉트
   useEffect(() => {
+    if (!matchId || !teamName) {
+      navigate("/404");
+    }
+  }, [matchId, teamName, navigate]);
+
+  // 컴포넌트 마운트 시 Firestore 문서 초기화
+  useEffect(() => {
+    if (!matchId || !teamName) return;
+
+    initializeDoc().catch(console.error);
+  }, [matchId, teamName, initializeDoc]);
+
+  // Firestore 스냅샷 구독 -> 양 팀 준비 완료 시 모달 닫기
+  useEffect(() => {
+    if (!matchId) return;
+
+    const unsubscribe = subscribeToStart(() => {
+      setIsModalOpen(false);
+    });
+
+    return () => unsubscribe();
+  }, [matchId, subscribeToStart]);
+
+  // 타이머 관리: 모달 닫혔을 때부터 동작
+  useEffect(() => {
+    if (isModalOpen) return;
+
     setTimeLeft(TOTAL_TIME);
 
     let timeoutId: NodeJS.Timeout;
@@ -33,7 +87,19 @@ const BanPickSimulation = () => {
     tick(TOTAL_TIME);
 
     return () => clearTimeout(timeoutId);
-  }, [isBlueTurn]);
+  }, [isBlueTurn, isModalOpen]);
+
+  // 준비 완료 버튼 클릭 핸들러
+  const handleReady = async () => {
+    if (isReady) return; // 중복 방지
+    try {
+      await markAsReady();
+      setIsReady(true);
+    } catch (e) {
+      console.error(e);
+      alert("준비 상태 갱신에 실패했습니다.");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col mt-20 md:mt-24">
@@ -57,7 +123,7 @@ const BanPickSimulation = () => {
           </div>
         </div>
 
-        {/* 밴 슬롯 -> 배열을 실제 밴 목록으로 교체해야 함*/}
+        {/* 밴 슬롯 */}
         <div className="flex justify-between items-center py-2">
           <div className="flex gap-2 flex-wrap">
             {[...Array(5)].map((_, i) => (
@@ -81,14 +147,12 @@ const BanPickSimulation = () => {
         <div className="max-w-6xl mx-auto mt-4 w-full">
           {/* md 이상 레이아웃 */}
           <div className="hidden md:grid md:grid-cols-4 gap-4 w-full">
-            {/* 왼쪽 챔피언 목록 */}
             <div className="md:col-span-1 border min-h-92 flex flex-col divide-y">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div key={i} className="flex-1" />
               ))}
             </div>
 
-            {/* 가운데 선택 영역 */}
             <div className="md:col-span-2 flex flex-col gap-2 px-4">
               <div className="px-4 py-2">
                 <div className="flex items-center justify-between gap-2">
@@ -108,7 +172,6 @@ const BanPickSimulation = () => {
               <CTAButton>선택 완료</CTAButton>
             </div>
 
-            {/* 오른쪽 챔피언 목록 */}
             <div className="md:col-span-1 border min-h-92 flex flex-col divide-y">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div key={i} className="flex-1" />
@@ -135,14 +198,12 @@ const BanPickSimulation = () => {
             <CTAButton>선택 완료</CTAButton>
 
             <div className="flex w-[75%] gap-4 mx-auto">
-              {/* 왼쪽 챔피언 목록 */}
               <div className="flex-1 border border-blue-400 min-h-84 flex flex-col divide-y">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <div key={i} className="flex-1" />
                 ))}
               </div>
 
-              {/* 오른쪽 챔피언 목록 */}
               <div className="flex-1 border border-rose-400 min-h-84 flex flex-col divide-y">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <div key={i} className="flex-1" />
@@ -152,6 +213,12 @@ const BanPickSimulation = () => {
           </div>
         </div>
       </div>
+
+      <ReadyCheckModal
+        open={isModalOpen}
+        onReadyClick={handleReady}
+        isReady={isReady}
+      />
     </div>
   );
 };
