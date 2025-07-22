@@ -38,11 +38,20 @@ const BanPickNoticeModal = ({
   const [copied, setCopied] = useState<"blue" | "red" | null>(null);
 
   const handleCopy = (team: "blue" | "red") => {
-    const teamName = team === "blue" ? blueTeamName : redTeamName;
+    const teamNames = {
+      blue: blueTeamName,
+      red: redTeamName,
+    };
+
+    const teamName = teamNames[team];
+    const oppositeTeamName = team === "blue" ? teamNames.red : teamNames.blue;
+
     const basePath = `${window.location.origin}${BASE_URL}`;
     const url = `${basePath}/banPickSimulation?matchId=${matchId}&teamName=${encodeURIComponent(
       teamName
-    )}&mode=${koreanModeToEnglish[mode]}&initialTeam=${team}`;
+    )}&mode=${
+      koreanModeToEnglish[mode]
+    }&initialTeam=${team}&oppositeTeam=${encodeURIComponent(oppositeTeamName)}`;
 
     navigator.clipboard.writeText(url);
     setCopied(team);
