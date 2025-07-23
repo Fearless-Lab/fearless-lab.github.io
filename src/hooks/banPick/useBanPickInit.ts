@@ -57,10 +57,10 @@ export const useBanPickInit = ({
     }
   }, [docRef, mode, initialTeam, teamName, oppositeTeam]);
 
+  // 양쪽 팀의 준비 완료 상태를 실시간으로 감지하는 함수
   const subscribeToStart = useCallback(
     (onReady: () => void) => {
       return onSnapshot(docRef, async (snapshot) => {
-        console.log("지금은");
         const data = snapshot.data();
         if (!data) return;
 
@@ -79,10 +79,10 @@ export const useBanPickInit = ({
     [docRef]
   );
 
+  // 시뮬레이션 문서의 모든 변경을 실시간으로 감지하고 처리할 수 있도록 돕는 함수
   const subscribeToSimulationDoc = useCallback(
     (callback: (data: any) => void) => {
       return onSnapshot(docRef, (snapshot) => {
-        console.log("지금은");
         const data = snapshot.data();
         if (!data) return;
         callback(data);

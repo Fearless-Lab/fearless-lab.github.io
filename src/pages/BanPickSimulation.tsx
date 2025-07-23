@@ -10,6 +10,7 @@ import ChampionGrid from "./components/BanPickSimulation/ChampionGrid";
 import ReadyCheckModal from "./components/BanPickSimulation/ReadyCheckModal";
 import { useBanPickLogic } from "@/hooks/banPick/useBanPickLogic";
 import { getBanPickQueryParams } from "@/utils/getQueryParams";
+import BanPickTimer from "./components/BanPickSimulation/BanPickTimer";
 
 const BanPickSimulation = () => {
   // URL 쿼리 파라미터
@@ -17,14 +18,23 @@ const BanPickSimulation = () => {
     getBanPickQueryParams();
 
   // 분리된 훅에서 Firestore 초기화, 팀 정보, 준비 상태 등 처리
-  const { isModalOpen, isReady, teams, handleReady } = useBanPickLogic({
+  const {
+    isModalOpen,
+    isReady,
+    teams,
+    currentSet,
+    currentStep,
+    startedAt,
+    handleReady,
+  } = useBanPickLogic({
     matchId,
     teamName,
     oppositeTeam,
     mode,
+
     initialTeam,
   });
-  // console.log(currentSet, currentStep, startedAt);
+  console.log(currentSet, currentStep, startedAt);
   return (
     <div className="min-h-screen flex flex-col mt-20 md:mt-24">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
@@ -34,7 +44,12 @@ const BanPickSimulation = () => {
             {teams ? teams.blue : "팀 정보 불러오는중"}
           </div>
           <div className="w-20 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
-            <div className="text-2xl">:00</div>
+            {startedAt && (
+              <BanPickTimer
+                startedAt={startedAt}
+                currentStep={currentStep ?? 0}
+              />
+            )}
             <div className="mt-1 flex items-center gap-4">
               <ClipboardDocumentListIcon className="w-5 h-5 cursor-pointer hover:text-gray-300" />
               <ArrowPathIcon className="w-5 h-5 cursor-pointer hover:text-red-800 text-rose-400" />
