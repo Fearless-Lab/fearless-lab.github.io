@@ -1,12 +1,5 @@
 import { useMemo, useCallback } from "react";
-import {
-  doc,
-  getDoc,
-  onSnapshot,
-  setDoc,
-  updateDoc,
-  serverTimestamp,
-} from "firebase/firestore";
+import { doc, getDoc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 
 interface UseBanPickInitOptions {
@@ -67,6 +60,7 @@ export const useBanPickInit = ({
   const subscribeToStart = useCallback(
     (onReady: () => void) => {
       return onSnapshot(docRef, async (snapshot) => {
+        console.log("지금은");
         const data = snapshot.data();
         if (!data) return;
 
@@ -80,13 +74,6 @@ export const useBanPickInit = ({
 
         // 준비 완료 시 onReady 호출
         if (bothReady) onReady();
-
-        // startedAt이 없으면 준비 완료 시점에 기록
-        if (bothReady && !setData.startedAt) {
-          await updateDoc(docRef, {
-            [`sets.${currentSet}.startedAt`]: serverTimestamp(),
-          });
-        }
       });
     },
     [docRef]
@@ -95,6 +82,7 @@ export const useBanPickInit = ({
   const subscribeToSimulationDoc = useCallback(
     (callback: (data: any) => void) => {
       return onSnapshot(docRef, (snapshot) => {
+        console.log("지금은");
         const data = snapshot.data();
         if (!data) return;
         callback(data);

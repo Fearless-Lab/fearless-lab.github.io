@@ -66,7 +66,7 @@ const ReadyCheckModal = ({
         </CTAButton>
         <CTAButton
           className="bg-rose-500 py-2 text-sm font-normal hover:bg-rose-400"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/banPick")}
         >
           이전 화면으로 돌아가기
         </CTAButton>

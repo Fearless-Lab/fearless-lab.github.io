@@ -15,7 +15,6 @@ const BanPickSimulation = () => {
   // URL 쿼리 파라미터
   const { matchId, teamName, oppositeTeam, mode, initialTeam } =
     getBanPickQueryParams();
-  console.log(teamName, oppositeTeam);
 
   // 분리된 훅에서 Firestore 초기화, 팀 정보, 준비 상태 등 처리
   const {
@@ -33,9 +32,7 @@ const BanPickSimulation = () => {
     mode,
     initialTeam,
   });
-
-  console.log(currentSet, currentStep, startedAt);
-
+  // console.log(currentSet, currentStep, startedAt);
   return (
     <div className="min-h-screen flex flex-col mt-20 md:mt-24">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">

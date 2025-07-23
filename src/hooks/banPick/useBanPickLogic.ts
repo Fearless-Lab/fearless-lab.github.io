@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useBanPickInit } from "@/hooks/banPick/useBanPickInit";
+import { useBanPickController } from "./useBanPickController";
 
 interface Teams {
   blue: string;
@@ -44,6 +45,8 @@ export const useBanPickLogic = ({
     mode,
     initialTeam,
   });
+
+  const { setStartedAtIfNeeded } = useBanPickController(matchId);
 
   // 404 리다이렉트
   useEffect(() => {
@@ -120,6 +123,8 @@ export const useBanPickLogic = ({
     try {
       await markAsReady();
       setIsReady(true);
+
+      await setStartedAtIfNeeded();
     } catch (e) {
       console.error(e);
       alert("준비 상태 갱신에 실패했습니다.");
