@@ -6,7 +6,11 @@ interface Champion {
   name: string;
 }
 
-export default function ChampionGrid() {
+interface ChampionGridProps {
+  searchTerm: string;
+}
+
+export default function ChampionGrid({ searchTerm }: ChampionGridProps) {
   const [champions, setChampions] = useState<Champion[]>([]);
   const [version, setVersion] = useState<string>("");
 
@@ -20,12 +24,18 @@ export default function ChampionGrid() {
     load();
   }, []);
 
+  const filteredChampions = searchTerm
+    ? champions.filter((champ) =>
+        champ.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : champions;
+
   return (
     <div
       className="grid justify-center auto-rows-[64px] grid-flow-row gap-6"
       style={{ gridTemplateColumns: "repeat(auto-fit, 64px)" }}
     >
-      {champions.map((champ) => (
+      {filteredChampions.map((champ) => (
         <div
           key={champ.id}
           className="w-16 flex flex-col items-center cursor-pointer"

@@ -11,6 +11,7 @@ import ReadyCheckModal from "./components/BanPickSimulation/ReadyCheckModal";
 import { useBanPickLogic } from "@/hooks/banPick/useBanPickLogic";
 import { getBanPickQueryParams } from "@/utils/getQueryParams";
 import BanPickTimer from "./components/BanPickSimulation/BanPickTimer";
+import { useState } from "react";
 
 const BanPickSimulation = () => {
   // URL 쿼리 파라미터
@@ -31,10 +32,13 @@ const BanPickSimulation = () => {
     teamName,
     oppositeTeam,
     mode,
-
     initialTeam,
   });
-  console.log(currentSet, currentStep, startedAt);
+  console.log(currentSet, currentStep);
+
+  // 필터링용 state
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <div className="min-h-screen flex flex-col mt-20 md:mt-24">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
@@ -46,6 +50,7 @@ const BanPickSimulation = () => {
           <div className="w-20 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
             {startedAt && (
               <BanPickTimer
+                matchId={matchId}
                 startedAt={startedAt}
                 currentStep={currentStep ?? 0}
               />
@@ -98,12 +103,14 @@ const BanPickSimulation = () => {
                     type="text"
                     placeholder="챔피언 검색"
                     className="w-36 rounded-none border border-gray-300"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
               </div>
 
               <div className="h-80 overflow-auto">
-                <ChampionGrid />
+                <ChampionGrid searchTerm={searchTerm} />
               </div>
 
               <CTAButton>선택 완료</CTAButton>
@@ -124,12 +131,14 @@ const BanPickSimulation = () => {
                 type="text"
                 placeholder="챔피언 검색"
                 className="w-40 rounded-none border border-gray-300 mt-4"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
 
             <div className="min-h-84">
               <div className="h-80 overflow-auto">
-                <ChampionGrid />
+                <ChampionGrid searchTerm={searchTerm} />
               </div>
             </div>
             <CTAButton>선택 완료</CTAButton>

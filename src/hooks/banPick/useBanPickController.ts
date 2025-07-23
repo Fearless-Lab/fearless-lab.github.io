@@ -1,20 +1,31 @@
-import { updateDoc, getDoc, doc, serverTimestamp } from "firebase/firestore";
+import {
+  updateDoc,
+  getDoc,
+  doc,
+  serverTimestamp,
+  runTransaction,
+} from "firebase/firestore";
 import { db } from "@/firebase";
 
 export const useBanPickController = (matchId: string) => {
   const docRef = doc(db, "banPickSimulations", matchId);
 
-  const goToNextStep = async () => {
-    const docSnap = await getDoc(docRef);
-    const data = docSnap.data();
-    if (!data) return;
+  const goToNextStep = async (localStep: number) => {
+    await runTransaction(db, async (transaction) => {
+      const docSnap = await transaction.get(docRef);
+      if (!docSnap.exists()) return;
 
-    const currentSet = data.currentSet ?? 1;
-    const currentStep = data.sets?.[currentSet]?.currentStep ?? 0;
+      const data = docSnap.data();
+      const currentSet = data.currentSet ?? 1;
+      const firestoreStep = data.sets?.[currentSet]?.currentStep ?? 0;
 
-    await updateDoc(docRef, {
-      [`sets.${currentSet}.currentStep`]: currentStep + 1,
-      [`sets.${currentSet}.startedAt`]: serverTimestamp(),
+      // 🔒 현재 firestore와 localStep이 일치할 때만 증가
+      if (firestoreStep !== localStep) return;
+
+      transaction.update(docRef, {
+        [`sets.${currentSet}.currentStep`]: firestoreStep + 1,
+        [`sets.${currentSet}.startedAt`]: serverTimestamp(),
+      });
     });
   };
 
@@ -30,7 +41,6 @@ export const useBanPickController = (matchId: string) => {
     });
   };
 
-  // 조건 검사 후 startedAt 갱신
   const setStartedAtIfNeeded = async () => {
     const docSnap = await getDoc(docRef);
     const data = docSnap.data();
@@ -41,8 +51,8 @@ export const useBanPickController = (matchId: string) => {
     if (!setData || setData.startedAt) return;
 
     const bothReady =
-      setData.started.blueTeam === "ready" &&
-      setData.started.redTeam === "ready";
+      setData.started?.blueTeam === "ready" &&
+      setData.started?.redTeam === "ready";
 
     if (bothReady) {
       await updateDoc(docRef, {
