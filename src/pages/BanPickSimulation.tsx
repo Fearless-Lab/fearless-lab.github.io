@@ -17,15 +17,7 @@ const BanPickSimulation = () => {
     getBanPickQueryParams();
 
   // 분리된 훅에서 Firestore 초기화, 팀 정보, 준비 상태 등 처리
-  const {
-    isModalOpen,
-    isReady,
-    teams,
-    currentSet,
-    currentStep,
-    startedAt,
-    handleReady,
-  } = useBanPickLogic({
+  const { isModalOpen, isReady, teams, handleReady } = useBanPickLogic({
     matchId,
     teamName,
     oppositeTeam,
