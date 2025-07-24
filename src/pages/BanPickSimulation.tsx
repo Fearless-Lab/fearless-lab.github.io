@@ -12,13 +12,12 @@ import { useBanPickLogic } from "@/hooks/banPick/useBanPickLogic";
 import { getBanPickQueryParams } from "@/utils/getQueryParams";
 import BanPickTimer from "./components/BanPickSimulation/BanPickTimer";
 import { useState } from "react";
+import { PHASE } from "@constants/banPick";
 
 const BanPickSimulation = () => {
-  // URL 쿼리 파라미터
   const { matchId, teamName, oppositeTeam, mode, initialTeam } =
     getBanPickQueryParams();
 
-  // 분리된 훅에서 Firestore 초기화, 팀 정보, 준비 상태 등 처리
   const {
     isModalOpen,
     isReady,
@@ -34,15 +33,46 @@ const BanPickSimulation = () => {
     mode,
     initialTeam,
   });
-  console.log(currentSet, currentStep);
 
-  // 필터링용 state
+  console.log(currentSet);
+
+  const checkTeam = () => {
+    if (teams?.blue === teamName) return "blue";
+    else if (teams?.red === teamName) return "red";
+  };
+
+  const convertTypeToKo = (type: string) => {
+    if (type === "pick") return "선택 완료";
+    else if (type === "ban") return "챔피언 금지";
+    else if (type === "swap") return "스왑해주세요";
+    else return "대기 중";
+  };
+
+  const myTeam = checkTeam();
+
+  const isSwapPhase = PHASE[currentStep]?.type === "swap";
+  const isGameEnd = currentStep === 21;
+
+  const isMyTurn =
+    !isSwapPhase &&
+    (PHASE[currentStep]?.team === myTeam ||
+      PHASE[currentStep]?.team === "both");
+
+  let actionText = "상대 차례입니다";
+
+  if (isGameEnd) {
+    actionText = "다음 게임 시작하기";
+  } else if (isSwapPhase) {
+    actionText = convertTypeToKo("swap");
+  } else if (isMyTurn) {
+    actionText = convertTypeToKo(PHASE[currentStep]?.type);
+  }
+
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <div className="min-h-screen flex flex-col mt-20 md:mt-24">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
-        {/* 상단 바 */}
         <div className="flex w-full h-16 rounded-tl-md rounded-tr-md overflow-hidden">
           <div className="flex-1 bg-blue-400 text-white flex items-center justify-start font-bold pl-2">
             {teams ? teams.blue : "팀 정보 불러오는중"}
@@ -65,7 +95,6 @@ const BanPickSimulation = () => {
           </div>
         </div>
 
-        {/* 밴 슬롯 */}
         <div className="flex justify-between items-center py-2">
           <div className="flex gap-2 flex-wrap">
             {[...Array(5)].map((_, i) => (
@@ -85,13 +114,11 @@ const BanPickSimulation = () => {
           </div>
         </div>
 
-        {/* main section */}
         <div className="max-w-6xl mx-auto mt-4 w-full">
-          {/* md 이상 레이아웃 */}
           <div className="hidden md:grid md:grid-cols-4 gap-4 w-full">
             <div className="md:col-span-1 border min-h-92 flex flex-col divide-y">
               {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="flex-1" />
+                <div key={`blue-pick-${i}`} className="flex-1" />
               ))}
             </div>
 
@@ -113,17 +140,18 @@ const BanPickSimulation = () => {
                 <ChampionGrid searchTerm={searchTerm} />
               </div>
 
-              <CTAButton>선택 완료</CTAButton>
+              <CTAButton disabled={!isMyTurn && !isGameEnd}>
+                {actionText}
+              </CTAButton>
             </div>
 
             <div className="md:col-span-1 border min-h-92 flex flex-col divide-y">
               {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="flex-1" />
+                <div key={`red-pick-${i}`} className="flex-1" />
               ))}
             </div>
           </div>
 
-          {/* md 이하 레이아웃 */}
           <div className="flex flex-col md:hidden gap-4 w-[90%] mx-auto">
             <div className="px-4 py-2 flex flex-col items-center">
               <PositionRow />
@@ -141,18 +169,21 @@ const BanPickSimulation = () => {
                 <ChampionGrid searchTerm={searchTerm} />
               </div>
             </div>
-            <CTAButton>선택 완료</CTAButton>
+
+            <CTAButton disabled={!isMyTurn && !isGameEnd}>
+              {actionText}
+            </CTAButton>
 
             <div className="flex w-[75%] gap-4 mx-auto">
               <div className="flex-1 border border-blue-400 min-h-84 flex flex-col divide-y">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className="flex-1" />
+                  <div key={`blue-pick-${i}`} className="flex-1" />
                 ))}
               </div>
 
               <div className="flex-1 border border-rose-400 min-h-84 flex flex-col divide-y">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className="flex-1" />
+                  <div key={`red-pick-${i}`} className="flex-1" />
                 ))}
               </div>
             </div>

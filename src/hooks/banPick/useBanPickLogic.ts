@@ -29,7 +29,7 @@ export const useBanPickLogic = ({
   const [isReady, setIsReady] = useState(false);
   const [teams, setTeams] = useState<Teams | null>(null);
   const [currentSet, setCurrentSet] = useState<number | null>(null);
-  const [currentStep, setCurrentStep] = useState<number | null>(null);
+  const [currentStep, setCurrentStep] = useState(0);
   const [startedAt, setStartedAt] = useState<Date | null>(null);
 
   const {

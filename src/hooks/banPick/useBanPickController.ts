@@ -19,7 +19,8 @@ export const useBanPickController = (matchId: string) => {
       const currentSet = data.currentSet ?? 1;
       const firestoreStep = data.sets?.[currentSet]?.currentStep ?? 0;
 
-      // 🔒 현재 firestore와 localStep이 일치할 때만 증가
+      // Firestore에 저장된 단계와 클라이언트가 인식한 단계가 다르면 (이미 다른 곳에서 진행된 경우)
+      // 트랜잭션을 취소하고 변경하지 않음.
       if (firestoreStep !== localStep) return;
 
       transaction.update(docRef, {
