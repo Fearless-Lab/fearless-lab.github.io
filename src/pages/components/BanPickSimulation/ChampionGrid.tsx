@@ -1,28 +1,50 @@
-import { fetchChampions } from "@/utils/generateRandomNickname";
-import { useEffect, useState } from "react";
+import type { Champion } from "@/utils/generateRandomNickname";
+import { PHASE } from "@constants/banPick";
 
-interface Champion {
-  id: string;
-  name: string;
-}
-
-interface ChampionGridProps {
+export interface ChampionGridProps {
   searchTerm: string;
+  champions: Champion[];
+  version: string;
+  currentStep: number;
+  myTeam: "blue" | "red" | undefined;
+  localBan: string[];
+  localPick: string[];
+  setLocalBan: (value: string[]) => void;
+  setLocalPick: (value: string[]) => void;
 }
 
-export default function ChampionGrid({ searchTerm }: ChampionGridProps) {
-  const [champions, setChampions] = useState<Champion[]>([]);
-  const [version, setVersion] = useState<string>("");
+export default function ChampionGrid({
+  searchTerm,
+  champions,
+  version,
+  currentStep,
+  myTeam,
+  localBan,
+  localPick,
+  setLocalBan,
+  setLocalPick,
+}: ChampionGridProps) {
+  const isMyTurn = myTeam === PHASE[currentStep].team;
 
-  useEffect(() => {
-    async function load() {
-      const { version, champions } = await fetchChampions();
-      setVersion(version);
-      setChampions(champions);
+  const onChampionClick = (champ: string) => {
+    if (!isMyTurn) return;
+
+    console.log(champ);
+
+    // 중복 로직 추가
+
+    const currentPhaseType = PHASE[currentStep].type;
+    const currentPhaseIdx = PHASE[currentStep].index;
+    if (currentPhaseType === "ban") {
+      const temp = [...localBan];
+      temp[currentPhaseIdx] = champ;
+      setLocalBan([...temp]);
+    } else if (currentPhaseType === "pick") {
+      const temp = [...localPick];
+      temp[currentPhaseIdx] = champ;
+      setLocalPick([...temp]);
     }
-
-    load();
-  }, []);
+  };
 
   const filteredChampions = searchTerm
     ? champions.filter((champ) =>
@@ -38,6 +60,7 @@ export default function ChampionGrid({ searchTerm }: ChampionGridProps) {
       {filteredChampions.map((champ) => (
         <div
           key={champ.id}
+          onClick={() => onChampionClick(champ.id)}
           className="w-16 flex flex-col items-center cursor-pointer"
         >
           <img

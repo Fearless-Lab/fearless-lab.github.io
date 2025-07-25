@@ -22,7 +22,8 @@ const BanPickTimer = ({
     if (!startedAt || currentStep === null || currentStep >= PHASE.length)
       return;
 
-    // currentStep이 바뀌었으면 호출 플래그 초기화
+    // 하나의 클라이언트에서 중복 호출 막기 위한 로직
+    // 다른 클라이언트 간 중복 호출 방지는 Firebase 측 코드에서 수행
     if (lastStepRef.current !== currentStep) {
       calledRef.current = false;
       lastStepRef.current = currentStep;
@@ -39,7 +40,7 @@ const BanPickTimer = ({
 
       if (remaining <= 0.3 && !calledRef.current) {
         calledRef.current = true;
-        goToNextStep(currentStep); // 정확한 currentStep 전달
+        goToNextStep(currentStep);
       }
     };
 

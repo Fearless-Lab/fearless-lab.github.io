@@ -32,6 +32,12 @@ export const useBanPickLogic = ({
   const [currentStep, setCurrentStep] = useState(0);
   const [startedAt, setStartedAt] = useState<Date | null>(null);
 
+  // 선택 상태 (각 팀 별 챔피언 선택 기록)
+  const [localBan, setLocalBan] = useState<string[]>([]);
+  const [localPick, setLocalPick] = useState<string[]>([]);
+  const [enemyBan, setEnemyBan] = useState<string[]>([]);
+  const [enemyPick, setEnemyPick] = useState<string[]>([]);
+
   const {
     initializeDoc,
     subscribeToStart,
@@ -48,14 +54,14 @@ export const useBanPickLogic = ({
 
   const { setStartedAtIfNeeded } = useBanPickController(matchId);
 
-  // 404 리다이렉트
+  // 잘못된 접근 시 404로 리다이렉트
   useEffect(() => {
     if (!matchId || !teamName) {
       navigate("/404");
     }
   }, [matchId, teamName, navigate]);
 
-  // Firestore 문서 초기화 후 팀 정보 불러오기 (순서 보장)
+  // Firestore 문서 초기화 + 팀 정보 불러오기
   useEffect(() => {
     if (!matchId || !teamName) return;
 
@@ -74,7 +80,7 @@ export const useBanPickLogic = ({
     initAndFetchTeams();
   }, [matchId, teamName, initializeDoc, getCurrentTeams]);
 
-  // 준비 완료 구독해서 모달 닫기
+  // 준비 완료 → 모달 닫기
   useEffect(() => {
     if (!matchId) return;
 
@@ -85,25 +91,30 @@ export const useBanPickLogic = ({
     return () => unsubscribe();
   }, [matchId, subscribeToStart]);
 
-  // currentSet, currentStep, startedAt 실시간 구독
+  // 실시간 동기화: set, step, startedAt, ban/pick
   useEffect(() => {
     if (!matchId) return;
 
     const unsubscribe = subscribeToSimulationDoc((data) => {
-      if (!data) return;
+      if (!data || data.currentSet === undefined) return;
 
-      if (data.currentSet !== undefined) {
-        setCurrentSet((prev) =>
-          prev !== data.currentSet ? data.currentSet : prev
-        );
-      }
+      const currentSetIndex = data.currentSet;
+      const setData = data.sets?.[currentSetIndex];
+      if (!setData) return;
 
-      const newStep = data.sets?.[data.currentSet]?.currentStep;
+      // currentSet 변경
+      setCurrentSet((prev) =>
+        prev !== currentSetIndex ? currentSetIndex : prev
+      );
+
+      // currentStep 변경
+      const newStep = setData.currentStep;
       if (newStep !== undefined) {
         setCurrentStep((prev) => (prev !== newStep ? newStep : prev));
       }
 
-      const newStartedAt = data.sets?.[data.currentSet]?.startedAt;
+      // startedAt 변경
+      const newStartedAt = setData.startedAt;
       if (newStartedAt) {
         setStartedAt(
           newStartedAt.toDate ? newStartedAt.toDate() : new Date(newStartedAt)
@@ -111,12 +122,23 @@ export const useBanPickLogic = ({
       } else {
         setStartedAt(null);
       }
+
+      // ban/pick 동기화
+      const myBan = setData.ban?.[teamName] ?? Array(5).fill("");
+      const myPick = setData.pick?.[teamName] ?? Array(5).fill("");
+      const oppBan = setData.ban?.[oppositeTeam] ?? Array(5).fill("");
+      const oppPick = setData.pick?.[oppositeTeam] ?? Array(5).fill("");
+
+      setLocalBan(myBan);
+      setLocalPick(myPick);
+      setEnemyBan(oppBan);
+      setEnemyPick(oppPick);
     });
 
     return () => unsubscribe();
-  }, [matchId, subscribeToSimulationDoc]);
+  }, [matchId, subscribeToSimulationDoc, teamName, oppositeTeam]);
 
-  // 준비 완료 처리 함수
+  // 준비 완료 버튼 클릭 시
   const handleReady = useCallback(async () => {
     if (isReady) return;
 
@@ -139,5 +161,11 @@ export const useBanPickLogic = ({
     currentStep,
     startedAt,
     handleReady,
+    localBan,
+    localPick,
+    setLocalBan,
+    setLocalPick,
+    enemyBan,
+    enemyPick,
   };
 };

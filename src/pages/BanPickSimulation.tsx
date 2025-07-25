@@ -6,17 +6,24 @@ import {
 
 import PositionRow from "./components/BanPickSimulation/PositionRow";
 import { Input } from "@/components/ui/input";
-import ChampionGrid from "./components/BanPickSimulation/ChampionGrid";
+import ChampionGrid, {
+  type ChampionGridProps,
+} from "./components/BanPickSimulation/ChampionGrid";
 import ReadyCheckModal from "./components/BanPickSimulation/ReadyCheckModal";
 import { useBanPickLogic } from "@/hooks/banPick/useBanPickLogic";
 import { getBanPickQueryParams } from "@/utils/getQueryParams";
 import BanPickTimer from "./components/BanPickSimulation/BanPickTimer";
 import { useState } from "react";
 import { PHASE } from "@constants/banPick";
+import { useChampions } from "@/hooks/banPick/useChampions";
+import BanArea from "./components/BanPickSimulation/BanArea";
+import PickColumn from "./components/BanPickSimulation/PickColumn";
 
 const BanPickSimulation = () => {
   const { matchId, teamName, oppositeTeam, mode, initialTeam } =
     getBanPickQueryParams();
+
+  const { champions, version } = useChampions();
 
   const {
     isModalOpen,
@@ -26,6 +33,12 @@ const BanPickSimulation = () => {
     currentStep,
     startedAt,
     handleReady,
+    localBan,
+    localPick,
+    setLocalBan,
+    setLocalPick,
+    enemyBan,
+    enemyPick,
   } = useBanPickLogic({
     matchId,
     teamName,
@@ -70,6 +83,18 @@ const BanPickSimulation = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
+  const championGridProps: ChampionGridProps = {
+    searchTerm,
+    champions,
+    version,
+    currentStep,
+    myTeam,
+    localBan,
+    localPick,
+    setLocalBan,
+    setLocalPick,
+  };
+
   return (
     <div className="min-h-screen flex flex-col mt-20 md:mt-24">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
@@ -96,30 +121,21 @@ const BanPickSimulation = () => {
         </div>
 
         <div className="flex justify-between items-center py-2">
-          <div className="flex gap-2 flex-wrap">
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={`blue-ban-${i}`}
-                className="w-10 h-10 border border-blue-400 bg-neutral-900"
-              />
-            ))}
-          </div>
-          <div className="flex gap-2 flex-wrap ml-auto justify-end">
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={`red-ban-${i}`}
-                className="w-10 h-10 border border-red-400 bg-neutral-900"
-              />
-            ))}
-          </div>
+          <BanArea
+            myTeam={myTeam}
+            localBan={localBan}
+            enemyBan={enemyBan}
+            version={version}
+          />
         </div>
 
         <div className="max-w-6xl mx-auto mt-4 w-full">
-          <div className="hidden md:grid md:grid-cols-4 gap-4 w-full">
+          <div className="hidden md:grid md:grid-cols-4 gap-12 w-full">
             <div className="md:col-span-1 border min-h-92 flex flex-col divide-y">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div key={`blue-pick-${i}`} className="flex-1" />
-              ))}
+              <PickColumn
+                team="blue"
+                picks={myTeam === "blue" ? localPick : enemyPick}
+              />
             </div>
 
             <div className="md:col-span-2 flex flex-col gap-2 px-4">
@@ -137,7 +153,7 @@ const BanPickSimulation = () => {
               </div>
 
               <div className="h-80 overflow-auto">
-                <ChampionGrid searchTerm={searchTerm} />
+                <ChampionGrid {...championGridProps} />
               </div>
 
               <CTAButton disabled={!isMyTurn && !isGameEnd}>
@@ -146,9 +162,10 @@ const BanPickSimulation = () => {
             </div>
 
             <div className="md:col-span-1 border min-h-92 flex flex-col divide-y">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div key={`red-pick-${i}`} className="flex-1" />
-              ))}
+              <PickColumn
+                team="red"
+                picks={myTeam === "red" ? localPick : enemyPick}
+              />
             </div>
           </div>
 
@@ -166,7 +183,7 @@ const BanPickSimulation = () => {
 
             <div className="min-h-84">
               <div className="h-80 overflow-auto">
-                <ChampionGrid searchTerm={searchTerm} />
+                <ChampionGrid {...championGridProps} />
               </div>
             </div>
 
@@ -174,17 +191,19 @@ const BanPickSimulation = () => {
               {actionText}
             </CTAButton>
 
-            <div className="flex w-[75%] gap-4 mx-auto">
+            <div className="flex w-[75%] gap-12 mx-auto">
               <div className="flex-1 border border-blue-400 min-h-84 flex flex-col divide-y">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={`blue-pick-${i}`} className="flex-1" />
-                ))}
+                <PickColumn
+                  team="blue"
+                  picks={myTeam === "blue" ? localPick : enemyPick}
+                />
               </div>
 
               <div className="flex-1 border border-rose-400 min-h-84 flex flex-col divide-y">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={`red-pick-${i}`} className="flex-1" />
-                ))}
+                <PickColumn
+                  team="red"
+                  picks={myTeam === "red" ? localPick : enemyPick}
+                />
               </div>
             </div>
           </div>
