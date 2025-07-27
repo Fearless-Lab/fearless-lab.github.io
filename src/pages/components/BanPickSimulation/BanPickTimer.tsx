@@ -38,14 +38,14 @@ const BanPickTimer = ({
 
       setRemainingTime(Math.ceil(remaining));
 
-      if (remaining <= 0.3 && !calledRef.current) {
+      if (remaining <= 0.1 && !calledRef.current) {
         calledRef.current = true;
         goToNextStep(currentStep);
       }
     };
 
     updateRemaining();
-    const interval = setInterval(updateRemaining, 300);
+    const interval = setInterval(updateRemaining, 100);
 
     return () => clearInterval(interval);
   }, [startedAt, currentStep, goToNextStep]);

@@ -124,15 +124,16 @@ export const useBanPickLogic = ({
       }
 
       // ban/pick 동기화
-      const myBan = setData.ban?.[teamName] ?? Array(5).fill("");
-      const myPick = setData.pick?.[teamName] ?? Array(5).fill("");
-      const oppBan = setData.ban?.[oppositeTeam] ?? Array(5).fill("");
-      const oppPick = setData.pick?.[oppositeTeam] ?? Array(5).fill("");
+      const myBan = setData.ban?.[teamName];
+      const myPick = setData.pick?.[teamName];
+      const oppBan = setData.ban?.[oppositeTeam];
+      const oppPick = setData.pick?.[oppositeTeam];
 
       setLocalBan(myBan);
       setLocalPick(myPick);
       setEnemyBan(oppBan);
       setEnemyPick(oppPick);
+      console.log(localBan, localPick);
     });
 
     return () => unsubscribe();

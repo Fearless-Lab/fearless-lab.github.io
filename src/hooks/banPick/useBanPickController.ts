@@ -6,6 +6,7 @@ import {
   runTransaction,
 } from "firebase/firestore";
 import { db } from "@/firebase";
+import { PHASE } from "@constants/banPick";
 
 export const useBanPickController = (matchId: string) => {
   const docRef = doc(db, "banPickSimulations", matchId);
@@ -51,10 +52,10 @@ export const useBanPickController = (matchId: string) => {
   };
 
   // ban, pick 추가하는 로직 👈 얘는 ChampionGrid가 아니라,
-  // CTAButton이랑 BanPickTimer에서 해야 함
+  // CTAButton이랑 BanPickTimer에서 호출해야 함
   // 선택 완료를 누르거나 || 시간이 초과되던가
-  const commitBanPick = async (
-    team: "blue" | "red",
+  const commitAndAdvance = async (
+    teamName: string,
     champName: string,
     type: "ban" | "pick",
     localStep: number
@@ -64,7 +65,7 @@ export const useBanPickController = (matchId: string) => {
       if (!docSnap.exists()) return;
 
       const data = docSnap.data();
-      const currentSet = data.currentSet ?? 1;
+      const currentSet = data.currentSet;
       const setData = data.sets?.[currentSet];
       if (!setData) return;
 
@@ -73,16 +74,18 @@ export const useBanPickController = (matchId: string) => {
 
       const targetPath =
         type === "ban"
-          ? `sets.${currentSet}.ban.${team}Team`
-          : `sets.${currentSet}.pick.${team}Team`;
+          ? `sets.${currentSet}.ban.${teamName}`
+          : `sets.${currentSet}.pick.${teamName}`;
 
       const currentList =
-        type === "ban"
-          ? setData.ban[`${team}Team`]
-          : setData.pick[`${team}Team`];
+        type === "ban" ? setData.ban[teamName] : setData.pick[teamName];
+
+      const newList = [...currentList];
+      newList[PHASE[localStep].index] = champName;
 
       transaction.update(docRef, {
-        [targetPath]: [...currentList, champName],
+        [targetPath]: newList,
+        [`sets.${currentSet}.currentStep`]: firestoreStep + 1,
         [`sets.${currentSet}.startedAt`]: serverTimestamp(),
       });
     });
@@ -91,6 +94,6 @@ export const useBanPickController = (matchId: string) => {
   return {
     goToNextStep,
     setStartedAtIfNeeded,
-    commitBanPick,
+    commitAndAdvance,
   };
 };

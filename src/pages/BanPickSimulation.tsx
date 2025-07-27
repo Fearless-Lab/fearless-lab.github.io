@@ -1,4 +1,3 @@
-import CTAButton from "@/components/CTAButton";
 import {
   ClipboardDocumentListIcon,
   ArrowPathIcon,
@@ -18,6 +17,7 @@ import { PHASE } from "@constants/banPick";
 import { useChampions } from "@/hooks/banPick/useChampions";
 import BanArea from "./components/BanPickSimulation/BanArea";
 import PickColumn from "./components/BanPickSimulation/PickColumn";
+import CommitButton from "./components/BanPickSimulation/CommitButton";
 
 const BanPickSimulation = () => {
   const { matchId, teamName, oppositeTeam, mode, initialTeam } =
@@ -156,9 +156,16 @@ const BanPickSimulation = () => {
                 <ChampionGrid {...championGridProps} />
               </div>
 
-              <CTAButton disabled={!isMyTurn && !isGameEnd}>
+              <CommitButton
+                disabled={!isMyTurn && !isGameEnd}
+                currentStep={currentStep}
+                teamName={teamName}
+                localPick={localPick}
+                localBan={localBan}
+                matchId={matchId}
+              >
                 {actionText}
-              </CTAButton>
+              </CommitButton>
             </div>
 
             <div className="md:col-span-1 border min-h-92 flex flex-col divide-y">
@@ -187,9 +194,16 @@ const BanPickSimulation = () => {
               </div>
             </div>
 
-            <CTAButton disabled={!isMyTurn && !isGameEnd}>
+            <CommitButton
+              disabled={!isMyTurn && !isGameEnd}
+              currentStep={currentStep}
+              teamName={teamName}
+              localPick={localPick}
+              localBan={localBan}
+              matchId={matchId}
+            >
               {actionText}
-            </CTAButton>
+            </CommitButton>
 
             <div className="flex w-[75%] gap-12 mx-auto">
               <div className="flex-1 border border-blue-400 min-h-84 flex flex-col divide-y">

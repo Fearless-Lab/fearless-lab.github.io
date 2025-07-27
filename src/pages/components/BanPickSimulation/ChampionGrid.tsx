@@ -24,12 +24,11 @@ export default function ChampionGrid({
   setLocalBan,
   setLocalPick,
 }: ChampionGridProps) {
-  const isMyTurn = myTeam === PHASE[currentStep].team;
+  let isMyTurn = undefined;
+  if (currentStep < 20) isMyTurn = myTeam === PHASE[currentStep].team;
 
   const onChampionClick = (champ: string) => {
     if (!isMyTurn) return;
-
-    console.log(champ);
 
     // 중복 로직 추가
 

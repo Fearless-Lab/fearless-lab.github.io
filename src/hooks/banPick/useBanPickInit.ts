@@ -43,12 +43,12 @@ export const useBanPickInit = ({
               redTeam: "pending",
             },
             ban: {
-              blueTeam: [],
-              redTeam: [],
+              [teamName]: Array(5).fill(""),
+              [oppositeTeam]: Array(5).fill(""),
             },
             pick: {
-              blueTeam: [],
-              redTeam: [],
+              [teamName]: Array(5).fill(""),
+              [oppositeTeam]: Array(5).fill(""),
             },
             startedAt: null,
           },
@@ -61,7 +61,6 @@ export const useBanPickInit = ({
   const subscribeToStart = useCallback(
     (onReady: () => void) => {
       return onSnapshot(docRef, async (snapshot) => {
-        console.log("1");
         const data = snapshot.data();
         if (!data) return;
 
@@ -84,7 +83,6 @@ export const useBanPickInit = ({
   const subscribeToSimulationDoc = useCallback(
     (callback: (data: any) => void) => {
       return onSnapshot(docRef, (snapshot) => {
-        console.log("2");
         const data = snapshot.data();
         if (!data) return;
         callback(data);
