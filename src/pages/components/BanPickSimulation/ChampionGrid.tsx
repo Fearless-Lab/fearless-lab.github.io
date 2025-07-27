@@ -12,6 +12,7 @@ export interface ChampionGridProps {
   setLocalBan: (value: string[]) => void;
   setLocalPick: (value: string[]) => void;
   currentSetSelections: Set<string>;
+  previousPicks: Set<string>;
 }
 
 export default function ChampionGrid({
@@ -25,6 +26,7 @@ export default function ChampionGrid({
   setLocalBan,
   setLocalPick,
   currentSetSelections,
+  previousPicks,
 }: ChampionGridProps) {
   let isMyTurn = undefined;
   if (currentStep < 20) isMyTurn = myTeam === PHASE[currentStep].team;
@@ -57,7 +59,8 @@ export default function ChampionGrid({
       style={{ gridTemplateColumns: "repeat(auto-fit, 64px)" }}
     >
       {filteredChampions.map((champ) => {
-        const isDisabled = currentSetSelections.has(champ.id);
+        const isDisabled =
+          currentSetSelections.has(champ.id) || previousPicks.has(champ.id);
 
         return (
           <div

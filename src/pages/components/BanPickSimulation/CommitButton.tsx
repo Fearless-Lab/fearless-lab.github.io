@@ -30,7 +30,7 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   }, [currentStep]);
 
   const baseClass =
-    "px-8 py-3 font-semibold rounded-lg transform transition duration-300 shadow-xl border border-transparent relative outline-none";
+    "px-8 py-3 font-semibold rounded-lg transform transition duration-300 shadow-xl border border-transparent relative outline-none cursor-pointer";
 
   const enabledClass = "bg-[#027088] hover:brightness-90";
   const disabledClass = "bg-gray-400 cursor-not-allowed";

@@ -42,7 +42,7 @@ export const useBanPickLogic = ({
   const [currentSetSelections, setCurrentSetSelections] = useState<Set<string>>(
     new Set()
   );
-  // const [previousPicks, setPreviousPicks] = useState<Set<string>>(new Set());
+  const [previousPicks, setPreviousPicks] = useState<Set<string>>(new Set());
 
   const {
     initializeDoc,
@@ -143,6 +143,24 @@ export const useBanPickLogic = ({
       // 해당 세트 누적 밴픽
       const allSelections = [...myBan, ...myPick, ...oppBan, ...oppPick];
       setCurrentSetSelections(new Set(allSelections));
+
+      // 이전 픽들 누적
+      const totalPickSet = new Set<string>();
+
+      const myTotalPicks = data.total?.[teamName];
+      const oppTotalPicks = data.total?.[oppositeTeam];
+
+      if (mode === "fearless") {
+        myTotalPicks.forEach((champ: string) => {
+          if (champ) totalPickSet.add(champ);
+        });
+      } else if (mode === "hardFearless") {
+        [...myTotalPicks, ...oppTotalPicks].forEach((champ) => {
+          if (champ) totalPickSet.add(champ);
+        });
+      }
+
+      setPreviousPicks(totalPickSet);
     });
 
     return () => unsubscribe();
@@ -178,5 +196,6 @@ export const useBanPickLogic = ({
     enemyBan,
     enemyPick,
     currentSetSelections,
+    previousPicks,
   };
 };

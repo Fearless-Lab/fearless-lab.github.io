@@ -31,6 +31,10 @@ export const useBanPickInit = ({
       await setDoc(docRef, {
         mode,
         currentSet: firstSetNumber,
+        total: {
+          [teamName]: [],
+          [oppositeTeam]: [],
+        },
         sets: {
           [firstSetNumber]: {
             teams: {
