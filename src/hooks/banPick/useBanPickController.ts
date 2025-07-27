@@ -51,9 +51,6 @@ export const useBanPickController = (matchId: string) => {
     }
   };
 
-  // ban, pick 추가하는 로직 👈 얘는 ChampionGrid가 아니라,
-  // CTAButton이랑 BanPickTimer에서 호출해야 함
-  // 선택 완료를 누르거나 || 시간이 초과되던가
   const commitAndAdvance = async (
     teamName: string,
     champName: string,

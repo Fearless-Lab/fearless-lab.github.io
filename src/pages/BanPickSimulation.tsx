@@ -111,11 +111,19 @@ const BanPickSimulation = () => {
               <BanPickTimer
                 matchId={matchId}
                 startedAt={startedAt}
-                currentStep={currentStep ?? 0}
+                currentStep={currentStep}
+                currentSetSelections={currentSetSelections}
+                previousPicks={previousPicks}
+                champions={champions}
+                teamName={teamName}
+                isMyTurn={isMyTurn}
               />
             )}
             <div className="mt-1 flex items-center gap-4">
-              <ClipboardDocumentListIcon className="w-5 h-5 cursor-pointer hover:text-gray-300" />
+              <ClipboardDocumentListIcon
+                className="w-5 h-5 cursor-pointer hover:text-gray-300"
+                onClick={() => alert("금방만들게요")}
+              />
               <ArrowPathIcon className="w-5 h-5 cursor-pointer hover:text-red-800 text-rose-400" />
             </div>
           </div>

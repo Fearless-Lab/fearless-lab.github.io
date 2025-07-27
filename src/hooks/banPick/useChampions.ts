@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchChampions } from "@utils/generateRandomNickname";
-
-export interface Champion {
-  id: string;
-  name: string;
-}
+import { fetchChampions, type Champion } from "@utils/generateRandomNickname";
 
 export function useChampions() {
   const [champions, setChampions] = useState<Champion[]>([]);

@@ -1,22 +1,45 @@
 import { useEffect, useRef, useState } from "react";
 import { PHASE } from "@constants/banPick";
 import { useBanPickController } from "@/hooks/banPick/useBanPickController";
+import type { Champion } from "@/utils/generateRandomNickname";
 
 interface BanPickTimerProps {
   matchId: string;
   startedAt: Date | null;
   currentStep: number | null;
+  currentSetSelections: Set<string>;
+  previousPicks: Set<string>;
+  champions: Champion[];
+  teamName: string;
+  isMyTurn: Boolean;
 }
 
 const BanPickTimer = ({
   matchId,
   startedAt,
   currentStep,
+  currentSetSelections,
+  previousPicks,
+  champions,
+  teamName,
+  isMyTurn,
 }: BanPickTimerProps) => {
   const [remainingTime, setRemainingTime] = useState<number>(0);
-  const { goToNextStep } = useBanPickController(matchId);
+  const { commitAndAdvance } = useBanPickController(matchId);
   const calledRef = useRef(false);
   const lastStepRef = useRef<number | null>(null);
+
+  const getRandomSelectableChampion = () => {
+    const bannedOrPicked = new Set([...currentSetSelections, ...previousPicks]);
+
+    const selectableChampions = champions
+      .map((c) => c.id)
+      .filter((champId) => !bannedOrPicked.has(champId));
+
+    // 랜덤으로 하나 뽑기
+    const randomIndex = Math.floor(Math.random() * selectableChampions.length);
+    return selectableChampions[randomIndex];
+  };
 
   useEffect(() => {
     if (!startedAt || currentStep === null || currentStep >= PHASE.length)
@@ -40,7 +63,16 @@ const BanPickTimer = ({
 
       if (remaining <= 0.1 && !calledRef.current) {
         calledRef.current = true;
-        goToNextStep(currentStep);
+        const randomPick = getRandomSelectableChampion();
+
+        if (isMyTurn) {
+          commitAndAdvance(
+            teamName,
+            randomPick,
+            PHASE[currentStep].type as "pick" | "ban",
+            currentStep
+          );
+        }
       }
     };
 
@@ -48,7 +80,7 @@ const BanPickTimer = ({
     const interval = setInterval(updateRemaining, 100);
 
     return () => clearInterval(interval);
-  }, [startedAt, currentStep, goToNextStep]);
+  }, [startedAt, currentStep]);
 
   if (!startedAt || currentStep === null || currentStep >= PHASE.length)
     return <div className="text-xl font-bold">:00</div>;
