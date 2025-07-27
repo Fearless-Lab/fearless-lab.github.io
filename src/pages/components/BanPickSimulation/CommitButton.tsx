@@ -42,8 +42,7 @@ const CommitButton: React.FC<CTAButtonProps> = ({
     const index = phase.index;
 
     const selected = phase.type === "pick" ? localPick[index] : localBan[index];
-
-    if (selected === undefined) return;
+    if (!selected.length) return;
 
     calledRef.current = true;
 
