@@ -30,7 +30,6 @@ export const handleSubmitPost = async ({
       password: hashedPassword,
     });
 
-    console.log("새 게시글 ID:", newPostId);
     return newPostId;
   } catch (error) {
     console.error("게시글 생성 실패:", error);

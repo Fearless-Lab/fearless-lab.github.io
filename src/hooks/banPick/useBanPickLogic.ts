@@ -38,6 +38,12 @@ export const useBanPickLogic = ({
   const [enemyBan, setEnemyBan] = useState<string[]>([]);
   const [enemyPick, setEnemyPick] = useState<string[]>([]);
 
+  // 선택 불가 챔피언 상태
+  const [currentSetSelections, setCurrentSetSelections] = useState<Set<string>>(
+    new Set()
+  );
+  // const [previousPicks, setPreviousPicks] = useState<Set<string>>(new Set());
+
   const {
     initializeDoc,
     subscribeToStart,
@@ -133,7 +139,10 @@ export const useBanPickLogic = ({
       setLocalPick(myPick);
       setEnemyBan(oppBan);
       setEnemyPick(oppPick);
-      console.log(localBan, localPick);
+
+      // 해당 세트 누적 밴픽
+      const allSelections = [...myBan, ...myPick, ...oppBan, ...oppPick];
+      setCurrentSetSelections(new Set(allSelections));
     });
 
     return () => unsubscribe();
@@ -168,5 +177,6 @@ export const useBanPickLogic = ({
     setLocalPick,
     enemyBan,
     enemyPick,
+    currentSetSelections,
   };
 };

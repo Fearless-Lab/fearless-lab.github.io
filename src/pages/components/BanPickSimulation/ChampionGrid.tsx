@@ -11,6 +11,7 @@ export interface ChampionGridProps {
   localPick: string[];
   setLocalBan: (value: string[]) => void;
   setLocalPick: (value: string[]) => void;
+  currentSetSelections: Set<string>;
 }
 
 export default function ChampionGrid({
@@ -23,14 +24,13 @@ export default function ChampionGrid({
   localPick,
   setLocalBan,
   setLocalPick,
+  currentSetSelections,
 }: ChampionGridProps) {
   let isMyTurn = undefined;
   if (currentStep < 20) isMyTurn = myTeam === PHASE[currentStep].team;
 
   const onChampionClick = (champ: string) => {
-    if (!isMyTurn) return;
-
-    // 중복 로직 추가
+    if (!isMyTurn || currentSetSelections.has(champ)) return;
 
     const currentPhaseType = PHASE[currentStep].type;
     const currentPhaseIdx = PHASE[currentStep].index;
@@ -56,20 +56,30 @@ export default function ChampionGrid({
       className="grid justify-center auto-rows-[64px] grid-flow-row gap-6"
       style={{ gridTemplateColumns: "repeat(auto-fit, 64px)" }}
     >
-      {filteredChampions.map((champ) => (
-        <div
-          key={champ.id}
-          onClick={() => onChampionClick(champ.id)}
-          className="w-16 flex flex-col items-center cursor-pointer"
-        >
-          <img
-            src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champ.id}.png`}
-            alt={champ.name}
-            className="w-16 h-16 object-cover"
-          />
-          <div className="text-[9px] text-center w-full">{champ.name}</div>
-        </div>
-      ))}
+      {filteredChampions.map((champ) => {
+        const isDisabled = currentSetSelections.has(champ.id);
+
+        return (
+          <div
+            key={champ.id}
+            onClick={() => {
+              if (!isDisabled) onChampionClick(champ.id);
+            }}
+            className={`w-16 flex flex-col items-center cursor-pointer ${
+              isDisabled ? "pointer-events-none opacity-90" : ""
+            }`}
+          >
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champ.id}.png`}
+              alt={champ.name}
+              className={`w-16 h-16 object-cover ${
+                isDisabled ? "grayscale" : ""
+              }`}
+            />
+            <div className="text-[9px] text-center w-full">{champ.name}</div>
+          </div>
+        );
+      })}
     </div>
   );
 }

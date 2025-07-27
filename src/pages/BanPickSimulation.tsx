@@ -39,6 +39,7 @@ const BanPickSimulation = () => {
     setLocalPick,
     enemyBan,
     enemyPick,
+    currentSetSelections,
   } = useBanPickLogic({
     matchId,
     teamName,
@@ -93,6 +94,7 @@ const BanPickSimulation = () => {
     localPick,
     setLocalBan,
     setLocalPick,
+    currentSetSelections,
   };
 
   return (
