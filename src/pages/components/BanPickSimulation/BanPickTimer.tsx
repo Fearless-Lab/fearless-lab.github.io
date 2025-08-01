@@ -12,6 +12,7 @@ interface BanPickTimerProps {
   champions: Champion[];
   teamName: string;
   isMyTurn: Boolean;
+  isSwapPhase: Boolean;
 }
 
 const BanPickTimer = ({
@@ -23,9 +24,12 @@ const BanPickTimer = ({
   champions,
   teamName,
   isMyTurn,
+  isSwapPhase,
 }: BanPickTimerProps) => {
   const [remainingTime, setRemainingTime] = useState<number>(0);
-  const { commitAndAdvance } = useBanPickController(matchId);
+
+  const { commitAndAdvance, goToNextStep, commitTotalPickIfNeeded } =
+    useBanPickController(matchId);
   const calledRef = useRef(false);
   const lastStepRef = useRef<number | null>(null);
 
@@ -72,6 +76,11 @@ const BanPickTimer = ({
             PHASE[currentStep].type as "pick" | "ban",
             currentStep
           );
+        }
+
+        if (isSwapPhase) {
+          commitTotalPickIfNeeded(teamName);
+          goToNextStep(currentStep);
         }
       }
     };

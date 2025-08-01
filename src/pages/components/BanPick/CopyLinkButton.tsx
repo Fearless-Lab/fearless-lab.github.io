@@ -35,12 +35,12 @@ const CopyLinkButton = ({
       {isCopied ? (
         <>
           <CheckIcon className="w-4 h-4" />
-          {teamName}팀 링크 복사 완료 !
+          {teamName} 팀 링크 복사 완료 !
         </>
       ) : (
         <>
           <LinkIcon className="w-4 h-4" />
-          {teamName}팀 링크 복사
+          {teamName} 팀 링크 복사
         </>
       )}
     </button>

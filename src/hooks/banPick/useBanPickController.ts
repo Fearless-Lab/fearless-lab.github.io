@@ -36,7 +36,7 @@ export const useBanPickController = (matchId: string) => {
     const data = docSnap.data();
     if (!data) return;
 
-    const currentSet = data.currentSet ?? 1;
+    const currentSet = data.currentSet;
     const setData = data.sets?.[currentSet];
     if (!setData || setData.startedAt) return;
 
@@ -88,9 +88,96 @@ export const useBanPickController = (matchId: string) => {
     });
   };
 
+  // 모든 밴픽이 끝났을 때 total에 pick을 저장
+  const commitTotalPickIfNeeded = async (teamName: string) => {
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) return;
+
+    const data = docSnap.data();
+    const currentSet = data.currentSet;
+    const pickList = data.sets?.[currentSet]?.pick?.[teamName];
+
+    const existingTotal = data.total?.[teamName] || [];
+
+    const isAlreadyCommitted = pickList.every((champ: string) =>
+      existingTotal.includes(champ)
+    );
+    if (isAlreadyCommitted) return;
+
+    const updatedTotal = [...existingTotal, ...pickList];
+
+    await updateDoc(docRef, {
+      [`total.${teamName}`]: updatedTotal,
+    });
+  };
+
+  const toggleIsNextSetPreparing = async (targetValue: boolean) => {
+    await runTransaction(db, async (transaction) => {
+      const docSnap = await transaction.get(docRef);
+      if (!docSnap.exists()) return;
+
+      const current = docSnap.data().isNextSetPreparing;
+
+      if (current === targetValue) return;
+
+      transaction.update(docRef, {
+        isNextSetPreparing: targetValue,
+      });
+    });
+  };
+
+  const createNextSet = async (
+    side: "blue" | "red",
+    teamName: string,
+    oppositeTeam: string
+  ) => {
+    const docRef = doc(db, "banPickSimulations", matchId);
+
+    try {
+      await runTransaction(db, async (transaction) => {
+        const snap = await transaction.get(docRef);
+        const data = snap.data();
+        if (!data) return;
+
+        const currentSet = data.currentSet;
+        const nextSet = currentSet + 1;
+
+        transaction.update(docRef, {
+          [`sets.${nextSet}`]: {
+            teams: {
+              blue: side === "blue" ? teamName : oppositeTeam,
+              red: side === "red" ? teamName : oppositeTeam,
+            },
+            currentStep: 0,
+            started: {
+              blueTeam: "pending",
+              redTeam: "pending",
+            },
+            ban: {
+              [teamName]: Array(5).fill(""),
+              [oppositeTeam]: Array(5).fill(""),
+            },
+            pick: {
+              [teamName]: Array(5).fill(""),
+              [oppositeTeam]: Array(5).fill(""),
+            },
+            startedAt: null,
+          },
+          currentSet: nextSet,
+          isNextSetPreparing: false,
+        });
+      });
+    } catch (err) {
+      console.error("createNextSet 트랜잭션 실패:", err);
+    }
+  };
+
   return {
     goToNextStep,
     setStartedAtIfNeeded,
     commitAndAdvance,
+    commitTotalPickIfNeeded,
+    toggleIsNextSetPreparing,
+    createNextSet,
   };
 };

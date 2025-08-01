@@ -10,6 +10,7 @@ interface CTAButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   localBan: string[];
   localPick: string[];
   matchId: string;
+  isGameEnd: Boolean;
 }
 
 const CommitButton: React.FC<CTAButtonProps> = ({
@@ -21,8 +22,10 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   localBan,
   localPick,
   matchId,
+  isGameEnd,
 }) => {
-  const { commitAndAdvance } = useBanPickController(matchId);
+  const { commitAndAdvance, toggleIsNextSetPreparing } =
+    useBanPickController(matchId);
   const calledRef = useRef(false);
 
   useEffect(() => {
@@ -35,9 +38,14 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   const enabledClass = "bg-[#027088] hover:brightness-90";
   const disabledClass = "bg-gray-400 cursor-not-allowed";
 
-  const onClickHandler = () => {
+  const onClickHandler = async () => {
     if (calledRef.current) return;
 
+    if (isGameEnd) {
+      await toggleIsNextSetPreparing(true);
+
+      return;
+    }
     const phase = PHASE[currentStep];
     const index = phase.index;
 

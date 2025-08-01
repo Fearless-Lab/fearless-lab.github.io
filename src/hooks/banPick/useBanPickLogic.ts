@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import { useBanPickInit } from "@/hooks/banPick/useBanPickInit";
 import { useBanPickController } from "./useBanPickController";
 
@@ -23,8 +22,6 @@ export const useBanPickLogic = ({
   mode,
   initialTeam,
 }: UseBanPickLogicOptions) => {
-  const navigate = useNavigate();
-
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [isReady, setIsReady] = useState(false);
   const [teams, setTeams] = useState<Teams | null>(null);
@@ -44,6 +41,9 @@ export const useBanPickLogic = ({
   );
   const [previousPicks, setPreviousPicks] = useState<Set<string>>(new Set());
 
+  // 다음 세트 셋업 준비 중인지 확인
+  const [isNextSetPreparing, setIsNextSetPreparing] = useState(false);
+
   const {
     initializeDoc,
     subscribeToStart,
@@ -60,16 +60,9 @@ export const useBanPickLogic = ({
 
   const { setStartedAtIfNeeded } = useBanPickController(matchId);
 
-  // 잘못된 접근 시 404로 리다이렉트
-  useEffect(() => {
-    if (!matchId || !teamName) {
-      navigate("/404");
-    }
-  }, [matchId, teamName, navigate]);
-
   // Firestore 문서 초기화 + 팀 정보 불러오기
   useEffect(() => {
-    if (!matchId || !teamName) return;
+    if (!matchId) return;
 
     const initAndFetchTeams = async () => {
       try {
@@ -84,7 +77,7 @@ export const useBanPickLogic = ({
     };
 
     initAndFetchTeams();
-  }, [matchId, teamName, initializeDoc, getCurrentTeams]);
+  }, [matchId, initializeDoc, getCurrentTeams]);
 
   // 준비 완료 → 모달 닫기
   useEffect(() => {
@@ -97,7 +90,7 @@ export const useBanPickLogic = ({
     return () => unsubscribe();
   }, [matchId, subscribeToStart]);
 
-  // 실시간 동기화: set, step, startedAt, ban/pick
+  // 실시간 동기화: set, step, startedAt, ban/pick + currentSet 변경 감지 시 모달 열기 및 teams 업데이트
   useEffect(() => {
     if (!matchId) return;
 
@@ -108,10 +101,20 @@ export const useBanPickLogic = ({
       const setData = data.sets?.[currentSetIndex];
       if (!setData) return;
 
-      // currentSet 변경
-      setCurrentSet((prev) =>
-        prev !== currentSetIndex ? currentSetIndex : prev
-      );
+      setCurrentSet((prev) => {
+        if (prev !== currentSetIndex) {
+          // 세트가 바뀌면 모달 다시 열고 준비 상태 초기화
+          setIsModalOpen(true);
+          setIsReady(false);
+          return currentSetIndex;
+        }
+        return prev;
+      });
+
+      // teams 업데이트
+      if (setData.teams) {
+        setTeams(setData.teams);
+      }
 
       // currentStep 변경
       const newStep = setData.currentStep;
@@ -161,6 +164,8 @@ export const useBanPickLogic = ({
       }
 
       setPreviousPicks(totalPickSet);
+
+      setIsNextSetPreparing(data.isNextSetPreparing);
     });
 
     return () => unsubscribe();
@@ -197,5 +202,6 @@ export const useBanPickLogic = ({
     enemyPick,
     currentSetSelections,
     previousPicks,
+    isNextSetPreparing,
   };
 };

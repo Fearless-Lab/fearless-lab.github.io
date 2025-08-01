@@ -18,6 +18,7 @@ import { useChampions } from "@/hooks/banPick/useChampions";
 import BanArea from "./components/BanPickSimulation/BanArea";
 import PickColumn from "./components/BanPickSimulation/PickColumn";
 import CommitButton from "./components/BanPickSimulation/CommitButton";
+import NextSetModal from "./components/BanPickSimulation/NextSetModal";
 
 const BanPickSimulation = () => {
   const { matchId, teamName, oppositeTeam, mode, initialTeam } =
@@ -41,6 +42,7 @@ const BanPickSimulation = () => {
     enemyPick,
     currentSetSelections,
     previousPicks,
+    isNextSetPreparing,
   } = useBanPickLogic({
     matchId,
     teamName,
@@ -117,14 +119,18 @@ const BanPickSimulation = () => {
                 champions={champions}
                 teamName={teamName}
                 isMyTurn={isMyTurn}
+                isSwapPhase={isSwapPhase}
               />
             )}
             <div className="mt-1 flex items-center gap-4">
               <ClipboardDocumentListIcon
                 className="w-5 h-5 cursor-pointer hover:text-gray-300"
-                onClick={() => alert("금방만들게요")}
+                onClick={() => alert("🚧 공사 중이에요")}
               />
-              <ArrowPathIcon className="w-5 h-5 cursor-pointer hover:text-red-800 text-rose-400" />
+              <ArrowPathIcon
+                className="w-5 h-5 cursor-pointer hover:text-red-800 text-rose-400"
+                onClick={() => alert("🚧 공사 중이에요")}
+              />
             </div>
           </div>
           <div className="flex-1 bg-red-400 text-white flex items-center justify-end font-bold pr-2">
@@ -175,6 +181,7 @@ const BanPickSimulation = () => {
                 localPick={localPick}
                 localBan={localBan}
                 matchId={matchId}
+                isGameEnd={isGameEnd}
               >
                 {actionText}
               </CommitButton>
@@ -213,6 +220,7 @@ const BanPickSimulation = () => {
               localPick={localPick}
               localBan={localBan}
               matchId={matchId}
+              isGameEnd={isGameEnd}
             >
               {actionText}
             </CommitButton>
@@ -240,6 +248,13 @@ const BanPickSimulation = () => {
         open={isModalOpen}
         onReadyClick={handleReady}
         isReady={isReady}
+      />
+
+      <NextSetModal
+        matchId={matchId}
+        open={isNextSetPreparing}
+        teamName={teamName}
+        oppositeTeam={oppositeTeam}
       />
     </div>
   );

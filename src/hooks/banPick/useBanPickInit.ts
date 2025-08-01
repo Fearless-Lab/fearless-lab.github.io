@@ -30,6 +30,7 @@ export const useBanPickInit = ({
 
       await setDoc(docRef, {
         mode,
+        isNextSetPreparing: false,
         currentSet: firstSetNumber,
         total: {
           [teamName]: [],
@@ -68,7 +69,7 @@ export const useBanPickInit = ({
         const data = snapshot.data();
         if (!data) return;
 
-        const currentSet = data.currentSet ?? 1;
+        const currentSet = data.currentSet;
         const setData = data.sets?.[currentSet];
         if (!setData) return;
 
@@ -96,22 +97,44 @@ export const useBanPickInit = ({
   );
 
   const markAsReady = useCallback(async () => {
-    const teamKey = initialTeam === "blue" ? "blueTeam" : "redTeam";
-
     const docSnap = await getDoc(docRef);
     const data = docSnap.data();
-    const currentSet = data?.currentSet ?? 1;
+    const currentSet = data?.currentSet;
+    if (!data || currentSet == null) return;
+
+    let teamKey: "blueTeam" | "redTeam";
+    let teamSide: "blue" | "red";
+
+    if (currentSet === 1) {
+      // 1세트일 때는 initialTeam 기준
+      teamSide = initialTeam;
+    } else {
+      // 2세트 이후는 teams 정보 기준
+      const currentTeams = data.sets?.[currentSet]?.teams;
+      if (!currentTeams) return;
+
+      if (currentTeams.blue === teamName) {
+        teamSide = "blue";
+      } else if (currentTeams.red === teamName) {
+        teamSide = "red";
+      } else {
+        console.warn("teamName이 현재 세트의 팀 정보에 없습니다.");
+        return;
+      }
+    }
+
+    teamKey = teamSide === "blue" ? "blueTeam" : "redTeam";
 
     await updateDoc(docRef, {
       [`sets.${currentSet}.started.${teamKey}`]: "ready",
-      [`sets.${currentSet}.teams.${initialTeam}`]: teamName,
+      [`sets.${currentSet}.teams.${teamSide}`]: teamName,
     });
   }, [docRef, initialTeam, teamName]);
 
   const getCurrentTeams = useCallback(async () => {
     const docSnap = await getDoc(docRef);
     const data = docSnap.data();
-    const currentSet = data?.currentSet ?? 1;
+    const currentSet = data?.currentSet;
     const teams = data?.sets?.[currentSet]?.teams;
 
     if (!teams) return null;
