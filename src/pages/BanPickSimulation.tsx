@@ -275,6 +275,7 @@ const BanPickSimulation = () => {
         oppositeTeam={oppositeTeam}
         open={isHistoryOpen}
         onClose={() => setIsHistoryOpen(false)}
+        version={version}
       />
     </div>
   );

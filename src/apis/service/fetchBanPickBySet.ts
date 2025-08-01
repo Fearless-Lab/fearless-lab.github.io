@@ -10,12 +10,20 @@ export type BanPickByTeam = {
   [teamName: string]: TeamBanPick;
 };
 
+export interface BanPickSetData {
+  teams: {
+    blue: string;
+    red: string;
+  };
+  banPickByTeam: BanPickByTeam;
+}
+
 export const fetchBanPickBySet = async (
   matchId: string,
   setNumber: number,
   teamName: string,
   oppositeTeam: string
-): Promise<BanPickByTeam | null> => {
+): Promise<BanPickSetData | null> => {
   const matchDocRef = doc(db, "banPickSimulations", matchId);
   const docSnap = await getDoc(matchDocRef);
 
@@ -23,16 +31,22 @@ export const fetchBanPickBySet = async (
 
   const data = docSnap.data();
   const setData = data.sets?.[setNumber];
-  if (!setData || !setData.ban || !setData.pick) return null;
+  if (!setData || !setData.ban || !setData.pick || !setData.teams) return null;
 
   return {
-    [teamName]: {
-      ban: setData.ban[teamName] || [],
-      pick: setData.pick[teamName] || [],
+    teams: {
+      blue: setData.teams.blue,
+      red: setData.teams.red,
     },
-    [oppositeTeam]: {
-      ban: setData.ban[oppositeTeam] || [],
-      pick: setData.pick[oppositeTeam] || [],
+    banPickByTeam: {
+      [teamName]: {
+        ban: setData.ban[teamName] || [],
+        pick: setData.pick[teamName] || [],
+      },
+      [oppositeTeam]: {
+        ban: setData.ban[oppositeTeam] || [],
+        pick: setData.pick[oppositeTeam] || [],
+      },
     },
   };
 };
