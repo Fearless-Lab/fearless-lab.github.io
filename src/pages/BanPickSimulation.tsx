@@ -19,6 +19,7 @@ import BanArea from "./components/BanPickSimulation/BanArea";
 import PickColumn from "./components/BanPickSimulation/PickColumn";
 import CommitButton from "./components/BanPickSimulation/CommitButton";
 import NextSetModal from "./components/BanPickSimulation/NextSetModal";
+import HistoryModal from "./components/BanPickSimulation/HistoryModal";
 
 const BanPickSimulation = () => {
   const { matchId, teamName, oppositeTeam, mode, initialTeam } =
@@ -102,6 +103,8 @@ const BanPickSimulation = () => {
     previousPicks,
   };
 
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+
   return (
     <div className="min-h-screen flex flex-col mt-20 md:mt-24">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
@@ -126,7 +129,7 @@ const BanPickSimulation = () => {
             <div className="mt-1 flex items-center gap-4">
               <ClipboardDocumentListIcon
                 className="w-5 h-5 cursor-pointer hover:text-gray-300"
-                onClick={() => alert("🚧 공사 중이에요")}
+                onClick={() => setIsHistoryOpen(true)}
               />
               {/* <ArrowPathIcon
                 className="w-5 h-5 cursor-pointer hover:text-red-800 text-rose-400"
@@ -262,6 +265,16 @@ const BanPickSimulation = () => {
         open={isNextSetPreparing}
         teamName={teamName}
         oppositeTeam={oppositeTeam}
+      />
+
+      <HistoryModal
+        matchId={matchId}
+        currentSet={currentSet}
+        currentStep={currentStep}
+        teamName={teamName}
+        oppositeTeam={oppositeTeam}
+        open={isHistoryOpen}
+        onClose={() => setIsHistoryOpen(false)}
       />
     </div>
   );
