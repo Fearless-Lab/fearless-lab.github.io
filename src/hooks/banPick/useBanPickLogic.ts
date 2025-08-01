@@ -102,13 +102,15 @@ export const useBanPickLogic = ({
       if (!setData) return;
 
       setCurrentSet((prev) => {
-        if (prev !== currentSetIndex) {
-          // 세트가 바뀌면 모달 다시 열고 준비 상태 초기화
+        const isGameOver = currentSetIndex === 5 && setData.currentStep === 21;
+        const isSetChanged = prev !== currentSetIndex;
+
+        if (isSetChanged && !isGameOver) {
           setIsModalOpen(true);
           setIsReady(false);
-          return currentSetIndex;
         }
-        return prev;
+
+        return currentSetIndex;
       });
 
       // teams 업데이트
