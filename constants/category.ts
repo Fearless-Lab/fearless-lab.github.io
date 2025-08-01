@@ -59,7 +59,7 @@ export const koreanModeToEnglish: Record<string, string> = {
 export const modalDescription = {
   error: [
     "제한 시간 내 밴픽을 완료하지 않으면 자동으로 랜덤한 챔피언이 선택됩니다.",
-    `밴픽 실수 시에는 해당 세트를 초기화하고 처음부터 다시 진행해야 합니다.
-특정 밴 혹은 픽만 바꿀 수 없어요!`,
+    //     `밴픽 실수 시에는 해당 세트를 초기화하고 처음부터 다시 진행해야 합니다.
+    // 특정 밴 혹은 픽만 바꿀 수 없어요!`,
   ],
 };

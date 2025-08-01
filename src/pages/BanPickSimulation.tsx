@@ -1,6 +1,6 @@
 import {
   ClipboardDocumentListIcon,
-  ArrowPathIcon,
+  // ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 
 import PositionRow from "./components/BanPickSimulation/PositionRow";
@@ -51,8 +51,6 @@ const BanPickSimulation = () => {
     initialTeam,
   });
 
-  console.log(currentSet);
-
   const checkTeam = () => {
     if (teams?.blue === teamName) return "blue";
     else if (teams?.red === teamName) return "red";
@@ -77,7 +75,10 @@ const BanPickSimulation = () => {
 
   let actionText = "상대 차례입니다";
 
-  if (isGameEnd) {
+  if (currentSet === 5 && currentStep === 21) {
+    actionText =
+      "5세트까지 진행되었습니다.\n기록판을 참고해 전략을 세워보세요!";
+  } else if (currentStep === 21) {
     actionText = "다음 게임 시작하기";
   } else if (isSwapPhase) {
     actionText = convertTypeToKo("swap");
@@ -127,10 +128,10 @@ const BanPickSimulation = () => {
                 className="w-5 h-5 cursor-pointer hover:text-gray-300"
                 onClick={() => alert("🚧 공사 중이에요")}
               />
-              <ArrowPathIcon
+              {/* <ArrowPathIcon
                 className="w-5 h-5 cursor-pointer hover:text-red-800 text-rose-400"
                 onClick={() => alert("🚧 공사 중이에요")}
-              />
+              /> */}
             </div>
           </div>
           <div className="flex-1 bg-red-400 text-white flex items-center justify-end font-bold pr-2">
@@ -175,7 +176,10 @@ const BanPickSimulation = () => {
               </div>
 
               <CommitButton
-                disabled={!isMyTurn && !isGameEnd}
+                disabled={
+                  (!isMyTurn && !isGameEnd) ||
+                  (currentSet === 5 && currentStep === 21)
+                }
                 currentStep={currentStep}
                 teamName={teamName}
                 localPick={localPick}
@@ -214,7 +218,10 @@ const BanPickSimulation = () => {
             </div>
 
             <CommitButton
-              disabled={!isMyTurn && !isGameEnd}
+              disabled={
+                (!isMyTurn && !isGameEnd) ||
+                (currentSet === 5 && currentStep === 21)
+              }
               currentStep={currentStep}
               teamName={teamName}
               localPick={localPick}

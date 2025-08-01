@@ -25,7 +25,7 @@ export const useBanPickLogic = ({
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [isReady, setIsReady] = useState(false);
   const [teams, setTeams] = useState<Teams | null>(null);
-  const [currentSet, setCurrentSet] = useState<number | null>(null);
+  const [currentSet, setCurrentSet] = useState<number>(1);
   const [currentStep, setCurrentStep] = useState(0);
   const [startedAt, setStartedAt] = useState<Date | null>(null);
 

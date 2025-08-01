@@ -7,7 +7,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import {
-  ArrowPathIcon,
+  // ArrowPathIcon,
   ClipboardDocumentListIcon,
 } from "@heroicons/react/16/solid";
 import { useNavigate } from "react-router-dom";
@@ -47,13 +47,13 @@ const ReadyCheckModal = ({
             이전 세트의 밴픽 기록을 확인할 수 있습니다.
           </div>
           <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <ArrowPathIcon className="w-5 h-5 text-rose-400" />
               해당 세트의 밴픽을 처음부터 다시 시작합니다.
-            </div>
-            <div className="text-xs text-gray-400 ml-7">
+            </div> */}
+            {/* <div className="text-xs text-gray-400 ml-7">
               ※ 다시 시작하려면 상대팀의 동의가 필요합니다.
-            </div>
+            </div> */}
           </div>
         </div>
 

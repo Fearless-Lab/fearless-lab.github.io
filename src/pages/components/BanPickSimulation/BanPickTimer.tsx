@@ -92,7 +92,7 @@ const BanPickTimer = ({
   }, [startedAt, currentStep]);
 
   if (!startedAt || currentStep === null || currentStep >= PHASE.length)
-    return <div className="text-xl font-bold">:00</div>;
+    return <div className="text-xl font-bold">:0</div>;
 
   return <div className="text-xl font-bold">:{Math.ceil(remainingTime)}</div>;
 };
