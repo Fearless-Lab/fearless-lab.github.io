@@ -16,7 +16,6 @@ import {
   modalDescription,
   modeDescription,
 } from "@constants/category";
-import { BASE_URL } from "@constants/url";
 
 type BanpickNoticeModalProps = {
   open: boolean;
@@ -46,7 +45,7 @@ const BanPickNoticeModal = ({
     const teamName = teamNames[team];
     const oppositeTeamName = team === "blue" ? teamNames.red : teamNames.blue;
 
-    const basePath = `${window.location.origin}${BASE_URL}`;
+    const basePath = `${window.location.origin}`;
     const url = `${basePath}/banPickSimulation?matchId=${matchId}&teamName=${encodeURIComponent(
       teamName
     )}&mode=${
