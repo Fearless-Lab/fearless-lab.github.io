@@ -175,7 +175,7 @@ const BanPickSimulation = () => {
             </div>
 
             <div className="md:col-span-2 flex flex-col gap-2 px-4">
-              <div className="px-4 py-2">
+              <div className="px-4">
                 <div className="flex flex-col items-center gap-2 justify-center">
                   <PositionRow
                     selected={selectedPosition}
@@ -221,7 +221,7 @@ const BanPickSimulation = () => {
           </div>
 
           <div className="flex flex-col md:hidden gap-4 w-[90%] mx-auto">
-            <div className="px-4 py-2 flex flex-col items-center">
+            <div className="px-4 flex flex-col items-center">
               <PositionRow
                 selected={selectedPosition}
                 onSelect={setSelectedPosition}

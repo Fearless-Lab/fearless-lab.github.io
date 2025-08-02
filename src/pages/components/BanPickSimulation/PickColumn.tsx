@@ -19,7 +19,7 @@ const PickColumn = ({ team, picks }: PickColumnProps) => {
         >
           {champion && (
             <div
-              className={`absolute top-1 px-1 py-0.5 text-xs font-semibold text-white bg-black/70 rounded ${
+              className={`absolute top-1 px-1 py-0.5 text-[9px] md:text-xs font-semibold text-white bg-black/70 rounded ${
                 team === "blue" ? "left-1" : "right-1"
               }`}
             >

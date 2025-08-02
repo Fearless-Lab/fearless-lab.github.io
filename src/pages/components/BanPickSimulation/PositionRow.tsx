@@ -9,7 +9,7 @@ interface PositionRowProps {
 
 export default function PositionRow({ selected, onSelect }: PositionRowProps) {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center mb-1">
       {positions.map((pos, i) => (
         <CategoryButton
           key={pos}

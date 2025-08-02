@@ -2,7 +2,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
+  // Navigate,
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 
@@ -11,7 +11,7 @@ import { ScrollTrigger, SplitText } from "gsap/all";
 import Home from "@/pages/Home";
 import Footer from "./components/Footer";
 import BanPick from "@/pages/BanPick";
-import Community from "./pages/Community";
+// import Community from "./pages/Community";
 import NotFound from "./pages/NotFound";
 import { BASE_URL } from "./../constants/url";
 import BanPickSimulation from "./pages/BanPickSimulation";
@@ -30,11 +30,11 @@ function App() {
             <Route path="/banPick" element={<BanPick />} />
             <Route path="/banPickSimulation" element={<BanPickSimulation />} />
 
-            <Route
+            {/* <Route
               path="/community"
               element={<Navigate to="/community/scrim" replace />}
             />
-            <Route path="/community/:category" element={<Community />} />
+            <Route path="/community/:category" element={<Community />} /> */}
 
             <Route path="*" element={<NotFound />} />
           </Routes>
