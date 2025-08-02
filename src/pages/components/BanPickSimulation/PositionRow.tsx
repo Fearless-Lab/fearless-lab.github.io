@@ -1,20 +1,22 @@
-import img1 from "@/assets/Position_Diamond-Top.png";
-import img2 from "@/assets/Position_Diamond-Jungle.png";
-import img3 from "@/assets/Position_Diamond-Mid.png";
-import img4 from "@/assets/Position_Diamond-Bot.png";
-import img5 from "@/assets/Position_Diamond-Support.png";
+import { positions, type Position } from "@constants/positions";
+import CategoryButton from "../Community/CategoryButton";
 
-const images = [img1, img2, img3, img4, img5];
+interface PositionRowProps {
+  selected: Position | null;
+  onSelect: (pos: Position | null) => void;
+  positions: readonly Position[];
+}
 
-export default function PositionRow() {
+export default function PositionRow({ selected, onSelect }: PositionRowProps) {
   return (
-    <div className="flex gap-2">
-      {images.map((src, i) => (
-        <img
-          key={i}
-          src={src}
-          alt={`img-${i}`}
-          className="w-6 h-6 cursor-pointer"
+    <div className="flex items-center">
+      {positions.map((pos, i) => (
+        <CategoryButton
+          key={pos}
+          label={pos}
+          isSelected={selected === pos}
+          onClick={() => onSelect(selected === pos ? null : pos)}
+          showSeparator={i !== positions.length - 1}
         />
       ))}
     </div>

@@ -48,9 +48,7 @@ export default function ChampionGrid({
   };
 
   const filteredChampions = searchTerm
-    ? champions.filter((champ) =>
-        champ.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+    ? champions.filter((champ) => champ.name.includes(searchTerm.trim()))
     : champions;
 
   return (

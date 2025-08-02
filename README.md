@@ -4,4 +4,4 @@
 
 ## 배포 주소
 
-- [https://fearlesslab.github.io/](https://fearlesslab.github.io/)
+- [https://fearless-lab.github.io/](https://fearless-lab.github.io/)

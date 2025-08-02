@@ -20,6 +20,7 @@ import PickColumn from "./components/BanPickSimulation/PickColumn";
 import CommitButton from "./components/BanPickSimulation/CommitButton";
 import NextSetModal from "./components/BanPickSimulation/NextSetModal";
 import HistoryModal from "./components/BanPickSimulation/HistoryModal";
+import { positions, positionMap, type Position } from "@constants/positions";
 
 const BanPickSimulation = () => {
   const { matchId, teamName, oppositeTeam, mode, initialTeam } =
@@ -87,11 +88,26 @@ const BanPickSimulation = () => {
     actionText = convertTypeToKo(PHASE[currentStep]?.type);
   }
 
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+
+  const [selectedPosition, setSelectedPosition] = useState<Position | null>(
+    null
+  );
   const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredByPosition = selectedPosition
+    ? champions.filter((champ) => positionMap[selectedPosition].has(champ.name))
+    : champions;
+
+  const filteredBySearch = searchTerm
+    ? filteredByPosition.filter((champ) =>
+        champ.name.includes(searchTerm.trim())
+      )
+    : filteredByPosition;
 
   const championGridProps: ChampionGridProps = {
     searchTerm,
-    champions,
+    champions: filteredBySearch,
     version,
     currentStep,
     myTeam,
@@ -103,10 +119,8 @@ const BanPickSimulation = () => {
     previousPicks,
   };
 
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-
   return (
-    <div className="min-h-screen flex flex-col mt-15">
+    <div className="min-h-screen flex flex-col mt-12">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
         <div className="flex w-full h-16 rounded-tl-md rounded-tr-md overflow-hidden">
           <div className="flex-1 bg-blue-400 text-white flex items-center justify-start font-bold pl-2">
@@ -162,12 +176,16 @@ const BanPickSimulation = () => {
 
             <div className="md:col-span-2 flex flex-col gap-2 px-4">
               <div className="px-4 py-2">
-                <div className="flex items-center justify-between gap-2">
-                  <PositionRow />
+                <div className="flex flex-col items-center gap-2 justify-center">
+                  <PositionRow
+                    selected={selectedPosition}
+                    onSelect={setSelectedPosition}
+                    positions={positions}
+                  />
                   <Input
                     type="text"
                     placeholder="챔피언 검색"
-                    className="w-36 rounded-none border border-gray-300"
+                    className="w-50 rounded-none border border-gray-300 pt-2"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
@@ -204,7 +222,11 @@ const BanPickSimulation = () => {
 
           <div className="flex flex-col md:hidden gap-4 w-[90%] mx-auto">
             <div className="px-4 py-2 flex flex-col items-center">
-              <PositionRow />
+              <PositionRow
+                selected={selectedPosition}
+                onSelect={setSelectedPosition}
+                positions={positions}
+              />
               <Input
                 type="text"
                 placeholder="챔피언 검색"
