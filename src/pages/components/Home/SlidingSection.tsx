@@ -1,8 +1,9 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { companies } from "@constants/navLinks";
 import { useScrollReveal } from "@animationHooks/useScrollReveal";
+
+const companies = ["1", "2", "3", "4", "5", "6", "7"];
 
 const SlidingSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
