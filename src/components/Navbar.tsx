@@ -1,9 +1,16 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { navLinks } from "@constants/navLinks";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const location = useLocation();
+
+  // /banPickSimulation 경로에서 숨기기
+  if (location.pathname === "/banPickSimulation") {
+    return null;
+  }
+
   useGSAP(() => {
     const navTween = gsap.timeline({
       scrollTrigger: {
@@ -24,7 +31,6 @@ const Navbar = () => {
       }
     );
 
-    // 스크롤이 top이 아닌 상태에서 새로고침 시 초기 스타일 수동 적용
     if (window.scrollY > 0) {
       gsap.set("nav", {
         backdropFilter: "blur(5px)",
@@ -53,4 +59,5 @@ const Navbar = () => {
     </nav>
   );
 };
+
 export default Navbar;

@@ -62,6 +62,16 @@ export default function ChampionGrid({
         const isDisabled =
           currentSetSelections.has(champ.id) || previousPicks.has(champ.id);
 
+        const currentPhaseType = PHASE[currentStep]?.type;
+        const currentPhaseIdx = PHASE[currentStep]?.index;
+
+        // 지금 단계에서 선택된 챔피언인지
+        const isSelected =
+          (currentPhaseType === "ban" &&
+            localBan[currentPhaseIdx] === champ.id) ||
+          (currentPhaseType === "pick" &&
+            localPick[currentPhaseIdx] === champ.id);
+
         return (
           <div
             key={champ.id}
@@ -69,7 +79,11 @@ export default function ChampionGrid({
               if (!isDisabled) onChampionClick(champ.id);
             }}
             className={`w-16 flex flex-col items-center cursor-pointer ${
-              isDisabled ? "pointer-events-none opacity-90" : ""
+              isDisabled
+                ? "pointer-events-none opacity-90"
+                : isSelected
+                ? "border-2 border-yellow-400 rounded-md"
+                : "hover:border hover:border-white rounded-md"
             }`}
           >
             <img

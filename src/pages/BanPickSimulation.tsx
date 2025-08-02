@@ -106,7 +106,7 @@ const BanPickSimulation = () => {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col mt-20 md:mt-24">
+    <div className="min-h-screen flex flex-col mt-15">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
         <div className="flex w-full h-16 rounded-tl-md rounded-tr-md overflow-hidden">
           <div className="flex-1 bg-blue-400 text-white flex items-center justify-start font-bold pl-2">

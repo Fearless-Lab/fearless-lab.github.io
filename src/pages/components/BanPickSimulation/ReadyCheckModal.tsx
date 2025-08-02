@@ -39,6 +39,9 @@ const ReadyCheckModal = ({
             밴픽은 데스크탑 환경에서의 이용을 권장합니다.
             <br />양 팀이 준비 완료를 눌러야 밴픽이 시작됩니다.
           </DialogDescription>
+          <DialogDescription className="text-gray-400 mt-2 text-sm">
+            좌측은 블루팀, 우측은 레드팀입니다. 본인의 팀명을 확인해 주세요!
+          </DialogDescription>
         </DialogHeader>
 
         <div className="mt-4 text-sm text-white space-y-3">

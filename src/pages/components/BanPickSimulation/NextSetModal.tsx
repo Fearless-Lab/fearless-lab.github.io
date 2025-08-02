@@ -139,13 +139,13 @@ const NextSetModal = ({
                 <div className="flex gap-3">
                   <CTAButton
                     onClick={() => chooseSide("blue")}
-                    className="w-1/2 bg-blue-400"
+                    className="w-1/2 bg-blue-400 text-xs md:text-sm"
                   >
                     블루 진영 선택
                   </CTAButton>
                   <CTAButton
                     onClick={() => chooseSide("red")}
-                    className="w-1/2 bg-rose-400"
+                    className="w-1/2 bg-rose-400 text-xs md:text-sm"
                   >
                     레드 진영 선택
                   </CTAButton>
