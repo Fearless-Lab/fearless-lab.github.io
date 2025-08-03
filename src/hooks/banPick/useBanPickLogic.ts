@@ -44,6 +44,9 @@ export const useBanPickLogic = ({
   // 다음 세트 셋업 준비 중인지 확인
   const [isNextSetPreparing, setIsNextSetPreparing] = useState(false);
 
+  // 승리 팀 Array
+  const [winners, setWinners] = useState<string[]>([]);
+
   const {
     initializeDoc,
     subscribeToStart,
@@ -169,6 +172,8 @@ export const useBanPickLogic = ({
       setPreviousPicks(totalPickSet);
 
       setIsNextSetPreparing(data.isNextSetPreparing);
+
+      setWinners(data.winners ?? []);
     });
 
     return () => unsubscribe();
@@ -206,5 +211,6 @@ export const useBanPickLogic = ({
     currentSetSelections,
     previousPicks,
     isNextSetPreparing,
+    winners,
   };
 };

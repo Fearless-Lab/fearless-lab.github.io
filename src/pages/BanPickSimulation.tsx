@@ -45,6 +45,7 @@ const BanPickSimulation = () => {
     currentSetSelections,
     previousPicks,
     isNextSetPreparing,
+    winners,
   } = useBanPickLogic({
     matchId,
     teamName,
@@ -297,6 +298,7 @@ const BanPickSimulation = () => {
         open={isHistoryOpen}
         onClose={() => setIsHistoryOpen(false)}
         version={version}
+        winners={winners}
       />
     </div>
   );

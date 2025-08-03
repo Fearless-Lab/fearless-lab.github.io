@@ -57,6 +57,7 @@ export const useBanPickInit = ({
             },
             startedAt: null,
           },
+          winners: [],
         },
       });
     }

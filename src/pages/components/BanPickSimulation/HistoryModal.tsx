@@ -17,6 +17,7 @@ interface HistoryModalProps {
   open: boolean;
   onClose: () => void;
   version: string;
+  winners: string[];
 }
 
 const HistoryModal = ({
@@ -28,8 +29,9 @@ const HistoryModal = ({
   open,
   onClose,
   version,
+  winners,
 }: HistoryModalProps) => {
-  const isCurrentSetFinished = currentStep === 21; // 진행 중인 세트 기록은 보여주지 않기 위한 변수
+  const isCurrentSetFinished = currentStep === 21;
 
   const queries = useQueries({
     queries: Array.from(
@@ -74,6 +76,7 @@ const HistoryModal = ({
 
               const { teams, banPickByTeam } = data;
               const orderedTeams = [teamName, oppositeTeam];
+              const winner = winners?.[idx];
 
               return (
                 <div key={idx}>
@@ -82,51 +85,62 @@ const HistoryModal = ({
                   </h2>
 
                   <div className="flex flex-col gap-4">
-                    {orderedTeams.map((team) => (
-                      <div
-                        key={team}
-                        className="border border-neutral-700 p-4 rounded bg-neutral-800"
-                      >
-                        <h3 className="text-sm font-semibold mb-3 text-white">
-                          {team === teams.blue ? "🟦 " : "🟥 "}
-                          {team}
-                        </h3>
+                    {orderedTeams.map((team) => {
+                      const isWinner = team === winner;
+                      return (
+                        <div
+                          key={team}
+                          className={`border p-4 rounded bg-neutral-800 relative ${
+                            isWinner
+                              ? "border-yellow-400 shadow-md shadow-yellow-400/30"
+                              : "border-neutral-700"
+                          }`}
+                        >
+                          <h3 className="text-sm font-semibold mb-3 text-white flex items-center gap-2">
+                            {team === teams.blue ? "🟦" : "🟥"} {team}
+                            {isWinner && (
+                              <span className="text-yellow-400 text-xs font-bold ml-1">
+                                승리
+                              </span>
+                            )}
+                          </h3>
 
-                        <div className="flex items-center mb-2 gap-2">
-                          <span className="text-sm text-gray-400 w-12">
-                            PICK :
-                          </span>
-                          <div className="flex gap-2 flex-wrap">
-                            {banPickByTeam[team].pick.map((champId) => (
-                              <img
-                                key={champId}
-                                src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champId}.png`}
-                                alt={champId}
-                                className="w-9 h-9 object-cover rounded border border-neutral-600"
-                                title={champId}
-                              />
-                            ))}
+                          <div className="flex items-center mb-2 gap-2">
+                            <span className="text-sm text-gray-400 w-12">
+                              PICK :
+                            </span>
+                            <div className="flex gap-2 flex-wrap">
+                              {banPickByTeam[team].pick.map((champId) => (
+                                <img
+                                  key={champId}
+                                  src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champId}.png`}
+                                  alt={champId}
+                                  className="w-9 h-9 object-cover rounded border border-neutral-600"
+                                  title={champId}
+                                />
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-gray-400 w-12">
+                              BAN :
+                            </span>
+                            <div className="flex gap-2 flex-wrap">
+                              {banPickByTeam[team].ban.map((champId) => (
+                                <img
+                                  key={champId}
+                                  src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champId}.png`}
+                                  alt={champId}
+                                  className="w-9 h-9 object-cover rounded border border-neutral-600"
+                                  title={champId}
+                                />
+                              ))}
+                            </div>
                           </div>
                         </div>
-
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm text-gray-400 w-12">
-                            BAN :
-                          </span>
-                          <div className="flex gap-2 flex-wrap">
-                            {banPickByTeam[team].ban.map((champId) => (
-                              <img
-                                key={champId}
-                                src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champId}.png`}
-                                alt={champId}
-                                className="w-9 h-9 object-cover rounded border border-neutral-600"
-                                title={champId}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               );

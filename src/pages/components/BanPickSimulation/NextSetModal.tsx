@@ -68,8 +68,9 @@ const NextSetModal = ({
         const data = snap.data();
         const currentSet = data?.currentSet;
         const votes = data?.sets?.[currentSet]?.votes || {};
-
         const otherVote = votes[oppositeTeam];
+
+        const winners = data?.winners ?? [];
 
         if (otherVote && otherVote !== selectedLoseTeam) {
           transaction.update(docRef, {
@@ -77,9 +78,17 @@ const NextSetModal = ({
             [`sets.${currentSet}.votes.${oppositeTeam}`]: null,
           });
         } else {
-          transaction.update(docRef, {
+          const updates: Record<string, any> = {
             [`sets.${currentSet}.votes.${teamName}`]: selectedLoseTeam,
-          });
+          };
+
+          if (otherVote === selectedLoseTeam) {
+            const winningTeam =
+              selectedLoseTeam === teamName ? oppositeTeam : teamName;
+            updates["winners"] = [...winners, winningTeam];
+          }
+
+          transaction.update(docRef, updates);
         }
       });
 
