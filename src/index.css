@@ -161,3 +161,17 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.animate-soft-pulse {
+  animation: soft-pulse 1.5s ease-in-out infinite;
+}

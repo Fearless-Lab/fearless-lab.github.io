@@ -67,7 +67,7 @@ const CommitButton: React.FC<CTAButtonProps> = ({
       onClick={onClickHandler}
       className={twMerge(
         baseClass,
-        disabled ? disabledClass : enabledClass,
+        disabled ? disabledClass : `${enabledClass} animate-soft-pulse`,
         className
       )}
       disabled={disabled}

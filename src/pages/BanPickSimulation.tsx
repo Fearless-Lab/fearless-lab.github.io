@@ -59,21 +59,16 @@ const BanPickSimulation = () => {
   };
 
   const convertTypeToKo = (type: string) => {
-    if (type === "pick") return "선택 완료";
+    if (type === "pick") return "챔피언 선택";
     else if (type === "ban") return "챔피언 금지";
     else if (type === "swap") return "스왑해주세요";
     else return "대기 중";
   };
 
   const myTeam = checkTeam();
-
   const isSwapPhase = PHASE[currentStep]?.type === "swap";
   const isGameEnd = currentStep === 21;
-
-  const isMyTurn =
-    !isSwapPhase &&
-    (PHASE[currentStep]?.team === myTeam ||
-      PHASE[currentStep]?.team === "both");
+  const isMyTurn = !isSwapPhase && PHASE[currentStep]?.team === myTeam;
 
   let actionText = "상대 차례입니다";
 
@@ -123,7 +118,7 @@ const BanPickSimulation = () => {
     <div className="min-h-screen flex flex-col mt-12">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
         <div className="flex w-full h-16 rounded-tl-md rounded-tr-md overflow-hidden">
-          <div className="flex-1 bg-blue-400 text-white flex items-center justify-start font-bold pl-2">
+          <div className="flex-1 bg-blue-400 text-lg md:text-2xl text-white flex items-center justify-start font-bold pl-5">
             {teams ? teams.blue : "팀 정보 불러오는중"}
           </div>
           <div className="w-20 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
@@ -151,7 +146,7 @@ const BanPickSimulation = () => {
               /> */}
             </div>
           </div>
-          <div className="flex-1 bg-red-400 text-white flex items-center justify-end font-bold pr-2">
+          <div className="flex-1 bg-red-400 text-lg md:text-2xl text-white flex items-center justify-end font-bold pr-5">
             {teams ? teams.red : "팀 정보 불러오는중"}
           </div>
         </div>
@@ -167,10 +162,11 @@ const BanPickSimulation = () => {
 
         <div className="max-w-6xl mx-auto mt-4 w-full">
           <div className="hidden md:grid md:grid-cols-4 gap-12 w-full">
-            <div className="md:col-span-1 border min-h-92 flex flex-col divide-y">
+            <div className="md:col-span-1 border rounded-md min-h-92 flex flex-col divide-y">
               <PickColumn
                 team="blue"
                 picks={myTeam === "blue" ? localPick : enemyPick}
+                currentStep={currentStep}
               />
             </div>
 
@@ -212,10 +208,11 @@ const BanPickSimulation = () => {
               </CommitButton>
             </div>
 
-            <div className="md:col-span-1 border min-h-92 flex flex-col divide-y">
+            <div className="md:col-span-1 border rounded-md min-h-92 flex flex-col divide-y">
               <PickColumn
                 team="red"
                 picks={myTeam === "red" ? localPick : enemyPick}
+                currentStep={currentStep}
               />
             </div>
           </div>
@@ -257,18 +254,20 @@ const BanPickSimulation = () => {
               {actionText}
             </CommitButton>
 
-            <div className="flex w-[75%] gap-12 mx-auto">
-              <div className="flex-1 border border-blue-400 min-h-84 flex flex-col divide-y">
+            <div className="flex w-[85%] gap-12 mx-auto">
+              <div className="flex-1 border rounded-md min-h-84 flex flex-col divide-y">
                 <PickColumn
                   team="blue"
                   picks={myTeam === "blue" ? localPick : enemyPick}
+                  currentStep={currentStep}
                 />
               </div>
 
-              <div className="flex-1 border border-rose-400 min-h-84 flex flex-col divide-y">
+              <div className="flex-1 border rounded-md min-h-84 flex flex-col divide-y">
                 <PickColumn
                   team="red"
                   picks={myTeam === "red" ? localPick : enemyPick}
+                  currentStep={currentStep}
                 />
               </div>
             </div>
