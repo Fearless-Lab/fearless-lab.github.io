@@ -67,7 +67,8 @@ export const useBanPickLogic = ({
     initialTeam,
   });
 
-  const { setStartedAtIfNeeded } = useBanPickController(matchId);
+  const { setStartedAtIfNeeded, forceNextStepIfBothCommited } =
+    useBanPickController(matchId);
 
   // Firestore 문서 초기화 + 팀 정보 불러오기
   useEffect(() => {
@@ -179,6 +180,10 @@ export const useBanPickLogic = ({
       setWinners(data.winners ?? []);
       setFinished(!!data.finished);
       setCommited(setData.commited?.[teamName] ?? false);
+
+      if (setData.commited?.[teamName] && setData.commited?.[oppositeTeam]) {
+        forceNextStepIfBothCommited();
+      }
     });
 
     return () => unsubscribe();

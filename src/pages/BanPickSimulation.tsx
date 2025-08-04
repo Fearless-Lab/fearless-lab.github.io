@@ -21,6 +21,7 @@ import CommitButton from "./components/BanPickSimulation/CommitButton";
 import NextSetModal from "./components/BanPickSimulation/NextSetModal";
 import HistoryModal from "./components/BanPickSimulation/HistoryModal";
 import { positions, positionMap, type Position } from "@constants/positions";
+import { useBanPickController } from "@/hooks/banPick/useBanPickController";
 
 const BanPickSimulation = () => {
   const { matchId, teamName, oppositeTeam, mode, initialTeam } =
@@ -56,6 +57,8 @@ const BanPickSimulation = () => {
     initialTeam,
   });
 
+  const { commitSwapOrder } = useBanPickController(matchId);
+
   const checkTeam = () => {
     if (teams?.blue === teamName) return "blue";
     else if (teams?.red === teamName) return "red";
@@ -84,7 +87,8 @@ const BanPickSimulation = () => {
   else if (currentStep === 21) {
     actionText = "패배 팀 투표하기";
   } else if (isSwapPhase) {
-    actionText = convertTypeToKo("swap");
+    if (commited) actionText = "상대팀이 아직 스왑 진행 중이에요";
+    else actionText = convertTypeToKo("swap");
   } else if (isMyTurn) {
     actionText = convertTypeToKo(PHASE[currentStep]?.type);
   }
@@ -92,7 +96,6 @@ const BanPickSimulation = () => {
   const isCommitButtonDisabled = isGameEnd
     ? false
     : (!isMyTurn && !isSwapPhase) || commited || (finished && !isSwapPhase);
-  console.log(commited);
 
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
@@ -125,11 +128,9 @@ const BanPickSimulation = () => {
     previousPicks,
   };
 
-  const [swapOrder, setSwapOrder] = useState<(string | undefined)[]>([]);
-
   const handleSwap = (newOrder: (string | undefined)[]) => {
     const cleanedOrder = newOrder.filter(Boolean) as string[];
-    setSwapOrder(cleanedOrder);
+    commitSwapOrder(teamName, cleanedOrder);
   };
 
   return (
@@ -223,7 +224,6 @@ const BanPickSimulation = () => {
                 matchId={matchId}
                 isGameEnd={isGameEnd}
                 commited={commited}
-                swapOrder={!swapOrder.length ? localPick : swapOrder}
               >
                 {actionText}
               </CommitButton>
@@ -273,7 +273,6 @@ const BanPickSimulation = () => {
               matchId={matchId}
               isGameEnd={isGameEnd}
               commited={commited}
-              swapOrder={swapOrder}
             >
               {actionText}
             </CommitButton>

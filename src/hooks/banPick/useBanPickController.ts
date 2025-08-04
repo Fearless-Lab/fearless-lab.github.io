@@ -185,7 +185,46 @@ export const useBanPickController = (matchId: string) => {
 
       transaction.update(docRef, {
         [`sets.${currentSet}.pick.${teamName}`]: newOrder,
+      });
+    });
+  };
+
+  const commitSwapConfirm = async (teamName: string) => {
+    await runTransaction(db, async (transaction) => {
+      const docSnap = await transaction.get(docRef);
+      if (!docSnap.exists()) return;
+
+      const data = docSnap.data();
+      const currentSet = data.currentSet;
+
+      transaction.update(docRef, {
         [`sets.${currentSet}.commited.${teamName}`]: true,
+      });
+    });
+  };
+
+  const forceNextStepIfBothCommited = async () => {
+    await runTransaction(db, async (transaction) => {
+      const snap = await transaction.get(docRef);
+      if (!snap.exists()) return;
+
+      const data = snap.data();
+      const currentSet = data.currentSet;
+      const setData = data.sets?.[currentSet];
+      if (!setData) return;
+
+      const { commited, currentStep, teams } = setData;
+
+      const blueTeam = teams.blue;
+      const redTeam = teams.red;
+
+      const bothCommited = commited?.[blueTeam] && commited?.[redTeam];
+
+      if (!bothCommited) return;
+      if (currentStep >= 21) return;
+
+      transaction.update(docRef, {
+        [`sets.${currentSet}.currentStep`]: currentStep + 1,
       });
     });
   };
@@ -198,5 +237,7 @@ export const useBanPickController = (matchId: string) => {
     toggleIsNextSetPreparing,
     createNextSet,
     commitSwapOrder,
+    commitSwapConfirm,
+    forceNextStepIfBothCommited,
   };
 };

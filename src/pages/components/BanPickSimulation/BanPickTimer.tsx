@@ -28,8 +28,12 @@ const BanPickTimer = ({
 }: BanPickTimerProps) => {
   const [remainingTime, setRemainingTime] = useState<number>(0);
 
-  const { commitAndAdvance, goToNextStep, commitTotalPickIfNeeded } =
-    useBanPickController(matchId);
+  const {
+    commitAndAdvance,
+    goToNextStep,
+    commitTotalPickIfNeeded,
+    commitSwapConfirm,
+  } = useBanPickController(matchId);
   const calledRef = useRef(false);
   const lastStepRef = useRef<number | null>(null);
 
@@ -79,6 +83,7 @@ const BanPickTimer = ({
         }
 
         if (isSwapPhase) {
+          commitSwapConfirm(teamName);
           commitTotalPickIfNeeded(teamName);
           goToNextStep(currentStep);
         }
