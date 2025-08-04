@@ -63,8 +63,15 @@ const BanPick = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
   useScrollReveal(sectionRef);
 
+  const description = `지금 ${selectedMode} 모드에서 밴픽을 경험해보세요!`;
+  const keywords = `롤, 밴픽, ${selectedMode}, 전략, 시뮬레이터, 롤 밴픽`;
+
   return (
     <>
+      <title>Fearless | {selectedMode} 모드 | 밴픽 URL 생성</title>
+      <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
+
       <section
         id="banPick"
         ref={sectionRef}

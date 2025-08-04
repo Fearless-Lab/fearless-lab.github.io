@@ -21,7 +21,9 @@ const BanArea = ({ myTeam, localBan, enemyBan, version }: BanAreaProps) => {
         <img
           src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champ}.png`}
           key={key}
+          alt={champ}
           className={baseClass}
+          title={champ}
         />
       ) : (
         <div key={`${key}-empty`} className={baseClass} />
