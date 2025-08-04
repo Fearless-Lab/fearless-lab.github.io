@@ -32,11 +32,21 @@ const BanPick = () => {
 
     const newError: { blue?: string; red?: string } = {};
 
-    if (!trimmedBlue) newError.blue = "블루팀 이름을 입력해주세요.";
-    if (!trimmedRed) newError.red = "레드팀 이름을 입력해주세요.";
+    if (!trimmedBlue) newError.blue = "블루팀 이름을 입력해주세요";
+    else if (trimmedBlue.length > 8)
+      newError.blue = "최대 8자까지 입력 가능해요";
 
-    if (trimmedBlue && trimmedRed && trimmedBlue === trimmedRed) {
-      newError.blue = newError.red = "팀 이름은 서로 달라야 합니다.";
+    if (!trimmedRed) newError.red = "레드팀 이름을 입력해주세요";
+    else if (trimmedRed.length > 8) newError.red = "최대 8자까지 입력 가능해요";
+
+    if (
+      trimmedBlue &&
+      trimmedRed &&
+      trimmedBlue === trimmedRed &&
+      !newError.blue &&
+      !newError.red
+    ) {
+      newError.blue = newError.red = "팀 이름은 서로 달라야 해요";
     }
 
     setError(newError);

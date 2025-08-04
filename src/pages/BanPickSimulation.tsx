@@ -120,7 +120,7 @@ const BanPickSimulation = () => {
     <div className="min-h-screen flex flex-col mt-12">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
         <div className="flex w-full h-16 rounded-tl-md rounded-tr-md overflow-hidden">
-          <div className="flex-1 bg-blue-400 text-lg md:text-xl text-white flex items-center justify-start font-bold pl-5">
+          <div className="flex-1 bg-blue-400 text-md md:text-xl text-white flex items-center justify-start font-bold pl-5">
             {teams ? teams.blue : "팀 정보 불러오는중"}
           </div>
           <div className="w-20 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
@@ -148,7 +148,7 @@ const BanPickSimulation = () => {
               /> */}
             </div>
           </div>
-          <div className="flex-1 bg-red-400 text-lg md:text-xl text-white flex items-center justify-end font-bold pr-5">
+          <div className="flex-1 bg-red-400 text-md md:text-xl text-white flex items-center justify-end font-bold pr-5">
             {teams ? teams.red : "팀 정보 불러오는중"}
           </div>
         </div>
