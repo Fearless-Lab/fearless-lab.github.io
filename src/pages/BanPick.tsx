@@ -68,7 +68,8 @@ const BanPick = () => {
 
   return (
     <>
-      <title>Fearless | {selectedMode} 모드 | 밴픽 URL 생성</title>
+      {/* ref) https://ko.react.dev/reference/react-dom/components/title */}
+      <title>{`Fearless | ${selectedMode} 모드 | 밴픽 URL 생성`}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
 
