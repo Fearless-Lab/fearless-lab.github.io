@@ -59,6 +59,7 @@ export const useBanPickInit = ({
           },
           winners: [],
         },
+        finished: false,
       });
     }
   }, [docRef, mode, initialTeam, teamName, oppositeTeam]);
@@ -78,8 +79,9 @@ export const useBanPickInit = ({
         const bothReady =
           started.blueTeam === "ready" && started.redTeam === "ready";
 
-        // 준비 완료 시 onReady 호출
-        if (bothReady) onReady();
+        const finished = data.finished === true;
+
+        if (bothReady || finished) onReady();
       });
     },
     [docRef]

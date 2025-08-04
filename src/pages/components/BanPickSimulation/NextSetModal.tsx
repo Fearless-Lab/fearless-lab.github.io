@@ -16,6 +16,7 @@ interface NextSetModalProps {
   matchId: string;
   teamName: string;
   oppositeTeam: string;
+  finished: boolean;
 }
 
 const NextSetModal = ({
@@ -23,6 +24,7 @@ const NextSetModal = ({
   matchId,
   teamName,
   oppositeTeam,
+  finished,
 }: NextSetModalProps) => {
   const { toggleIsNextSetPreparing, createNextSet } =
     useBanPickController(matchId);
@@ -88,6 +90,11 @@ const NextSetModal = ({
             updates["winners"] = [...winners, winningTeam];
           }
 
+          if (currentSet === 5) {
+            console.log("여기 안타느건가");
+            updates["finished"] = true;
+          }
+
           transaction.update(docRef, updates);
         }
       });
@@ -142,7 +149,7 @@ const NextSetModal = ({
             </div>
           ) : null}
 
-          {bothVoted && votesMatch && (
+          {!finished && bothVoted && votesMatch && (
             <>
               {isUserLoseTeam ? (
                 <div className="flex gap-3">

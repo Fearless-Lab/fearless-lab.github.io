@@ -47,6 +47,9 @@ export const useBanPickLogic = ({
   // 승리 팀 Array
   const [winners, setWinners] = useState<string[]>([]);
 
+  // 5세트까지 진행됐는지
+  const [finished, setFinished] = useState(false);
+
   const {
     initializeDoc,
     subscribeToStart,
@@ -93,7 +96,6 @@ export const useBanPickLogic = ({
     return () => unsubscribe();
   }, [matchId, subscribeToStart]);
 
-  // 실시간 동기화: set, step, startedAt, ban/pick + currentSet 변경 감지 시 모달 열기 및 teams 업데이트
   useEffect(() => {
     if (!matchId) return;
 
@@ -170,10 +172,9 @@ export const useBanPickLogic = ({
       }
 
       setPreviousPicks(totalPickSet);
-
       setIsNextSetPreparing(data.isNextSetPreparing);
-
       setWinners(data.winners ?? []);
+      setFinished(!!data.finished);
     });
 
     return () => unsubscribe();
@@ -212,5 +213,6 @@ export const useBanPickLogic = ({
     previousPicks,
     isNextSetPreparing,
     winners,
+    finished,
   };
 };

@@ -1,12 +1,19 @@
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { useQueries } from "@tanstack/react-query";
 import { fetchBanPickBySet } from "@/apis/service/fetchBanPickBySet";
+import {
+  XMarkIcon,
+  ArrowsPointingOutIcon,
+  ArrowsPointingInIcon,
+} from "@heroicons/react/24/outline";
+import { cn } from "@/lib/utils";
 
 interface HistoryModalProps {
   matchId: string;
@@ -31,6 +38,7 @@ const HistoryModal = ({
   version,
   winners,
 }: HistoryModalProps) => {
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const isCurrentSetFinished = currentStep === 21;
 
   const queries = useQueries({
@@ -53,17 +61,49 @@ const HistoryModal = ({
 
   return (
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
-      <DialogContent className="bg-neutral-900 border border-neutral-700 text-white w-full max-w-[calc(100%-2rem)] mx-auto max-h-[80vh] overflow-auto z-100">
-        <DialogHeader className="text-left">
-          <DialogTitle className="text-lg md:text-xl">밴픽 기록판</DialogTitle>
-          <DialogDescription className="text-gray-400 mt-2 text-sm">
-            이전 세트의 밴픽 기록을 확인할 수 있습니다.
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent
+        isFullscreen={isFullscreen}
+        showCloseButton={false}
+        className="bg-neutral-900 border border-neutral-700 text-white overflow-auto z-100"
+      >
+        <div className="flex justify-between items-start">
+          <div>
+            <DialogTitle className="text-lg md:text-xl">
+              밴픽 기록판
+            </DialogTitle>
+            <DialogDescription className="text-gray-400 mt-2 text-sm">
+              이전 세트의 밴픽 기록을 확인할 수 있습니다.
+            </DialogDescription>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsFullscreen(!isFullscreen)}
+              className="p-1 rounded hover:bg-gray-700"
+              aria-label={isFullscreen ? "작게 보기" : "전체 보기"}
+              type="button"
+            >
+              {isFullscreen ? (
+                <ArrowsPointingInIcon className="h-6 w-6 text-white" />
+              ) : (
+                <ArrowsPointingOutIcon className="h-6 w-6 text-white" />
+              )}
+            </button>
+
+            <DialogClose asChild>
+              <button
+                className="p-1 rounded hover:bg-gray-700"
+                aria-label="닫기"
+                type="button"
+              >
+                <XMarkIcon className="h-6 w-6 text-white" />
+              </button>
+            </DialogClose>
+          </div>
+        </div>
 
         <div className="mt-4 text-sm space-y-6">
           {isLoading && <p className="text-gray-300">불러오는 중...</p>}
-
           {isError && (
             <p className="text-rose-400">데이터를 불러오는데 실패했습니다.</p>
           )}
@@ -84,17 +124,24 @@ const HistoryModal = ({
                     {idx + 1} 세트
                   </h2>
 
-                  <div className="flex flex-col gap-4">
+                  <div
+                    className={cn(
+                      "flex flex-col gap-4",
+                      isFullscreen && "sm:flex-row sm:items-start"
+                    )}
+                  >
                     {orderedTeams.map((team) => {
                       const isWinner = team === winner;
                       return (
                         <div
                           key={team}
-                          className={`border p-4 rounded bg-neutral-800 relative ${
+                          className={cn(
+                            "border p-4 rounded bg-neutral-800 relative w-full",
+                            isFullscreen && "sm:w-1/2",
                             isWinner
                               ? "border-yellow-400 shadow-md shadow-yellow-400/30"
                               : "border-neutral-700"
-                          }`}
+                          )}
                         >
                           <h3 className="text-sm font-semibold mb-3 text-white flex items-center gap-2">
                             {team === teams.blue ? "🟦" : "🟥"} {team}
@@ -106,8 +153,8 @@ const HistoryModal = ({
                           </h3>
 
                           <div className="flex items-center mb-2 gap-2">
-                            <span className="text-sm text-gray-400 w-12">
-                              PICK :
+                            <span className="text-sm text-gray-400 w-10">
+                              PICK
                             </span>
                             <div className="flex gap-2 flex-wrap">
                               {banPickByTeam[team].pick.map((champId) => (
@@ -123,8 +170,8 @@ const HistoryModal = ({
                           </div>
 
                           <div className="flex items-center gap-2">
-                            <span className="text-sm text-gray-400 w-12">
-                              BAN :
+                            <span className="text-sm text-gray-400 w-10">
+                              BAN
                             </span>
                             <div className="flex gap-2 flex-wrap">
                               {banPickByTeam[team].ban.map((champId) => (
@@ -150,6 +197,7 @@ const HistoryModal = ({
         <button
           className="mt-6 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm"
           onClick={onClose}
+          type="button"
         >
           닫기
         </button>
