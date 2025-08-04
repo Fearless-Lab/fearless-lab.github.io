@@ -56,6 +56,10 @@ export const useBanPickInit = ({
               [oppositeTeam]: Array(5).fill(""),
             },
             startedAt: null,
+            commited: {
+              [teamName]: false,
+              [oppositeTeam]: false,
+            },
           },
           winners: [],
         },

@@ -172,6 +172,24 @@ export const useBanPickController = (matchId: string) => {
     }
   };
 
+  const commitSwapOrder = async (
+    teamName: string,
+    newOrder: (string | undefined)[]
+  ) => {
+    await runTransaction(db, async (transaction) => {
+      const docSnap = await transaction.get(docRef);
+      if (!docSnap.exists()) return;
+
+      const data = docSnap.data();
+      const currentSet = data.currentSet;
+
+      transaction.update(docRef, {
+        [`sets.${currentSet}.pick.${teamName}`]: newOrder,
+        [`sets.${currentSet}.commited.${teamName}`]: true,
+      });
+    });
+  };
+
   return {
     goToNextStep,
     setStartedAtIfNeeded,
@@ -179,5 +197,6 @@ export const useBanPickController = (matchId: string) => {
     commitTotalPickIfNeeded,
     toggleIsNextSetPreparing,
     createNextSet,
+    commitSwapOrder,
   };
 };

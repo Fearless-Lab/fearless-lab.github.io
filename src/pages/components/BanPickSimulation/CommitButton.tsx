@@ -11,6 +11,8 @@ interface CTAButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   localPick: string[];
   matchId: string;
   isGameEnd: Boolean;
+  commited: Boolean;
+  swapOrder: (string | undefined)[];
 }
 
 const CommitButton: React.FC<CTAButtonProps> = ({
@@ -23,8 +25,10 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   localPick,
   matchId,
   isGameEnd,
+  commited,
+  swapOrder,
 }) => {
-  const { commitAndAdvance, toggleIsNextSetPreparing } =
+  const { commitAndAdvance, toggleIsNextSetPreparing, commitSwapOrder } =
     useBanPickController(matchId);
   const calledRef = useRef(false);
 
@@ -41,9 +45,15 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   const onClickHandler = async () => {
     if (calledRef.current) return;
 
+    // 밴픽 끝나고 커밋 안된 경우에만 탄다
+    if (!commited && currentStep === 20) {
+      await commitSwapOrder(teamName, swapOrder);
+      calledRef.current = true;
+      return;
+    }
+
     if (isGameEnd) {
       await toggleIsNextSetPreparing(true);
-
       return;
     }
     const phase = PHASE[currentStep];

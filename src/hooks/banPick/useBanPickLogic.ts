@@ -50,6 +50,9 @@ export const useBanPickLogic = ({
   // 5세트까지 진행됐는지
   const [finished, setFinished] = useState(false);
 
+  // 라인별 정렬하고 완료했는지
+  const [commited, setCommited] = useState(false);
+
   const {
     initializeDoc,
     subscribeToStart,
@@ -175,6 +178,7 @@ export const useBanPickLogic = ({
       setIsNextSetPreparing(data.isNextSetPreparing);
       setWinners(data.winners ?? []);
       setFinished(!!data.finished);
+      setCommited(setData.commited?.[teamName] ?? false);
     });
 
     return () => unsubscribe();
@@ -214,5 +218,6 @@ export const useBanPickLogic = ({
     isNextSetPreparing,
     winners,
     finished,
+    commited,
   };
 };

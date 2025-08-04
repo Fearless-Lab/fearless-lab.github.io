@@ -47,6 +47,7 @@ const BanPickSimulation = () => {
     isNextSetPreparing,
     winners,
     finished,
+    commited,
   } = useBanPickLogic({
     matchId,
     teamName,
@@ -63,14 +64,17 @@ const BanPickSimulation = () => {
   const convertTypeToKo = (type: string) => {
     if (type === "pick") return "챔피언 선택";
     else if (type === "ban") return "챔피언 금지";
-    else if (type === "swap") return "스왑해주세요";
+    else if (type === "swap")
+      return "드래그로 순서를 정한 뒤, 버튼을 눌러 확정해주세요";
     else return "대기 중";
   };
 
   const myTeam = checkTeam();
-  const isSwapPhase = PHASE[currentStep]?.type === "swap";
+  const phase = PHASE[currentStep];
+  const isSwapPhase = phase?.type === "swap";
   const isGameEnd = currentStep === 21;
-  const isMyTurn = !isSwapPhase && PHASE[currentStep]?.team === myTeam;
+
+  const isMyTurn = !isSwapPhase && phase?.team === myTeam;
 
   let actionText = "상대 차례입니다";
 
@@ -84,6 +88,11 @@ const BanPickSimulation = () => {
   } else if (isMyTurn) {
     actionText = convertTypeToKo(PHASE[currentStep]?.type);
   }
+
+  const isCommitButtonDisabled = isGameEnd
+    ? false
+    : (!isMyTurn && !isSwapPhase) || commited || (finished && !isSwapPhase);
+  console.log(commited);
 
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
@@ -114,6 +123,13 @@ const BanPickSimulation = () => {
     setLocalPick,
     currentSetSelections,
     previousPicks,
+  };
+
+  const [swapOrder, setSwapOrder] = useState<(string | undefined)[]>([]);
+
+  const handleSwap = (newOrder: (string | undefined)[]) => {
+    const cleanedOrder = newOrder.filter(Boolean) as string[];
+    setSwapOrder(cleanedOrder);
   };
 
   return (
@@ -169,6 +185,10 @@ const BanPickSimulation = () => {
                 team="blue"
                 picks={myTeam === "blue" ? localPick : enemyPick}
                 currentStep={currentStep}
+                isSwapPhase={isSwapPhase}
+                onSwap={handleSwap}
+                myTeam={myTeam}
+                commited={commited}
               />
             </div>
 
@@ -183,7 +203,7 @@ const BanPickSimulation = () => {
                   <Input
                     type="text"
                     placeholder="챔피언 검색"
-                    className="w-50 rounded-none border border-gray-300 pt-2"
+                    className="w-50 rounded-none border border-gray-300"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
@@ -195,13 +215,15 @@ const BanPickSimulation = () => {
               </div>
 
               <CommitButton
-                disabled={(!isMyTurn && !isGameEnd) || finished}
+                disabled={isCommitButtonDisabled}
                 currentStep={currentStep}
                 teamName={teamName}
                 localPick={localPick}
                 localBan={localBan}
                 matchId={matchId}
                 isGameEnd={isGameEnd}
+                commited={commited}
+                swapOrder={!swapOrder.length ? localPick : swapOrder}
               >
                 {actionText}
               </CommitButton>
@@ -212,6 +234,10 @@ const BanPickSimulation = () => {
                 team="red"
                 picks={myTeam === "red" ? localPick : enemyPick}
                 currentStep={currentStep}
+                isSwapPhase={isSwapPhase}
+                onSwap={handleSwap}
+                myTeam={myTeam}
+                commited={commited}
               />
             </div>
           </div>
@@ -239,13 +265,15 @@ const BanPickSimulation = () => {
             </div>
 
             <CommitButton
-              disabled={(!isMyTurn && !isGameEnd) || finished}
+              disabled={isCommitButtonDisabled}
               currentStep={currentStep}
               teamName={teamName}
               localPick={localPick}
               localBan={localBan}
               matchId={matchId}
               isGameEnd={isGameEnd}
+              commited={commited}
+              swapOrder={swapOrder}
             >
               {actionText}
             </CommitButton>
@@ -256,6 +284,10 @@ const BanPickSimulation = () => {
                   team="blue"
                   picks={myTeam === "blue" ? localPick : enemyPick}
                   currentStep={currentStep}
+                  isSwapPhase={isSwapPhase}
+                  onSwap={handleSwap}
+                  myTeam={myTeam}
+                  commited={commited}
                 />
               </div>
 
@@ -264,6 +296,10 @@ const BanPickSimulation = () => {
                   team="red"
                   picks={myTeam === "red" ? localPick : enemyPick}
                   currentStep={currentStep}
+                  isSwapPhase={isSwapPhase}
+                  onSwap={handleSwap}
+                  myTeam={myTeam}
+                  commited={commited}
                 />
               </div>
             </div>
