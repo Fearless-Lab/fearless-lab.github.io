@@ -291,7 +291,7 @@ const BanPickSimulation = () => {
         currentStep={currentStep}
         teamName={teamName}
         oppositeTeam={oppositeTeam}
-        open={isHistoryOpen}
+        open={isHistoryOpen && (currentSet > 1 || currentStep === 21)}
         onClose={() => setIsHistoryOpen(false)}
         version={version}
         winners={winners}

@@ -88,11 +88,10 @@ const NextSetModal = ({
             const winningTeam =
               selectedLoseTeam === teamName ? oppositeTeam : teamName;
             updates["winners"] = [...winners, winningTeam];
-          }
 
-          if (currentSet === 5) {
-            console.log("여기 안타느건가");
-            updates["finished"] = true;
+            if (currentSet === 5) {
+              updates["finished"] = true;
+            }
           }
 
           transaction.update(docRef, updates);

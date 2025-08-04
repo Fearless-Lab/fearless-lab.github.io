@@ -74,6 +74,18 @@ const HistoryModal = ({
             <DialogDescription className="text-gray-400 mt-2 text-sm">
               이전 세트의 밴픽 기록을 확인할 수 있습니다.
             </DialogDescription>
+
+            <div className="mt-4 mb-4 border-t border-neutral-700" />
+
+            <div className="flex items-center text-lg text-gray-300 font-medium">
+              <span className="text-white font-semibold">{teamName}</span>
+              <span className="mx-2 text-yellow-400 text-2xl">
+                {winners.filter((w) => w === teamName).length}
+                <span className="mx-1 text-gray-400">:</span>
+                {winners.filter((w) => w === oppositeTeam).length}
+              </span>
+              <span className="text-white font-semibold">{oppositeTeam}</span>
+            </div>
           </div>
 
           <div className="flex items-center gap-2">
@@ -195,7 +207,7 @@ const HistoryModal = ({
         </div>
 
         <button
-          className="mt-6 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm"
+          className="h-10 mt-6 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm"
           onClick={onClose}
           type="button"
         >

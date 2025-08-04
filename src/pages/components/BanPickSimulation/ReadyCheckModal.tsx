@@ -40,7 +40,9 @@ const ReadyCheckModal = ({
             <br />양 팀이 준비 완료를 눌러야 밴픽이 시작됩니다.
           </DialogDescription>
           <DialogDescription className="text-gray-400 mt-2 text-sm">
-            좌측은 블루팀, 우측은 레드팀입니다. 본인의 팀명을 확인해 주세요!
+            좌측은 블루팀, 우측은 레드팀입니다.
+            <br />
+            본인의 팀명을 확인해 주세요!
           </DialogDescription>
         </DialogHeader>
 
@@ -48,6 +50,8 @@ const ReadyCheckModal = ({
           <div className="flex items-center gap-2">
             <ClipboardDocumentListIcon className="w-5 h-5" />
             이전 세트의 밴픽 기록을 확인할 수 있습니다.
+            <br />
+            1세트 종료 이후부터 확인할 수 있습니다.
           </div>
           <div className="flex flex-col gap-1">
             {/* <div className="flex items-center gap-2">
