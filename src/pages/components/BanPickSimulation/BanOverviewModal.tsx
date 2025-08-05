@@ -9,6 +9,7 @@ import { modeDescription } from "@constants/category";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useQueries } from "@tanstack/react-query";
 import { fetchPickBySet } from "@/apis/service/fetchPickBySet";
+import { cn } from "@/lib/utils";
 
 interface BanOverviewModalProps {
   open: boolean;
@@ -69,7 +70,9 @@ const BanOverviewModal = ({
               {mode === "fearless"
                 ? modeDescription["소프트 피어리스"]
                 : modeDescription["하드 피어리스"]}
-              {modeDescription[mode]}
+              <br />
+              {mode === "fearless" &&
+                "상대팀의 금지 챔피언도 함께 표시되니 전략 구성에 참고해보세요."}
             </DialogDescription>
 
             <div className="mt-4 mb-4 border-t border-neutral-700" />
@@ -101,33 +104,53 @@ const BanOverviewModal = ({
               if (!picks) return null;
 
               return (
-                <div key={idx} className="flex items-center gap-4">
-                  <h2 className="font-bold text-base text-white whitespace-nowrap">
+                <div
+                  key={idx}
+                  className="flex items-start gap-4 flex-wrap sm:flex-nowrap"
+                >
+                  <h2 className="font-bold text-base text-white min-w-fit self-center">
                     Set {idx + 1}
                   </h2>
 
                   <div className="flex flex-col gap-1">
-                    <div className="flex gap-2">
-                      {picks.slice(0, 5).map((champId) => (
-                        <img
-                          key={champId}
-                          src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champId}.png`}
-                          alt={champId}
-                          title={champId}
-                          className="w-10 h-10 rounded border border-neutral-600 object-cover"
-                        />
-                      ))}
+                    <div className="flex gap-2 mb-1">
+                      {picks.slice(0, 5).map((champId) => {
+                        const shouldHighlight =
+                          mode === "hardFearless" || mode === "fearless";
+                        return (
+                          <img
+                            key={champId}
+                            src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champId}.png`}
+                            alt={champId}
+                            title={champId}
+                            className={cn(
+                              "w-10 h-10 rounded object-cover border block",
+                              shouldHighlight
+                                ? "border-red-600"
+                                : "border-neutral-600"
+                            )}
+                          />
+                        );
+                      })}
                     </div>
                     <div className="flex gap-2">
-                      {picks.slice(5, 10).map((champId) => (
-                        <img
-                          key={champId}
-                          src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champId}.png`}
-                          alt={champId}
-                          title={champId}
-                          className="w-10 h-10 rounded border border-neutral-600 object-cover"
-                        />
-                      ))}
+                      {picks.slice(5, 10).map((champId) => {
+                        const shouldHighlight = mode === "hardFearless";
+                        return (
+                          <img
+                            key={champId}
+                            src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champId}.png`}
+                            alt={champId}
+                            title={champId}
+                            className={cn(
+                              "w-10 h-10 rounded object-cover border",
+                              shouldHighlight
+                                ? "border-red-600"
+                                : "border-neutral-600"
+                            )}
+                          />
+                        );
+                      })}
                     </div>
                   </div>
                 </div>

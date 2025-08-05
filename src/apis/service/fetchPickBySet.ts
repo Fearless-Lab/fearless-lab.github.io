@@ -18,15 +18,7 @@ export const fetchPickBySet = async (
 
   if (!setData || !setData.pick || !mode) return null;
 
-  if (mode === "fearless") {
-    return setData.pick[teamName] || [];
-  }
-
-  if (mode === "hardFearless") {
-    const ourPick = setData.pick[teamName] || [];
-    const oppPick = setData.pick[oppositeTeam] || [];
-    return [...ourPick, ...oppPick];
-  }
-
-  return null;
+  const ourPick = setData.pick[teamName] || [];
+  const oppPick = setData.pick[oppositeTeam] || [];
+  return [...ourPick, ...oppPick];
 };
