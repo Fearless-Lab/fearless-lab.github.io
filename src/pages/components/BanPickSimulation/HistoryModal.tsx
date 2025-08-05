@@ -133,7 +133,7 @@ const HistoryModal = ({
               return (
                 <div key={idx}>
                   <h2 className="font-bold text-base text-white mb-2">
-                    {idx + 1} 세트
+                    Set {idx + 1}
                   </h2>
 
                   <div

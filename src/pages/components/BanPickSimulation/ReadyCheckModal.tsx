@@ -9,6 +9,7 @@ import {
 import {
   // ArrowPathIcon,
   ClipboardDocumentListIcon,
+  NoSymbolIcon,
 } from "@heroicons/react/16/solid";
 import { useNavigate } from "react-router-dom";
 
@@ -16,12 +17,14 @@ type ReadyCheckModalProps = {
   open: boolean;
   onReadyClick: () => void;
   isReady: boolean;
+  mode: string;
 };
 
 const ReadyCheckModal = ({
   open,
   onReadyClick,
   isReady,
+  mode,
 }: ReadyCheckModalProps) => {
   const navigate = useNavigate();
 
@@ -50,16 +53,21 @@ const ReadyCheckModal = ({
           <div className="flex items-center gap-2">
             <ClipboardDocumentListIcon className="w-5 h-5" />
             이전 세트의 밴픽 기록을 확인할 수 있습니다.
-            <br />
-            1세트 종료 이후부터 확인할 수 있습니다.
           </div>
+          {mode !== "normal" && (
+            <div className="flex items-center gap-2">
+              <NoSymbolIcon className="w-5 h-5 text-rose-400" />
+              선택하신 모드에서의 금지 현황을 확인할 수 있습니다.
+            </div>
+          )}
+
           <div className="flex flex-col gap-1">
+            <div className="text-xs text-gray-400 ml-7">
+              ※ 1세트 종료 이후부터 확인할 수 있습니다.
+            </div>
             {/* <div className="flex items-center gap-2">
               <ArrowPathIcon className="w-5 h-5 text-rose-400" />
               해당 세트의 밴픽을 처음부터 다시 시작합니다.
-            </div> */}
-            {/* <div className="text-xs text-gray-400 ml-7">
-              ※ 다시 시작하려면 상대팀의 동의가 필요합니다.
             </div> */}
           </div>
         </div>
@@ -75,7 +83,7 @@ const ReadyCheckModal = ({
           className="bg-rose-500 py-2 text-sm font-normal hover:bg-rose-400"
           onClick={() => navigate("/banPick")}
         >
-          이전 화면으로 돌아가기
+          홈으로 돌아가기
         </CTAButton>
       </DialogContent>
     </Dialog>

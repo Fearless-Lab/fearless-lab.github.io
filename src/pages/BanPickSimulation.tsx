@@ -1,5 +1,6 @@
 import {
   ClipboardDocumentListIcon,
+  NoSymbolIcon,
   // ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 
@@ -22,6 +23,7 @@ import NextSetModal from "./components/BanPickSimulation/NextSetModal";
 import HistoryModal from "./components/BanPickSimulation/HistoryModal";
 import { positions, positionMap, type Position } from "@constants/positions";
 import { useBanPickController } from "@/hooks/banPick/useBanPickController";
+import BanOverviewModal from "./components/BanPickSimulation/BanOverviewModal";
 
 const BanPickSimulation = () => {
   const { matchId, teamName, oppositeTeam, mode, initialTeam } =
@@ -98,6 +100,7 @@ const BanPickSimulation = () => {
     : (!isMyTurn && !isSwapPhase) || commited || (finished && !isSwapPhase);
 
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isBanOverviewOpen, setIsBanOverviewOpen] = useState(false);
 
   const [selectedPosition, setSelectedPosition] = useState<Position | null>(
     null
@@ -159,13 +162,20 @@ const BanPickSimulation = () => {
                 className="w-5 h-5 cursor-pointer hover:text-gray-300"
                 onClick={() => setIsHistoryOpen(true)}
               />
+              {mode !== "normal" && (
+                <NoSymbolIcon
+                  className="w-5 h-5 text-rose-400 cursor-pointer hover:text-gray-300"
+                  onClick={() => setIsBanOverviewOpen(true)}
+                />
+              )}
+
               {/* <ArrowPathIcon
                 className="w-5 h-5 cursor-pointer hover:text-red-800 text-rose-400"
                 onClick={() => alert("🚧 공사 중이에요")}
               /> */}
             </div>
           </div>
-          <div className="flex-1 bg-red-400 text-md md:text-xl text-white flex items-center justify-end font-bold pr-5">
+          <div className="flex-1 bg-rose-400 text-md md:text-xl text-white flex items-center justify-end font-bold pr-5">
             {teams ? teams.red : "팀 정보 불러오는중"}
           </div>
         </div>
@@ -305,13 +315,12 @@ const BanPickSimulation = () => {
           </div>
         </div>
       </div>
-
       <ReadyCheckModal
         open={isModalOpen}
         onReadyClick={handleReady}
         isReady={isReady}
+        mode={mode}
       />
-
       <NextSetModal
         matchId={matchId}
         open={isNextSetPreparing && !finished}
@@ -319,7 +328,6 @@ const BanPickSimulation = () => {
         oppositeTeam={oppositeTeam}
         finished={finished}
       />
-
       <HistoryModal
         matchId={matchId}
         currentSet={currentSet}
@@ -330,6 +338,17 @@ const BanPickSimulation = () => {
         onClose={() => setIsHistoryOpen(false)}
         version={version}
         winners={winners}
+      />
+      <BanOverviewModal
+        open={isBanOverviewOpen && (currentSet > 1 || currentStep === 21)}
+        onClose={() => setIsBanOverviewOpen(false)}
+        mode={mode}
+        matchId={matchId}
+        currentSet={currentSet}
+        currentStep={currentStep}
+        teamName={teamName}
+        oppositeTeam={oppositeTeam}
+        version={version}
       />
     </div>
   );
