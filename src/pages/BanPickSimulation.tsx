@@ -137,9 +137,9 @@ const BanPickSimulation = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col mt-12">
+    <div className="min-h-screen flex flex-col mt-22">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
-        <div className="flex w-full h-16 rounded-tl-md rounded-tr-md overflow-hidden">
+        <div className="flex w-full h-15 rounded-tl-md rounded-tr-md overflow-hidden">
           <div className="flex-1 bg-blue-400 text-md md:text-xl text-white flex items-center justify-start font-bold pl-5">
             {teams ? teams.blue : "팀 정보 불러오는중"}
           </div>
@@ -189,7 +189,7 @@ const BanPickSimulation = () => {
           />
         </div>
 
-        <div className="max-w-6xl mx-auto mt-4 w-full">
+        <div className="max-w-6xl mx-auto mt-2 w-full">
           <div className="hidden md:grid md:grid-cols-4 gap-12 w-full">
             <div className="md:col-span-1 border rounded-md min-h-92 flex flex-col divide-y">
               <PickColumn
@@ -221,7 +221,7 @@ const BanPickSimulation = () => {
                 </div>
               </div>
 
-              <div className="h-80 overflow-auto">
+              <div className="h-75 overflow-auto">
                 <ChampionGrid {...championGridProps} />
               </div>
 
@@ -268,8 +268,8 @@ const BanPickSimulation = () => {
               />
             </div>
 
-            <div className="min-h-84">
-              <div className="h-80 overflow-auto">
+            <div className="min-h-76">
+              <div className="h-76 overflow-auto">
                 <ChampionGrid {...championGridProps} />
               </div>
             </div>
