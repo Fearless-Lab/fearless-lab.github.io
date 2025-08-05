@@ -78,7 +78,7 @@ const BanPick = () => {
         ref={sectionRef}
         className="flex flex-col items-center justify-center my-28 text-center scroll-mt-20"
       >
-        <HighlightBadge>Ban · Pick Simulation</HighlightBadge>
+        <HighlightBadge>LOL Ban · Pick Simulation</HighlightBadge>
 
         <Infopill>밴픽 전략을 구상해보세요</Infopill>
         <SubInfopill>
