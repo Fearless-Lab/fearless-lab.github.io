@@ -38,13 +38,21 @@ const BanPickTimer = ({
   const lastStepRef = useRef<number | null>(null);
 
   const getRandomSelectableChampion = () => {
-    const bannedOrPicked = new Set([...currentSetSelections, ...previousPicks]);
+    const currentPhaseType = PHASE[currentStep!].type;
+    let bannedOrPicked: Set<string>;
+
+    if (currentPhaseType === "ban") {
+      // ban일 때는 현재 set에서만 제외
+      bannedOrPicked = new Set(currentSetSelections);
+    } else {
+      // pick일 때는 이전 pick까지 모두 제외
+      bannedOrPicked = new Set([...currentSetSelections, ...previousPicks]);
+    }
 
     const selectableChampions = champions
       .map((c) => c.id)
       .filter((champId) => !bannedOrPicked.has(champId));
 
-    // 랜덤으로 하나 뽑기
     const randomIndex = Math.floor(Math.random() * selectableChampions.length);
     return selectableChampions[randomIndex];
   };

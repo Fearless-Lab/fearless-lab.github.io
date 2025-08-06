@@ -26,8 +26,12 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   isGameEnd,
   commited,
 }) => {
-  const { commitAndAdvance, toggleIsNextSetPreparing, commitSwapConfirm } =
-    useBanPickController(matchId);
+  const {
+    commitAndAdvance,
+    toggleIsNextSetPreparing,
+    commitSwapConfirm,
+    commitTotalPickIfNeeded,
+  } = useBanPickController(matchId);
   const calledRef = useRef(false);
 
   useEffect(() => {
@@ -46,7 +50,8 @@ const CommitButton: React.FC<CTAButtonProps> = ({
     // 밴픽 끝나고 커밋 안된 경우에만 탄다
     if (!commited && currentStep === 20) {
       calledRef.current = true;
-      commitSwapConfirm(teamName);
+      await commitSwapConfirm(teamName);
+      await commitTotalPickIfNeeded(teamName);
       return;
     }
 

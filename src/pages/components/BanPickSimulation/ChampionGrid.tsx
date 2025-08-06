@@ -36,6 +36,7 @@ export default function ChampionGrid({
 
     const currentPhaseType = PHASE[currentStep].type;
     const currentPhaseIdx = PHASE[currentStep].index;
+
     if (currentPhaseType === "ban") {
       const temp = [...localBan];
       temp[currentPhaseIdx] = champ;
@@ -57,13 +58,15 @@ export default function ChampionGrid({
       style={{ gridTemplateColumns: "repeat(auto-fit, 64px)" }}
     >
       {filteredChampions.map((champ) => {
-        const isDisabled =
-          currentSetSelections.has(champ.id) || previousPicks.has(champ.id);
-
         const currentPhaseType = PHASE[currentStep]?.type;
         const currentPhaseIdx = PHASE[currentStep]?.index;
 
-        // 지금 단계에서 선택된 챔피언인지
+        // ban일 경우 previousPicks는 고려하지 않음
+        const isDisabled =
+          currentPhaseType === "ban"
+            ? currentSetSelections.has(champ.id)
+            : currentSetSelections.has(champ.id) || previousPicks.has(champ.id);
+
         const isSelected =
           (currentPhaseType === "ban" &&
             localBan[currentPhaseIdx] === champ.id) ||
