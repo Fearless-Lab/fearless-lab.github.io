@@ -65,15 +65,14 @@ const BanPick = () => {
 
   return (
     <>
-      {/* ref) https://ko.react.dev/reference/react-dom/components/title */}
-      <title>피어리스 | 밴픽 URL 생성</title>
+      <title>롤 모의 밴픽 | 피어리스</title>
 
       <section
         id="banPick"
         ref={sectionRef}
         className="flex flex-col items-center justify-center my-28 text-center scroll-mt-20"
       >
-        <HighlightBadge>LOL Ban · Pick Simulation</HighlightBadge>
+        <HighlightBadge>롤 모의 밴픽 시뮬레이터</HighlightBadge>
 
         <Infopill>밴픽 전략을 구상해보세요</Infopill>
         <SubInfopill>
