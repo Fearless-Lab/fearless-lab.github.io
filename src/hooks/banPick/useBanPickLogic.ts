@@ -41,6 +41,12 @@ export const useBanPickLogic = ({
   );
   const [previousPicks, setPreviousPicks] = useState<Set<string>>(new Set());
 
+  // 소프트 피어리스 모드의 밴 페이즈에서 비활성 여부 체크하기 위한 상태
+  // 양팀 모두 사용한 챔피언이면 밴페이즈에서 비활성화
+  const [bothTeamsPreviousPicks, setBothTeamsPreviousPicks] = useState<
+    Set<string>
+  >(new Set());
+
   // 다음 세트 셋업 준비 중인지 확인
   const [isNextSetPreparing, setIsNextSetPreparing] = useState(false);
 
@@ -160,22 +166,21 @@ export const useBanPickLogic = ({
       setCurrentSetSelections(new Set(allSelections));
 
       // 이전 픽들 누적
-      const totalPickSet = new Set<string>();
+      const myTotalPicks: string[] = data.total?.[teamName] ?? [];
+      const oppTotalPicks: string[] = data.total?.[oppositeTeam] ?? [];
 
-      const myTotalPicks = data.total?.[teamName];
-      const oppTotalPicks = data.total?.[oppositeTeam];
+      setPreviousPicks(
+        mode === "fearless"
+          ? new Set(myTotalPicks)
+          : new Set([...myTotalPicks, ...oppTotalPicks])
+      );
 
-      if (mode === "fearless") {
-        myTotalPicks.forEach((champ: string) => {
-          if (champ) totalPickSet.add(champ);
-        });
-      } else if (mode === "hardFearless") {
-        [...myTotalPicks, ...oppTotalPicks].forEach((champ) => {
-          if (champ) totalPickSet.add(champ);
-        });
-      }
+      const oppSet = new Set(oppTotalPicks);
+      const intersection = new Set(
+        myTotalPicks.filter((champ) => oppSet.has(champ))
+      );
+      setBothTeamsPreviousPicks(intersection);
 
-      setPreviousPicks(totalPickSet);
       setIsNextSetPreparing(data.isNextSetPreparing);
       setWinners(data.winners ?? []);
       setFinished(!!data.finished);
@@ -220,6 +225,7 @@ export const useBanPickLogic = ({
     enemyPick,
     currentSetSelections,
     previousPicks,
+    bothTeamsPreviousPicks,
     isNextSetPreparing,
     winners,
     finished,

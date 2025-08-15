@@ -47,6 +47,7 @@ const BanPickSimulation = () => {
     enemyPick,
     currentSetSelections,
     previousPicks,
+    bothTeamsPreviousPicks,
     isNextSetPreparing,
     winners,
     finished,
@@ -129,6 +130,8 @@ const BanPickSimulation = () => {
     setLocalPick,
     currentSetSelections,
     previousPicks,
+    mode,
+    bothTeamsPreviousPicks,
   };
 
   const handleSwap = (newOrder: (string | undefined)[]) => {

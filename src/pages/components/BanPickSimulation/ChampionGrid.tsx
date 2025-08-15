@@ -13,6 +13,8 @@ export interface ChampionGridProps {
   setLocalPick: (value: string[]) => void;
   currentSetSelections: Set<string>;
   previousPicks: Set<string>;
+  mode: string;
+  bothTeamsPreviousPicks: Set<string>;
 }
 
 export default function ChampionGrid({
@@ -27,6 +29,8 @@ export default function ChampionGrid({
   setLocalPick,
   currentSetSelections,
   previousPicks,
+  mode,
+  bothTeamsPreviousPicks,
 }: ChampionGridProps) {
   let isMyTurn = undefined;
   if (currentStep < 20) isMyTurn = myTeam === PHASE[currentStep].team;
@@ -61,11 +65,19 @@ export default function ChampionGrid({
         const currentPhaseType = PHASE[currentStep]?.type;
         const currentPhaseIdx = PHASE[currentStep]?.index;
 
-        // ban일 경우 previousPicks는 고려하지 않음
+        const baseCheck = currentSetSelections.has(champ.id);
+
+        const banCheck =
+          mode === "hardFearless"
+            ? previousPicks.has(champ.id)
+            : bothTeamsPreviousPicks.has(champ.id);
+
+        const pickCheck = previousPicks.has(champ.id);
+
         const isDisabled =
           currentPhaseType === "ban"
-            ? currentSetSelections.has(champ.id)
-            : currentSetSelections.has(champ.id) || previousPicks.has(champ.id);
+            ? baseCheck || banCheck
+            : baseCheck || pickCheck;
 
         const isSelected =
           (currentPhaseType === "ban" &&
