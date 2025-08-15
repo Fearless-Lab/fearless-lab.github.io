@@ -162,7 +162,11 @@ export const useBanPickLogic = ({
       setEnemyPick(oppPick);
 
       // 해당 세트 누적 밴픽
-      const allSelections = [...myBan, ...myPick, ...oppBan, ...oppPick];
+      const allSelections = new Set(
+        [myBan, myPick, oppBan, oppPick].flat().filter(Boolean)
+      );
+      // flat : 배열 안의 배열을 1단계 풀어서 평탄화(flatten) 하는 메서드
+
       setCurrentSetSelections(new Set(allSelections));
 
       // 이전 픽들 누적

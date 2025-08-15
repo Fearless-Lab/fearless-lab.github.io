@@ -21,14 +21,19 @@ const CopyLinkButton = ({
       ? "bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60"
       : "bg-gradient-to-r from-rose-400/40 via-rose-500/50 to-rose-700/60";
 
+  const copiedGradient =
+    team === "blue"
+      ? "bg-gradient-to-l from-blue-200/60 via-blue-300/70 to-blue-400/80"
+      : "bg-gradient-to-r from-rose-200/60 via-rose-300/70 to-rose-400/80";
+
   return (
     <button
       onClick={() => onCopy(team)}
       className={clsx(
         "flex items-center justify-center gap-1 px-3 py-2 rounded-md shadow-md border transition-all duration-500 backdrop-blur-md cursor-pointer",
         isCopied
-          ? "bg-gray-100/80 text-gray-600 border-gray-300"
-          : `${teamGradient} text-white border-white/10 hover:brightness-110`
+          ? `${copiedGradient} text-black border-white/20`
+          : `${teamGradient} text-white border-white/10 hover:brightness-150`
       )}
     >
       {isCopied ? (

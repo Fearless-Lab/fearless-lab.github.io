@@ -38,16 +38,7 @@ const BanPickTimer = ({
   const lastStepRef = useRef<number | null>(null);
 
   const getRandomSelectableChampion = () => {
-    const currentPhaseType = PHASE[currentStep!].type;
-    let bannedOrPicked: Set<string>;
-
-    if (currentPhaseType === "ban") {
-      // ban일 때는 현재 set에서만 제외
-      bannedOrPicked = new Set(currentSetSelections);
-    } else {
-      // pick일 때는 이전 pick까지 모두 제외
-      bannedOrPicked = new Set([...currentSetSelections, ...previousPicks]);
-    }
+    const bannedOrPicked = new Set([...currentSetSelections, ...previousPicks]);
 
     const selectableChampions = champions
       .map((c) => c.id)
@@ -79,15 +70,16 @@ const BanPickTimer = ({
 
       if (remaining <= 0.1 && !calledRef.current) {
         calledRef.current = true;
-        const randomPick = getRandomSelectableChampion();
 
         if (isMyTurn) {
-          commitAndAdvance(
-            teamName,
-            randomPick,
-            PHASE[currentStep].type as "pick" | "ban",
-            currentStep
-          );
+          // 내 차례일때만 랜덤 픽 함수 호출
+          const randomPick = getRandomSelectableChampion();
+
+          if (PHASE[currentStep].type === "ban") {
+            commitAndAdvance(teamName, "", "ban", currentStep); // ban은 챔피언 ID 없이
+          } else {
+            commitAndAdvance(teamName, randomPick, "pick", currentStep);
+          }
         }
 
         if (isSwapPhase) {

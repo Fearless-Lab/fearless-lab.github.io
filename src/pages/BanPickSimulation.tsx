@@ -144,7 +144,7 @@ const BanPickSimulation = () => {
     <div className="min-h-screen flex flex-col mt-22">
       <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
         <div className="flex w-full h-15 rounded-tl-md rounded-tr-md overflow-hidden">
-          <div className="flex-1 bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-xl text-white flex items-center justify-start font-bold pl-5">
+          <div className="flex-1 bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60 backdrop-blur-md border border-white/10 shadow-lg text-lg md:text-xl text-white flex items-center justify-start font-bold pl-5">
             {teams ? teams.blue : "팀 정보 불러오는중"}
           </div>
           <div className="w-20 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
@@ -179,7 +179,7 @@ const BanPickSimulation = () => {
               /> */}
             </div>
           </div>
-          <div className="flex-1 bg-gradient-to-r from-rose-400/40 via-rose-500/50 to-rose-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-xl text-white flex items-center justify-end font-bold pr-5">
+          <div className="flex-1 bg-gradient-to-r from-rose-400/40 via-rose-500/50 to-rose-700/60 backdrop-blur-md border border-white/10 shadow-lg text-lg md:text-xl text-white flex items-center justify-end font-bold pr-5">
             {teams ? teams.red : "팀 정보 불러오는중"}
           </div>
         </div>
