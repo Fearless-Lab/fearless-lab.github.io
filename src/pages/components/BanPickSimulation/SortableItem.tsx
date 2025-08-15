@@ -4,21 +4,15 @@ import { CSS } from "@dnd-kit/utilities";
 interface SortableItemProps {
   id: string;
   champion: string | undefined;
-  isCurrentTeam: boolean;
-  currentIndex: number | undefined;
-  borderColorClass: string;
+
   team: "blue" | "red";
-  index: number;
 }
 
 const SortableItem = ({
   id,
   champion,
-  isCurrentTeam,
-  currentIndex,
-  borderColorClass,
+
   team,
-  index,
 }: SortableItemProps) => {
   const {
     attributes,
@@ -43,11 +37,7 @@ const SortableItem = ({
       {...attributes}
       {...listeners}
       style={style}
-      className={`flex-1 relative rounded-md ${
-        isCurrentTeam && index === currentIndex
-          ? `border-2 ${borderColorClass}`
-          : ""
-      }`}
+      className="flex-1 relative rounded-md "
       title={champion}
     >
       <div

@@ -1,6 +1,11 @@
 import { useBanPickController } from "@/hooks/banPick/useBanPickController";
 import { PHASE } from "@constants/banPick";
-import React, { useEffect, useRef } from "react";
+import React, {
+  useEffect,
+  useRef,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { twMerge } from "tailwind-merge";
 
 interface CTAButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -12,6 +17,8 @@ interface CTAButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   matchId: string;
   isGameEnd: Boolean;
   commited: Boolean;
+  finished: Boolean;
+  setIsHistoryOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const CommitButton: React.FC<CTAButtonProps> = ({
@@ -25,6 +32,8 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   matchId,
   isGameEnd,
   commited,
+  finished,
+  setIsHistoryOpen,
 }) => {
   const {
     commitAndAdvance,
@@ -45,6 +54,8 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   const disabledClass = "bg-gray-400 cursor-not-allowed";
 
   const onClickHandler = async () => {
+    if (finished) setIsHistoryOpen(true);
+
     if (calledRef.current) return;
 
     // 밴픽 끝나고 커밋 안된 경우에만 탄다

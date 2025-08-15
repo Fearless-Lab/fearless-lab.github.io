@@ -189,6 +189,7 @@ const BanPickSimulation = () => {
             localBan={localBan}
             enemyBan={enemyBan}
             version={version}
+            currentStep={currentStep}
           />
         </div>
 
@@ -237,6 +238,8 @@ const BanPickSimulation = () => {
                 matchId={matchId}
                 isGameEnd={isGameEnd}
                 commited={commited}
+                finished={finished}
+                setIsHistoryOpen={setIsHistoryOpen}
               >
                 {actionText}
               </CommitButton>
@@ -286,6 +289,8 @@ const BanPickSimulation = () => {
               matchId={matchId}
               isGameEnd={isGameEnd}
               commited={commited}
+              finished={finished}
+              setIsHistoryOpen={setIsHistoryOpen}
             >
               {actionText}
             </CommitButton>

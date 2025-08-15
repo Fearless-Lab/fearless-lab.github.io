@@ -43,9 +43,6 @@ const PickColumn = ({
     currentPhase?.team === team && currentPhase?.type === "pick";
   const currentIndex = currentPhase?.index;
 
-  const borderColorClass =
-    team === "blue" ? "border-blue-400" : "border-rose-400";
-
   // 우리팀이고 스왑 페이즈일 때만 드래그 가능
   const isDraggable = isSwapPhase && team === myTeam && !commited;
 
@@ -94,11 +91,7 @@ const PickColumn = ({
               key={`${team}-pick-${index}`}
               id={champion ?? `empty-${index}`}
               champion={champion}
-              isCurrentTeam={isCurrentTeam}
-              currentIndex={currentIndex}
-              borderColorClass={borderColorClass}
               team={team}
-              index={index}
             />
           ))}
         </SortableContext>
@@ -113,16 +106,22 @@ const PickColumn = ({
           key={`${team}-pick-${i}`}
           className={`flex-1 relative rounded-md ${
             isCurrentTeam && i === currentIndex
-              ? `border-2 ${borderColorClass}`
+              ? `border-2 animate-border-ripple`
               : ""
           }`}
-          style={{
-            backgroundImage: champion
-              ? `url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion}_0.jpg)`
-              : undefined,
-            backgroundSize: "cover",
-            height: "80px",
-          }}
+          style={
+            {
+              "--ripple-color":
+                team === "blue"
+                  ? "rgba(96, 165, 250, 0.7)"
+                  : "rgba(244, 63, 94, 0.7)",
+              backgroundImage: champion
+                ? `url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion}_0.jpg)`
+                : undefined,
+              backgroundSize: "cover",
+              height: "80px",
+            } as React.CSSProperties
+          }
         >
           {champion && (
             <div

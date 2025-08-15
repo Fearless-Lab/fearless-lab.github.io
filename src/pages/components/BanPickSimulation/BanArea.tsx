@@ -1,11 +1,25 @@
+import { PHASE } from "@constants/banPick";
+
 interface BanAreaProps {
   myTeam: "blue" | "red" | undefined;
   localBan: string[];
   enemyBan: string[];
   version: string;
+  currentStep: number;
 }
 
-const BanArea = ({ myTeam, localBan, enemyBan, version }: BanAreaProps) => {
+const BanArea = ({
+  myTeam,
+  localBan,
+  enemyBan,
+  version,
+  currentStep,
+}: BanAreaProps) => {
+  const currentPhase = PHASE[currentStep];
+  const isBanPhase = currentPhase?.type === "ban";
+  const currentBanTeam = currentPhase?.team;
+  const currentBanIndex = currentPhase?.index;
+
   const renderBans = (
     bans: string[],
     keyPrefix: string,
@@ -13,9 +27,23 @@ const BanArea = ({ myTeam, localBan, enemyBan, version }: BanAreaProps) => {
   ) =>
     bans.map((champ, i) => {
       const borderColor =
-        team === "blue" ? "border-blue-400" : "border-red-400";
+        team === "blue" ? "border-blue-400" : "border-rose-400";
+
+      // 빨강팀은 reverse 순서라 인덱스 보정
+      const logicalIndex = team === "red" ? bans.length - 1 - i : i;
+
+      const isHighlight =
+        isBanPhase &&
+        currentBanTeam === team &&
+        currentBanIndex === logicalIndex;
+
       const key = `${keyPrefix}-${i}`;
-      const baseClass = `w-10 h-10 border ${borderColor} bg-neutral-900`;
+      const baseClass = `w-10 h-10 border ${borderColor} bg-neutral-900 rounded-md ${
+        isHighlight ? "animate-border-ripple" : ""
+      }`;
+
+      const rippleColor =
+        team === "blue" ? "rgba(96, 165, 250, 0.9)" : "rgba(244, 63, 94, 0.9)";
 
       return champ ? (
         <img
@@ -24,9 +52,14 @@ const BanArea = ({ myTeam, localBan, enemyBan, version }: BanAreaProps) => {
           alt={champ}
           className={baseClass}
           title={champ}
+          style={{ "--ripple-color": rippleColor } as React.CSSProperties}
         />
       ) : (
-        <div key={`${key}-empty`} className={baseClass} />
+        <div
+          key={`${key}-empty`}
+          className={baseClass}
+          style={{ "--ripple-color": rippleColor } as React.CSSProperties}
+        />
       );
     });
 
