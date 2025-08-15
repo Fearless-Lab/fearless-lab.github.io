@@ -190,6 +190,7 @@ const BanPickSimulation = () => {
             enemyBan={enemyBan}
             version={version}
             currentStep={currentStep}
+            isModalOpen={isModalOpen}
           />
         </div>
 

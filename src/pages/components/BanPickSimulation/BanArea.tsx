@@ -6,6 +6,7 @@ interface BanAreaProps {
   enemyBan: string[];
   version: string;
   currentStep: number;
+  isModalOpen: boolean;
 }
 
 const BanArea = ({
@@ -14,6 +15,7 @@ const BanArea = ({
   enemyBan,
   version,
   currentStep,
+  isModalOpen,
 }: BanAreaProps) => {
   const currentPhase = PHASE[currentStep];
   const isBanPhase = currentPhase?.type === "ban";
@@ -33,6 +35,7 @@ const BanArea = ({
       const logicalIndex = team === "red" ? bans.length - 1 - i : i;
 
       const isHighlight =
+        !isModalOpen &&
         isBanPhase &&
         currentBanTeam === team &&
         currentBanIndex === logicalIndex;
