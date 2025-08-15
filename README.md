@@ -10,9 +10,10 @@ Fearless는 리그 오브 레전드(LoL)의 밴픽(Ban & Pick) 과정을 시뮬�
 - 다양한 모드 지원 (토너먼트 드래프트, 소프트 피어리스, 하드 피어리스)
 - 이전 세트 기록 및 스왑 기능 제공
 
-<img width="780" height="465" alt="image" src="https://github.com/user-attachments/assets/9970a7c2-376b-4c6c-a995-00e790efefc1" />
-<img width="780" height="465" alt="image" src="https://github.com/user-attachments/assets/7e2366eb-380d-4989-894d-9977d3a372b5" />
-<img width="780" height="465" alt="image" src="https://github.com/user-attachments/assets/c50917a1-fefe-4cd1-9f8f-22de9caa59ab" />
+<img width="780" height="465" alt="banPick" src="https://github.com/user-attachments/assets/c1680735-d899-41b2-ba63-bcf99072e27c" />
+<img width="780" height="465" alt="banPick_history" src="https://github.com/user-attachments/assets/ef58de17-07bd-4ce5-90ec-236689694f6b" />
+<img width="780" height="465" alt="fearless_ban_list" src="https://github.com/user-attachments/assets/a81b1a6a-562d-48bc-88e1-d6cc7313e947" />
+
 
 
 
