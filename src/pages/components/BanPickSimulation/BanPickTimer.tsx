@@ -15,6 +15,8 @@ interface BanPickTimerProps {
   isSwapPhase: Boolean;
 }
 
+const EXTRA_DELAY = 2.5; // 0초 이후 추가 대기 시간
+
 const BanPickTimer = ({
   matchId,
   startedAt,
@@ -34,12 +36,12 @@ const BanPickTimer = ({
     commitTotalPickIfNeeded,
     commitSwapConfirm,
   } = useBanPickController(matchId);
+
   const calledRef = useRef(false);
   const lastStepRef = useRef<number | null>(null);
 
   const getRandomSelectableChampion = () => {
     const bannedOrPicked = new Set([...currentSetSelections, ...previousPicks]);
-
     const selectableChampions = champions
       .map((c) => c.id)
       .filter((champId) => !bannedOrPicked.has(champId));
@@ -64,19 +66,26 @@ const BanPickTimer = ({
       const elapsed = (now - startedAt.getTime()) / 1000;
 
       const currentPhase = PHASE[currentStep];
-      const remaining = Math.max(currentPhase.duration - elapsed, 0);
 
-      setRemainingTime(Math.ceil(remaining));
+      // 실제 로직 실행용: EXTRA_DELAY 포함
+      const actualRemaining = Math.max(
+        currentPhase.duration + EXTRA_DELAY - elapsed,
+        0
+      );
 
-      if (remaining <= 0.1 && !calledRef.current) {
+      // 화면 표시용: EXTRA_DELAY 제외
+      const displayRemaining = Math.max(currentPhase.duration - elapsed, 0);
+
+      setRemainingTime(Math.ceil(displayRemaining));
+
+      // 실행 조건은 EXTRA_DELAY 포함
+      if (actualRemaining <= 0.1 && !calledRef.current) {
         calledRef.current = true;
 
         if (isMyTurn) {
-          // 내 차례일때만 랜덤 픽 함수 호출
           const randomPick = getRandomSelectableChampion();
-
           if (PHASE[currentStep].type === "ban") {
-            commitAndAdvance(teamName, "", "ban", currentStep); // ban은 챔피언 ID 없이
+            commitAndAdvance(teamName, "", "ban", currentStep);
           } else {
             commitAndAdvance(teamName, randomPick, "pick", currentStep);
           }
@@ -92,14 +101,26 @@ const BanPickTimer = ({
 
     updateRemaining();
     const interval = setInterval(updateRemaining, 100);
-
     return () => clearInterval(interval);
   }, [startedAt, currentStep]);
 
   if (!startedAt || currentStep === null || currentStep >= PHASE.length)
     return <div className="text-xl font-bold">:0</div>;
 
-  return <div className="text-xl font-bold">:{Math.ceil(remainingTime)}</div>;
+  const timerColor =
+    remainingTime <= 3
+      ? "text-red-500"
+      : remainingTime <= 5
+      ? "text-yellow-500"
+      : "text-white";
+
+  return (
+    <div
+      className={`text-xl font-bold transition-all duration-300 ${timerColor}`}
+    >
+      :{Math.ceil(remainingTime)}
+    </div>
+  );
 };
 
 export default BanPickTimer;
