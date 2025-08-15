@@ -67,10 +67,13 @@ export default function ChampionGrid({
 
         const baseCheck = currentSetSelections.has(champ.id);
 
-        const banCheck =
-          mode === "hardFearless"
-            ? previousPicks.has(champ.id)
-            : bothTeamsPreviousPicks.has(champ.id);
+        let banCheck = false;
+
+        if (mode === "hardFearless") {
+          banCheck = previousPicks.has(champ.id);
+        } else if (mode === "fearless") {
+          banCheck = bothTeamsPreviousPicks.has(champ.id);
+        }
 
         const pickCheck = previousPicks.has(champ.id);
 

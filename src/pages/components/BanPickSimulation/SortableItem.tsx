@@ -4,16 +4,10 @@ import { CSS } from "@dnd-kit/utilities";
 interface SortableItemProps {
   id: string;
   champion: string | undefined;
-
   team: "blue" | "red";
 }
 
-const SortableItem = ({
-  id,
-  champion,
-
-  team,
-}: SortableItemProps) => {
+const SortableItem = ({ id, champion, team }: SortableItemProps) => {
   const {
     attributes,
     listeners,
@@ -28,7 +22,6 @@ const SortableItem = ({
     transition,
     cursor: "grab",
     opacity: isDragging ? 0.8 : 1,
-    height: "80px",
   };
 
   return (
@@ -37,17 +30,15 @@ const SortableItem = ({
       {...attributes}
       {...listeners}
       style={style}
-      className="flex-1 relative rounded-md "
+      className="relative w-full h-full rounded-md"
       title={champion}
     >
       <div
+        className="w-full h-full rounded-md bg-cover"
         style={{
           backgroundImage: champion
             ? `url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion}_0.jpg)`
             : undefined,
-          backgroundSize: "cover",
-          height: "100%",
-          borderRadius: "8px",
         }}
       />
       {champion && (

@@ -169,12 +169,17 @@ export const useBanPickLogic = ({
       const myTotalPicks: string[] = data.total?.[teamName] ?? [];
       const oppTotalPicks: string[] = data.total?.[oppositeTeam] ?? [];
 
-      setPreviousPicks(
-        mode === "fearless"
-          ? new Set(myTotalPicks)
-          : new Set([...myTotalPicks, ...oppTotalPicks])
-      );
+      let picksToSet = new Set<string>();
 
+      if (mode === "fearless") {
+        picksToSet = new Set(myTotalPicks);
+      } else if (mode === "hardFearless") {
+        picksToSet = new Set([...myTotalPicks, ...oppTotalPicks]);
+      }
+
+      setPreviousPicks(picksToSet);
+
+      // 양쪽 모두 사용했던 챔피언이면 밴 때도 비활성화
       const oppSet = new Set(oppTotalPicks);
       const intersection = new Set(
         myTotalPicks.filter((champ) => oppSet.has(champ))
