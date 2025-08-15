@@ -31,7 +31,6 @@ const BanArea = ({
       const borderColor =
         team === "blue" ? "border-blue-400" : "border-rose-400";
 
-      // 빨강팀은 reverse 순서라 인덱스 보정
       const logicalIndex = team === "red" ? bans.length - 1 - i : i;
 
       const isHighlight =
@@ -41,28 +40,33 @@ const BanArea = ({
         currentBanIndex === logicalIndex;
 
       const key = `${keyPrefix}-${i}`;
-      const baseClass = `w-10 h-10 border ${borderColor} bg-neutral-900 rounded-md ${
+      const baseClass = `relative w-10 h-10 border ${borderColor} bg-neutral-900 rounded-md overflow-hidden ${
         isHighlight ? "animate-border-ripple" : ""
       }`;
 
       const rippleColor =
         team === "blue" ? "rgba(96, 165, 250, 0.9)" : "rgba(244, 63, 94, 0.9)";
 
-      return champ ? (
-        <img
-          src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champ}.png`}
-          key={key}
-          alt={champ}
-          className={baseClass}
-          title={champ}
-          style={{ "--ripple-color": rippleColor } as React.CSSProperties}
-        />
-      ) : (
+      return (
         <div
-          key={`${key}-empty`}
+          key={key}
           className={baseClass}
           style={{ "--ripple-color": rippleColor } as React.CSSProperties}
-        />
+        >
+          {champ && (
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champ}.png`}
+              alt={champ}
+              title={champ}
+              className="w-full h-full object-cover"
+            />
+          )}
+          <div
+            className={`absolute w-[70%] h-[1.2px] rotate-45 top-1/2 left-1/2 
+                        -translate-x-1/2 -translate-y-1/2 pointer-events-none 
+                        ${champ ? "bg-white" : "bg-white/30"}`}
+          />
+        </div>
       );
     });
 

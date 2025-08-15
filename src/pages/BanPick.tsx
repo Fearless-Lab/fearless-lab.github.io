@@ -101,7 +101,7 @@ const BanPick = () => {
           <div className="flex flex-col text-left">
             <Label className="text-white mb-2">블루팀</Label>
             <Input
-              className="h-12 px-4 text-sm bg-blue-400 text-white placeholder:text-blue-100 placeholder:text-xs md:placeholder:text-sm shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300 hover:brightness-110 transition-all duration-200 border-none"
+              className="h-12 px-4 text-sm bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60 backdrop-blur-md border border-white/10 shadow-lg text-white placeholder:text-blue-100 placeholder:text-xs md:placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-blue-300 hover:brightness-110 transition-all duration-200"
               placeholder="블루팀 이름을 지어주세요 !"
               value={blueTeamName}
               onChange={(e) => setBlueTeamName(e.target.value)}
@@ -114,7 +114,7 @@ const BanPick = () => {
           <div className="flex flex-col text-left mb-4">
             <Label className="text-white mb-2">레드팀</Label>
             <Input
-              className="h-12 px-4 text-sm bg-red-400 text-white placeholder:text-red-100 placeholder:text-xs md:placeholder:text-sm shadow-lg focus:outline-none focus:ring-2 focus:ring-red-300 hover:brightness-110 transition-all duration-200 border-none"
+              className="h-12 px-4 text-sm bg-gradient-to-r from-rose-400/40 via-rose-500/50 to-rose-700/60 backdrop-blur-md border border-white/10 shadow-lg text-white placeholder:text-rose-100 placeholder:text-xs md:placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 hover:brightness-110 transition-all duration-200"
               placeholder="레드팀 이름을 지어주세요 !"
               value={redTeamName}
               onChange={(e) => setRedTeamName(e.target.value)}

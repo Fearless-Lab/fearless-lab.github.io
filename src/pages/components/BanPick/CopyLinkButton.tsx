@@ -15,27 +15,26 @@ const CopyLinkButton = ({
   onCopy,
 }: CopyLinkButtonProps) => {
   const isCopied = copied === team;
-  const baseColor =
+
+  const teamGradient =
     team === "blue"
-      ? isCopied
-        ? "bg-gray-100 text-gray-500"
-        : "bg-blue-400 text-white hover:brightness-110"
-      : isCopied
-      ? "bg-gray-100 text-gray-500"
-      : "bg-red-400 text-white hover:brightness-110";
+      ? "bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60"
+      : "bg-gradient-to-r from-rose-400/40 via-rose-500/50 to-rose-700/60";
 
   return (
     <button
       onClick={() => onCopy(team)}
       className={clsx(
-        "flex items-center justify-center gap-1 py-2 rounded-md transition-all",
-        baseColor
+        "flex items-center justify-center gap-1 px-3 py-2 rounded-md shadow-md border transition-all duration-500 backdrop-blur-md cursor-pointer",
+        isCopied
+          ? "bg-gray-100/80 text-gray-600 border-gray-300"
+          : `${teamGradient} text-white border-white/10 hover:brightness-110`
       )}
     >
       {isCopied ? (
         <>
           <CheckIcon className="w-4 h-4" />
-          {teamName} 팀 링크 복사 완료 !
+          {teamName} 팀 링크 복사 완료!
         </>
       ) : (
         <>
