@@ -10,7 +10,7 @@ Fearless는 리그 오브 레전드(LoL)의 밴픽(Ban & Pick) 과정을 시뮬�
 - 다양한 모드 지원 (토너먼트 드래프트, 소프트 피어리스, 하드 피어리스)
 - 이전 세트 기록 및 스왑 기능 제공
 
-<img width="780" height="465" alt="image" src="https://github.com/user-attachments/assets/e385b275-6c03-49ac-8d20-955734b356b8" />
+<img width="780" height="465" alt="image" src="https://github.com/user-attachments/assets/9970a7c2-376b-4c6c-a995-00e790efefc1" />
 <img width="780" height="465" alt="image" src="https://github.com/user-attachments/assets/7e2366eb-380d-4989-894d-9977d3a372b5" />
 <img width="780" height="465" alt="image" src="https://github.com/user-attachments/assets/c50917a1-fefe-4cd1-9f8f-22de9caa59ab" />
 
@@ -61,7 +61,7 @@ Fearless는 리그 오브 레전드(LoL)의 밴픽(Ban & Pick) 과정을 시뮬�
 
 ### 3. 해결 방법 도입
 - `react-static-prerender`를 사용해 정적 HTML을 사전 렌더링하여 모든 경로에서 정적 페이지가 서빙되도록 수정했습니다.  
-- 이를 통해 구글 검색 결과에서 특정 키워드 기준으로 1페이지 5위에 노출되는 성과를 얻었습니다.
+- 이를 통해 구글 검색 결과에서 특정 키워드 기준으로 1페이지 1 ~ 3위에 노출되는 성과를 얻었습니다.
 
 ### 4. Next.js 마이그레이션 고려
 - 완전한 SSR로의 이전(Next.js)을 고민했으나, 현재 방식으로도 유의미한 결과를 얻었기에 당분간 유지하기로 결정했습니다.
