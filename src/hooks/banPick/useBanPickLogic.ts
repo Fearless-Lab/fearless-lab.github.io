@@ -42,10 +42,10 @@ export const useBanPickLogic = ({
   const [previousPicks, setPreviousPicks] = useState<Set<string>>(new Set());
 
   // 소프트 피어리스 모드의 밴 페이즈에서 비활성 여부 체크하기 위한 상태
-  // 양팀 모두 사용한 챔피언이면 밴페이즈에서 비활성화
-  const [bothTeamsPreviousPicks, setBothTeamsPreviousPicks] = useState<
-    Set<string>
-  >(new Set());
+  // 상대가 사용한 챔피언이면 밴페이즈에서 비활성화
+  const [oppoPreviousPicks, setOppoPreviousPicks] = useState<Set<string>>(
+    new Set()
+  );
 
   // 다음 세트 셋업 준비 중인지 확인
   const [isNextSetPreparing, setIsNextSetPreparing] = useState(false);
@@ -183,12 +183,9 @@ export const useBanPickLogic = ({
 
       setPreviousPicks(picksToSet);
 
-      // 양쪽 모두 사용했던 챔피언이면 밴 때도 비활성화
+      // 소프트 피어리스의 경우 상대가 사용했던 챔피언이면 밴 때도 비활성화
       const oppSet = new Set(oppTotalPicks);
-      const intersection = new Set(
-        myTotalPicks.filter((champ) => oppSet.has(champ))
-      );
-      setBothTeamsPreviousPicks(intersection);
+      setOppoPreviousPicks(oppSet);
 
       setIsNextSetPreparing(data.isNextSetPreparing);
       setWinners(data.winners ?? []);
@@ -234,7 +231,7 @@ export const useBanPickLogic = ({
     enemyPick,
     currentSetSelections,
     previousPicks,
-    bothTeamsPreviousPicks,
+    oppoPreviousPicks,
     isNextSetPreparing,
     winners,
     finished,

@@ -37,9 +37,9 @@ export const categoryGuideText = {
 export const PAGE_SIZE = 7;
 
 export const gameMode = [
-  "토너먼트 드래프트",
-  "소프트 피어리스",
   "하드 피어리스",
+  "소프트 피어리스",
+  "토너먼트 드래프트",
 ];
 
 export const modeDescription: Record<(typeof gameMode)[number], string> = {
@@ -50,16 +50,26 @@ export const modeDescription: Record<(typeof gameMode)[number], string> = {
     "이전 세트들에서 양 팀이 사용했던 챔피언을 다시 고를 수 없어요.",
 };
 
+export const modeExtraDescription: Record<(typeof gameMode)[number], string> = {
+  "토너먼트 드래프트": " \n" + " \n",
+  "소프트 피어리스":
+    "밴 페이즈에서는 상대가 이전 세트에서 사용했던 챔피언이 자동으로 비활성화돼요.\n" +
+    "사용할 수 없는 챔피언을 다시 밴하는 실수를 막기 위한 처리예요.",
+  "하드 피어리스":
+    "밴 페이즈에서도 이전 세트에서 사용했던 챔피언은 자동으로 비활성화돼요.\n" +
+    "즉, 한 번이라도 쓰인 챔피언은 이후 세트에서 다시 사용할 수 없고 밴도 불필요해요.",
+};
+
 export const koreanModeToEnglish: Record<string, string> = {
-  "토너먼트 드래프트": "normal",
-  "소프트 피어리스": "fearless",
   "하드 피어리스": "hardFearless",
+  "소프트 피어리스": "fearless",
+  "토너먼트 드래프트": "normal",
 };
 
 export const modalDescription = {
   error: [
     "제한 시간 내 픽을 완료하지 않으면 자동으로 랜덤한 챔피언이 선택됩니다.",
-    "제한 시간 내 밴을 하지 않으면 해당 차례는 건너뜁니다.",
-    "브라우저를 닫으면 밴픽이 원활하게 진행되지 않을 수 있습니다.",
+    "제한 시간 내 밴을 완료하지 않으면 해당 차례는 건너뜁니다.",
+    "밴픽 중에는 브라우저를 닫거나 비활성화하지 마세요.",
   ],
 };

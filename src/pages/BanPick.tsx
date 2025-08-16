@@ -1,7 +1,11 @@
 import HighlightBadge from "@/components/HighlightBadge";
 import Infopill from "@/components/Infopill";
 import SubInfopill from "@/components/SubInfopill";
-import { gameMode, modeDescription } from "@constants/category";
+import {
+  gameMode,
+  modeDescription,
+  modeExtraDescription,
+} from "@constants/category";
 import { useRef, useState } from "react";
 import CategoryButton from "./components/Community/CategoryButton";
 import { Label } from "@/components/ui/label";
@@ -96,6 +100,7 @@ const BanPick = () => {
         </div>
 
         <SubInfopill>{modeDescription[selectedMode]}</SubInfopill>
+        <SubInfopill>{modeExtraDescription[selectedMode]}</SubInfopill>
 
         <div className="w-[90%] md:w-full max-w-md flex gap-4 py-5">
           <div className="flex flex-col text-left">

@@ -66,7 +66,11 @@ const BanPickNoticeModal = ({
         }
       }}
     >
-      <DialogContent className="bg-neutral-900 border border-neutral-700 text-white w-full max-w-[calc(100%-2rem)] mx-auto z-100">
+      <DialogContent
+        className="bg-neutral-900 border border-neutral-700 text-white w-full max-w-[calc(100%-2rem)] mx-auto z-100"
+        onInteractOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+      >
         <DialogHeader className="text-left">
           <DialogTitle className="text-lg md:text-xl">
             밴픽 시뮬레이터 참여 전 주의사항

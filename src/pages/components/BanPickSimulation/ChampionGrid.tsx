@@ -14,7 +14,7 @@ export interface ChampionGridProps {
   currentSetSelections: Set<string>;
   previousPicks: Set<string>;
   mode: string;
-  bothTeamsPreviousPicks: Set<string>;
+  oppoPreviousPicks: Set<string>;
 }
 
 export default function ChampionGrid({
@@ -30,7 +30,7 @@ export default function ChampionGrid({
   currentSetSelections,
   previousPicks,
   mode,
-  bothTeamsPreviousPicks,
+  oppoPreviousPicks,
 }: ChampionGridProps) {
   let isMyTurn = undefined;
   if (currentStep < 20) isMyTurn = myTeam === PHASE[currentStep].team;
@@ -72,7 +72,7 @@ export default function ChampionGrid({
         if (mode === "hardFearless") {
           banCheck = previousPicks.has(champ.id);
         } else if (mode === "fearless") {
-          banCheck = bothTeamsPreviousPicks.has(champ.id);
+          banCheck = oppoPreviousPicks.has(champ.id);
         }
 
         const pickCheck = previousPicks.has(champ.id);
