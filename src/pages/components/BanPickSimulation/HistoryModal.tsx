@@ -186,14 +186,29 @@ const HistoryModal = ({
                               BAN
                             </span>
                             <div className="flex gap-2 flex-wrap">
-                              {banPickByTeam[team].ban.map((champId) => (
-                                <img
-                                  key={champId}
-                                  src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champId}.png`}
-                                  alt={champId}
-                                  className="w-9 h-9 object-cover rounded border border-neutral-600"
-                                  title={champId}
-                                />
+                              {banPickByTeam[team].ban.map((champId, i) => (
+                                <div
+                                  key={champId || `ban-${i}`}
+                                  className="relative w-9 h-9 border border-neutral-600 bg-neutral-900 rounded-md overflow-hidden"
+                                >
+                                  {champId && (
+                                    <img
+                                      src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champId}.png`}
+                                      alt={champId}
+                                      title={champId}
+                                      className="w-full h-full object-cover"
+                                    />
+                                  )}
+                                  <div
+                                    className={`absolute w-[70%] h-[1.2px] rotate-45 top-1/2 left-1/2 
+                                                -translate-x-1/2 -translate-y-1/2 pointer-events-none 
+                                                ${
+                                                  champId
+                                                    ? "bg-white"
+                                                    : "bg-white/30"
+                                                }`}
+                                  />
+                                </div>
                               ))}
                             </div>
                           </div>
