@@ -43,7 +43,7 @@ export const gameMode = [
 ];
 
 export const modeDescription: Record<(typeof gameMode)[number], string> = {
-  "토너먼트 드래프트": "자유롭게 선택할 수 있는 모드에요.",
+  "토너먼트 드래프트": "\n 자유롭게 선택할 수 있는 모드에요.",
   "소프트 피어리스":
     "이전 세트들에서 우리 팀이 사용했던 챔피언은 다시 고를 수 없어요.",
   "하드 피어리스":
@@ -51,7 +51,7 @@ export const modeDescription: Record<(typeof gameMode)[number], string> = {
 };
 
 export const modeExtraDescription: Record<(typeof gameMode)[number], string> = {
-  "토너먼트 드래프트": " \n" + " \n",
+  "토너먼트 드래프트": " \n",
   "소프트 피어리스":
     "밴 페이즈에서는 상대가 이전 세트에서 사용했던 챔피언이 자동으로 비활성화돼요.\n" +
     "사용할 수 없는 챔피언을 다시 밴하는 실수를 막기 위한 처리예요.",
