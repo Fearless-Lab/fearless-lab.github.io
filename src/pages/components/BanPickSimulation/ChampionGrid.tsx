@@ -80,9 +80,10 @@ export default function ChampionGrid({
         const pickCheck = previousPicks.has(champ.id);
 
         const isDisabled =
-          currentPhaseType === "ban"
+          isGuest ||
+          (currentPhaseType === "ban"
             ? baseCheck || banCheck
-            : baseCheck || pickCheck;
+            : baseCheck || pickCheck);
 
         const isSelected =
           (currentPhaseType === "ban" &&

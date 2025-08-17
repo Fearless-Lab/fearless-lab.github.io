@@ -86,17 +86,26 @@ const BanPickSimulation = () => {
   let actionText = "상대 차례입니다";
 
   if (isGuest) {
-    actionText = "관전 중입니다";
-  } else if (finished)
-    actionText =
-      "5세트까지 진행되었습니다.\n기록판을 참고해 전략을 세워보세요!";
-  else if (currentStep === 21) {
-    actionText = "패배 팀 투표하기";
-  } else if (isSwapPhase) {
-    if (commited) actionText = "상대팀이 아직 스왑 진행 중이에요";
-    else actionText = convertTypeToKo("swap");
-  } else if (isMyTurn) {
-    actionText = convertTypeToKo(PHASE[currentStep]?.type);
+    if (finished) actionText = "경기가 종료되었습니다";
+    else if (currentStep === 21) {
+      actionText = "패배팀 투표 중입니다";
+    } else if (isSwapPhase) {
+      actionText = "스왑 중입니다";
+    } else {
+      actionText = "관전 중입니다";
+    }
+  } else {
+    if (finished)
+      actionText =
+        "5세트까지 진행되었습니다.\n기록판을 참고해 전략을 세워보세요!";
+    else if (currentStep === 21) {
+      actionText = "패배 팀 투표하기";
+    } else if (isSwapPhase) {
+      if (commited) actionText = "상대팀이 아직 스왑 진행 중이에요";
+      else actionText = convertTypeToKo("swap");
+    } else if (isMyTurn) {
+      actionText = convertTypeToKo(PHASE[currentStep]?.type);
+    }
   }
 
   const isCommitButtonDisabled = isGameEnd
