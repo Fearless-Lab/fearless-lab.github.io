@@ -34,23 +34,30 @@ const BanPickNoticeModal = ({
   matchId,
   mode,
 }: BanpickNoticeModalProps) => {
-  const [copied, setCopied] = useState<"blue" | "red" | null>(null);
+  const [copied, setCopied] = useState<"blue" | "red" | "guest" | null>(null);
 
-  const handleCopy = (team: "blue" | "red") => {
+  const handleCopy = (team: "blue" | "red" | "guest") => {
     const teamNames = {
       blue: blueTeamName,
       red: redTeamName,
     };
 
-    const teamName = teamNames[team];
-    const oppositeTeamName = team === "blue" ? teamNames.red : teamNames.blue;
+    const isGuest = team === "guest";
+    const teamName = isGuest ? blueTeamName : teamNames[team];
+    const oppositeTeamName = isGuest
+      ? redTeamName
+      : team === "blue"
+      ? teamNames.red
+      : teamNames.blue;
 
     const basePath = `${window.location.origin}`;
     const url = `${basePath}/banPickSimulation?matchId=${matchId}&teamName=${encodeURIComponent(
       teamName
-    )}&mode=${
-      koreanModeToEnglish[mode]
-    }&initialTeam=${team}&oppositeTeam=${encodeURIComponent(oppositeTeamName)}`;
+    )}&mode=${koreanModeToEnglish[mode]}&initialTeam=${
+      team === "guest" ? "blue" : team
+    }&oppositeTeam=${encodeURIComponent(oppositeTeamName)}${
+      isGuest ? "&guest=true" : ""
+    }`;
 
     navigator.clipboard.writeText(url);
     setCopied(team);
@@ -109,6 +116,15 @@ const BanPickNoticeModal = ({
             copied={copied}
             teamName={redTeamName}
             onCopy={handleCopy}
+          />
+        </div>
+        <div className="text-xs md:text-sm">
+          <CopyLinkButton
+            team="guest"
+            copied={copied}
+            teamName="관전자 전용 링크"
+            onCopy={handleCopy}
+            className="w-full"
           />
         </div>
 

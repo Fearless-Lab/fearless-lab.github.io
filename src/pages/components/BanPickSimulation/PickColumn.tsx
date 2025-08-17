@@ -35,6 +35,7 @@ interface PickColumnProps {
   onSwap: (newOrder: (string | undefined)[]) => void;
   myTeam: "blue" | "red" | undefined;
   commited: boolean;
+  isGuest: boolean;
 }
 
 const roleOrder = ["Top", "Jungle", "Mid", "Bot", "Support"];
@@ -64,6 +65,7 @@ const PickColumn = ({
   onSwap,
   myTeam,
   commited,
+  isGuest,
 }: PickColumnProps) => {
   const currentPhase = PHASE[currentStep];
 
@@ -102,7 +104,7 @@ const PickColumn = ({
   };
 
   // 드래그 가능 상태
-  if (isDraggable) {
+  if (isDraggable && !isGuest) {
     return (
       <DndContext
         sensors={sensors}

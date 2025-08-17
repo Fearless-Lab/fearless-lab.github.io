@@ -15,6 +15,7 @@ export interface ChampionGridProps {
   previousPicks: Set<string>;
   mode: string;
   oppoPreviousPicks: Set<string>;
+  isGuest: boolean;
 }
 
 export default function ChampionGrid({
@@ -31,12 +32,13 @@ export default function ChampionGrid({
   previousPicks,
   mode,
   oppoPreviousPicks,
+  isGuest,
 }: ChampionGridProps) {
   let isMyTurn = undefined;
   if (currentStep < 20) isMyTurn = myTeam === PHASE[currentStep].team;
 
   const onChampionClick = (champ: string) => {
-    if (!isMyTurn || currentSetSelections.has(champ)) return;
+    if (!isMyTurn || currentSetSelections.has(champ) || isGuest) return;
 
     const currentPhaseType = PHASE[currentStep].type;
     const currentPhaseIdx = PHASE[currentStep].index;

@@ -27,7 +27,7 @@ import BanOverviewModal from "./components/BanPickSimulation/BanOverviewModal";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 
 const BanPickSimulation = () => {
-  const { matchId, teamName, oppositeTeam, mode, initialTeam } =
+  const { matchId, teamName, oppositeTeam, mode, initialTeam, isGuest } =
     getBanPickQueryParams();
 
   const { champions, version } = useChampions();
@@ -85,7 +85,9 @@ const BanPickSimulation = () => {
 
   let actionText = "상대 차례입니다";
 
-  if (finished)
+  if (isGuest) {
+    actionText = "관전 중입니다";
+  } else if (finished)
     actionText =
       "5세트까지 진행되었습니다.\n기록판을 참고해 전략을 세워보세요!";
   else if (currentStep === 21) {
@@ -133,6 +135,7 @@ const BanPickSimulation = () => {
     previousPicks,
     mode,
     oppoPreviousPicks,
+    isGuest,
   };
 
   const handleSwap = (newOrder: (string | undefined)[]) => {
@@ -169,6 +172,7 @@ const BanPickSimulation = () => {
                 teamName={teamName}
                 isMyTurn={isMyTurn}
                 isSwapPhase={isSwapPhase}
+                isGuest={isGuest}
               />
             )}
             <div className="mt-1 flex items-center gap-4">
@@ -219,6 +223,7 @@ const BanPickSimulation = () => {
                 onSwap={handleSwap}
                 myTeam={myTeam}
                 commited={commited}
+                isGuest={isGuest}
               />
             </div>
 
@@ -257,7 +262,7 @@ const BanPickSimulation = () => {
               </div>
 
               <CommitButton
-                disabled={isCommitButtonDisabled}
+                disabled={isGuest || isCommitButtonDisabled}
                 currentStep={currentStep}
                 teamName={teamName}
                 localPick={localPick}
@@ -281,6 +286,7 @@ const BanPickSimulation = () => {
                 onSwap={handleSwap}
                 myTeam={myTeam}
                 commited={commited}
+                isGuest={isGuest}
               />
             </div>
           </div>
@@ -320,7 +326,7 @@ const BanPickSimulation = () => {
             </div>
 
             <CommitButton
-              disabled={isCommitButtonDisabled}
+              disabled={isGuest || isCommitButtonDisabled}
               currentStep={currentStep}
               teamName={teamName}
               localPick={localPick}
@@ -344,6 +350,7 @@ const BanPickSimulation = () => {
                   onSwap={handleSwap}
                   myTeam={myTeam}
                   commited={commited}
+                  isGuest={isGuest}
                 />
               </div>
 
@@ -356,6 +363,7 @@ const BanPickSimulation = () => {
                   onSwap={handleSwap}
                   myTeam={myTeam}
                   commited={commited}
+                  isGuest={isGuest}
                 />
               </div>
             </div>
@@ -363,14 +371,14 @@ const BanPickSimulation = () => {
         </div>
       </div>
       <ReadyCheckModal
-        open={isModalOpen}
+        open={!isGuest && isModalOpen}
         onReadyClick={handleReady}
         isReady={isReady}
         mode={mode}
       />
       <NextSetModal
         matchId={matchId}
-        open={isNextSetPreparing && !finished}
+        open={!isGuest && isNextSetPreparing && !finished}
         teamName={teamName}
         oppositeTeam={oppositeTeam}
         finished={finished}

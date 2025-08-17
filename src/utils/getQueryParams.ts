@@ -11,5 +11,7 @@ export const getBanPickQueryParams = () => {
     | "blue"
     | "red";
 
-  return { matchId, teamName, oppositeTeam, mode, initialTeam };
+  const isGuest = searchParams.get("guest") === "true";
+
+  return { matchId, teamName, oppositeTeam, mode, initialTeam, isGuest };
 };

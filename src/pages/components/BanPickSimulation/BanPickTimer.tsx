@@ -13,6 +13,7 @@ interface BanPickTimerProps {
   teamName: string;
   isMyTurn: Boolean;
   isSwapPhase: Boolean;
+  isGuest: Boolean;
 }
 
 const EXTRA_DELAY = 2.5; // 0초 이후 추가 대기 시간
@@ -27,6 +28,7 @@ const BanPickTimer = ({
   teamName,
   isMyTurn,
   isSwapPhase,
+  isGuest,
 }: BanPickTimerProps) => {
   const [remainingTime, setRemainingTime] = useState<number>(0);
 
@@ -77,6 +79,8 @@ const BanPickTimer = ({
       const displayRemaining = Math.max(currentPhase.duration - elapsed, 0);
 
       setRemainingTime(Math.ceil(displayRemaining));
+
+      if (isGuest) return;
 
       // 실행 조건은 EXTRA_DELAY 포함
       if (actualRemaining <= 0.1 && !calledRef.current) {
