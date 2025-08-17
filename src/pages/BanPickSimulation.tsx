@@ -160,114 +160,179 @@ const BanPickSimulation = () => {
   const redScore = getWinsOf(teams?.red);
 
   return (
-    <div className="min-h-screen flex flex-col mt-22">
-      <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
-        <div className="flex w-full h-15 rounded-tl-md rounded-tr-md overflow-hidden">
-          <div className="flex-1 bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-lg text-white flex items-center justify-between font-bold px-4">
-            <span>{teams ? teams.blue : "팀 정보 불러오는중"}</span>
-            <span className="text-yellow-400 text-xl md:text-2xl">
-              {blueScore}
-            </span>
-          </div>
-          <div className="w-20 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
-            {startedAt && (
-              <BanPickTimer
-                matchId={matchId}
-                startedAt={startedAt}
-                currentStep={currentStep}
-                currentSetSelections={currentSetSelections}
-                previousPicks={previousPicks}
-                champions={champions}
-                teamName={teamName}
-                isMyTurn={isMyTurn}
-                isSwapPhase={isSwapPhase}
-                isGuest={isGuest}
-              />
-            )}
-            <div className="mt-1 flex items-center gap-4">
-              <ClipboardDocumentListIcon
-                className="w-5 h-5 cursor-pointer hover:text-gray-300"
-                onClick={() => setIsHistoryOpen(true)}
-              />
-              {mode !== "normal" && (
-                <NoSymbolIcon
-                  className="w-5 h-5 text-rose-400 cursor-pointer hover:text-gray-300"
-                  onClick={() => setIsBanOverviewOpen(true)}
+    <>
+      <div className="min-h-screen flex flex-col mt-22">
+        <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
+          <div className="flex w-full h-15 rounded-tl-md rounded-tr-md overflow-hidden">
+            <div className="flex-1 bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-lg text-white flex items-center justify-between font-bold px-4">
+              <span>{teams ? teams.blue : "팀 정보 불러오는중"}</span>
+              <span className="text-yellow-400 text-xl md:text-2xl">
+                {blueScore}
+              </span>
+            </div>
+            <div className="w-20 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
+              {startedAt && (
+                <BanPickTimer
+                  matchId={matchId}
+                  startedAt={startedAt}
+                  currentStep={currentStep}
+                  currentSetSelections={currentSetSelections}
+                  previousPicks={previousPicks}
+                  champions={champions}
+                  teamName={teamName}
+                  isMyTurn={isMyTurn}
+                  isSwapPhase={isSwapPhase}
+                  isGuest={isGuest}
                 />
               )}
+              <div className="mt-1 flex items-center gap-4">
+                <ClipboardDocumentListIcon
+                  className="w-5 h-5 cursor-pointer hover:text-gray-300"
+                  onClick={() => setIsHistoryOpen(true)}
+                />
+                {mode !== "normal" && (
+                  <NoSymbolIcon
+                    className="w-5 h-5 text-rose-400 cursor-pointer hover:text-gray-300"
+                    onClick={() => setIsBanOverviewOpen(true)}
+                  />
+                )}
 
-              {/* <ArrowPathIcon
+                {/* <ArrowPathIcon
                 className="w-5 h-5 cursor-pointer hover:text-red-800 text-rose-400"
                 onClick={() => alert("🚧 공사 중이에요")}
               /> */}
+              </div>
+            </div>
+            <div className="flex-1 bg-gradient-to-r from-rose-400/40 via-rose-500/50 to-rose-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-lg text-white flex items-center justify-between font-bold px-4">
+              <span className="text-yellow-400 text-xl md:text-2xl">
+                {redScore}
+              </span>
+              <span>{teams ? teams.red : "팀 정보 불러오는중"}</span>
             </div>
           </div>
-          <div className="flex-1 bg-gradient-to-r from-rose-400/40 via-rose-500/50 to-rose-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-lg text-white flex items-center justify-between font-bold px-4">
-            <span className="text-yellow-400 text-xl md:text-2xl">
-              {redScore}
-            </span>
-            <span>{teams ? teams.red : "팀 정보 불러오는중"}</span>
+
+          <div className="flex justify-between items-center py-2">
+            <BanArea
+              myTeam={myTeam}
+              localBan={localBan}
+              enemyBan={enemyBan}
+              version={version}
+              currentStep={currentStep}
+              isModalOpen={isModalOpen}
+            />
           </div>
-        </div>
 
-        <div className="flex justify-between items-center py-2">
-          <BanArea
-            myTeam={myTeam}
-            localBan={localBan}
-            enemyBan={enemyBan}
-            version={version}
-            currentStep={currentStep}
-            isModalOpen={isModalOpen}
-          />
-        </div>
+          <div className="max-w-6xl mx-auto mt-2 w-full">
+            <div className="hidden md:grid md:grid-cols-4 gap-12 w-full">
+              <div className="md:col-span-1 border rounded-md min-h-92 flex flex-col divide-y">
+                <PickColumn
+                  team="blue"
+                  picks={myTeam === "blue" ? localPick : enemyPick}
+                  currentStep={currentStep}
+                  isSwapPhase={isSwapPhase}
+                  onSwap={handleSwap}
+                  myTeam={myTeam}
+                  commited={commited}
+                  isGuest={isGuest}
+                />
+              </div>
 
-        <div className="max-w-6xl mx-auto mt-2 w-full">
-          <div className="hidden md:grid md:grid-cols-4 gap-12 w-full">
-            <div className="md:col-span-1 border rounded-md min-h-92 flex flex-col divide-y">
-              <PickColumn
-                team="blue"
-                picks={myTeam === "blue" ? localPick : enemyPick}
-                currentStep={currentStep}
-                isSwapPhase={isSwapPhase}
-                onSwap={handleSwap}
-                myTeam={myTeam}
-                commited={commited}
-                isGuest={isGuest}
-              />
-            </div>
-
-            <div className="md:col-span-2 flex flex-col gap-2 px-4">
-              <div className="px-4">
-                <div className="flex flex-col items-center gap-2 justify-center">
-                  <PositionRow
-                    selected={selectedPosition}
-                    onSelect={setSelectedPosition}
-                    positions={positions}
-                  />
-
-                  <div className="relative w-50">
-                    <Input
-                      type="text"
-                      placeholder="챔피언 검색"
-                      className="rounded-none border border-gray-300 pr-8"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
+              <div className="md:col-span-2 flex flex-col gap-2 px-4">
+                <div className="px-4">
+                  <div className="flex flex-col items-center gap-2 justify-center">
+                    <PositionRow
+                      selected={selectedPosition}
+                      onSelect={setSelectedPosition}
+                      positions={positions}
                     />
-                    {searchTerm && (
-                      <button
-                        type="button"
-                        onClick={() => setSearchTerm("")}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
-                      >
-                        <XMarkIcon className="w-4 h-4" />
-                      </button>
-                    )}
+
+                    <div className="relative w-50">
+                      <Input
+                        type="text"
+                        placeholder="챔피언 검색"
+                        className="rounded-none border border-gray-300 pr-8"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                      {searchTerm && (
+                        <button
+                          type="button"
+                          onClick={() => setSearchTerm("")}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+                        >
+                          <XMarkIcon className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
                   </div>
+                </div>
+
+                <div className="h-75 overflow-auto">
+                  <ChampionGrid {...championGridProps} />
+                </div>
+
+                <CommitButton
+                  disabled={isGuest || isCommitButtonDisabled}
+                  currentStep={currentStep}
+                  teamName={teamName}
+                  localPick={localPick}
+                  localBan={localBan}
+                  matchId={matchId}
+                  isGameEnd={isGameEnd}
+                  commited={commited}
+                  finished={finished}
+                  setIsHistoryOpen={setIsHistoryOpen}
+                >
+                  {actionText}
+                </CommitButton>
+              </div>
+
+              <div className="md:col-span-1 border rounded-md min-h-92 flex flex-col divide-y">
+                <PickColumn
+                  team="red"
+                  picks={myTeam === "red" ? localPick : enemyPick}
+                  currentStep={currentStep}
+                  isSwapPhase={isSwapPhase}
+                  onSwap={handleSwap}
+                  myTeam={myTeam}
+                  commited={commited}
+                  isGuest={isGuest}
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col md:hidden gap-4 w-[90%] mx-auto">
+              <div className="px-4 flex flex-col items-center">
+                <PositionRow
+                  selected={selectedPosition}
+                  onSelect={setSelectedPosition}
+                  positions={positions}
+                />
+
+                <div className="relative w-40 mt-4">
+                  <Input
+                    type="text"
+                    placeholder="챔피언 검색"
+                    className="rounded-none border border-gray-300 pr-8"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  {searchTerm && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchTerm("")}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+                    >
+                      <XMarkIcon className="w-4 h-4" />
+                    </button>
+                  )}
                 </div>
               </div>
 
-              <div className="h-75 overflow-auto">
-                <ChampionGrid {...championGridProps} />
+              <div className="min-h-76">
+                <div className="h-76 overflow-auto">
+                  <ChampionGrid {...championGridProps} />
+                </div>
               </div>
 
               <CommitButton
@@ -284,137 +349,85 @@ const BanPickSimulation = () => {
               >
                 {actionText}
               </CommitButton>
-            </div>
 
-            <div className="md:col-span-1 border rounded-md min-h-92 flex flex-col divide-y">
-              <PickColumn
-                team="red"
-                picks={myTeam === "red" ? localPick : enemyPick}
-                currentStep={currentStep}
-                isSwapPhase={isSwapPhase}
-                onSwap={handleSwap}
-                myTeam={myTeam}
-                commited={commited}
-                isGuest={isGuest}
-              />
-            </div>
-          </div>
+              <div className="flex w-[85%] gap-12 mx-auto">
+                <div className="flex-1 border rounded-md min-h-84 flex flex-col divide-y">
+                  <PickColumn
+                    team="blue"
+                    picks={myTeam === "blue" ? localPick : enemyPick}
+                    currentStep={currentStep}
+                    isSwapPhase={isSwapPhase}
+                    onSwap={handleSwap}
+                    myTeam={myTeam}
+                    commited={commited}
+                    isGuest={isGuest}
+                  />
+                </div>
 
-          <div className="flex flex-col md:hidden gap-4 w-[90%] mx-auto">
-            <div className="px-4 flex flex-col items-center">
-              <PositionRow
-                selected={selectedPosition}
-                onSelect={setSelectedPosition}
-                positions={positions}
-              />
-
-              <div className="relative w-40 mt-4">
-                <Input
-                  type="text"
-                  placeholder="챔피언 검색"
-                  className="rounded-none border border-gray-300 pr-8"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                {searchTerm && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchTerm("")}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
-                  >
-                    <XMarkIcon className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
-            </div>
-
-            <div className="min-h-76">
-              <div className="h-76 overflow-auto">
-                <ChampionGrid {...championGridProps} />
-              </div>
-            </div>
-
-            <CommitButton
-              disabled={isGuest || isCommitButtonDisabled}
-              currentStep={currentStep}
-              teamName={teamName}
-              localPick={localPick}
-              localBan={localBan}
-              matchId={matchId}
-              isGameEnd={isGameEnd}
-              commited={commited}
-              finished={finished}
-              setIsHistoryOpen={setIsHistoryOpen}
-            >
-              {actionText}
-            </CommitButton>
-
-            <div className="flex w-[85%] gap-12 mx-auto">
-              <div className="flex-1 border rounded-md min-h-84 flex flex-col divide-y">
-                <PickColumn
-                  team="blue"
-                  picks={myTeam === "blue" ? localPick : enemyPick}
-                  currentStep={currentStep}
-                  isSwapPhase={isSwapPhase}
-                  onSwap={handleSwap}
-                  myTeam={myTeam}
-                  commited={commited}
-                  isGuest={isGuest}
-                />
-              </div>
-
-              <div className="flex-1 border rounded-md min-h-84 flex flex-col divide-y">
-                <PickColumn
-                  team="red"
-                  picks={myTeam === "red" ? localPick : enemyPick}
-                  currentStep={currentStep}
-                  isSwapPhase={isSwapPhase}
-                  onSwap={handleSwap}
-                  myTeam={myTeam}
-                  commited={commited}
-                  isGuest={isGuest}
-                />
+                <div className="flex-1 border rounded-md min-h-84 flex flex-col divide-y">
+                  <PickColumn
+                    team="red"
+                    picks={myTeam === "red" ? localPick : enemyPick}
+                    currentStep={currentStep}
+                    isSwapPhase={isSwapPhase}
+                    onSwap={handleSwap}
+                    myTeam={myTeam}
+                    commited={commited}
+                    isGuest={isGuest}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <ReadyCheckModal
+          open={!isGuest && isModalOpen}
+          onReadyClick={handleReady}
+          isReady={isReady}
+          mode={mode}
+        />
+        <NextSetModal
+          matchId={matchId}
+          open={!isGuest && isNextSetPreparing && !finished}
+          teamName={teamName}
+          oppositeTeam={oppositeTeam}
+          finished={finished}
+        />
+        <HistoryModal
+          matchId={matchId}
+          currentSet={currentSet}
+          currentStep={currentStep}
+          teamName={teamName}
+          oppositeTeam={oppositeTeam}
+          open={isHistoryOpen && (currentSet > 1 || currentStep === 21)}
+          onClose={() => setIsHistoryOpen(false)}
+          version={version}
+          winners={winners}
+        />
+        <BanOverviewModal
+          open={isBanOverviewOpen && (currentSet > 1 || currentStep === 21)}
+          onClose={() => setIsBanOverviewOpen(false)}
+          mode={mode}
+          matchId={matchId}
+          currentSet={currentSet}
+          currentStep={currentStep}
+          teamName={teamName}
+          oppositeTeam={oppositeTeam}
+          version={version}
+        />
       </div>
-      <ReadyCheckModal
-        open={!isGuest && isModalOpen}
-        onReadyClick={handleReady}
-        isReady={isReady}
-        mode={mode}
-      />
-      <NextSetModal
-        matchId={matchId}
-        open={!isGuest && isNextSetPreparing && !finished}
-        teamName={teamName}
-        oppositeTeam={oppositeTeam}
-        finished={finished}
-      />
-      <HistoryModal
-        matchId={matchId}
-        currentSet={currentSet}
-        currentStep={currentStep}
-        teamName={teamName}
-        oppositeTeam={oppositeTeam}
-        open={isHistoryOpen && (currentSet > 1 || currentStep === 21)}
-        onClose={() => setIsHistoryOpen(false)}
-        version={version}
-        winners={winners}
-      />
-      <BanOverviewModal
-        open={isBanOverviewOpen && (currentSet > 1 || currentStep === 21)}
-        onClose={() => setIsBanOverviewOpen(false)}
-        mode={mode}
-        matchId={matchId}
-        currentSet={currentSet}
-        currentStep={currentStep}
-        teamName={teamName}
-        oppositeTeam={oppositeTeam}
-        version={version}
-      />
-    </div>
+      <div className="my-2 flex justify-center">
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/BKATPpLnrcE"
+          title="YouTube video player"
+          style={{ border: "none" }}
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        ></iframe>
+      </div>
+    </>
   );
 };
 
