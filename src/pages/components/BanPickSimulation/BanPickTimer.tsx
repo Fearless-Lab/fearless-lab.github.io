@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { PHASE } from "@constants/banPick";
 import { useBanPickController } from "@/hooks/banPick/useBanPickController";
 import type { Champion } from "@/utils/generateRandomNickname";
+import { getServerNow } from "@/utils/serverTime";
 
 interface BanPickTimerProps {
   matchId: string;
@@ -64,8 +65,7 @@ const BanPickTimer = ({
     }
 
     const updateRemaining = () => {
-      const now = Date.now();
-      const elapsed = (now - startedAt.getTime()) / 1000;
+      const elapsed = (getServerNow() - startedAt.getTime()) / 1000;
 
       const currentPhase = PHASE[currentStep];
 
@@ -78,7 +78,7 @@ const BanPickTimer = ({
       // 화면 표시용: EXTRA_DELAY 제외
       const displayRemaining = Math.max(currentPhase.duration - elapsed, 0);
 
-      setRemainingTime(Math.ceil(displayRemaining));
+      setRemainingTime(Math.round(displayRemaining));
 
       if (isGuest) return;
 
@@ -122,7 +122,7 @@ const BanPickTimer = ({
     <div
       className={`text-xl font-bold transition-all duration-300 ${timerColor}`}
     >
-      :{Math.ceil(remainingTime)}
+      :{Math.round(remainingTime)}
     </div>
   );
 };
