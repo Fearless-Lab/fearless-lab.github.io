@@ -34,7 +34,7 @@ jobs:
         run: npm run build
 
       - name: Prerender static HTML
-        run: npx react-static-prerender --serveDir dist --outDir prerendered --debug
+        run: npx react-static-prerender --serveDir dist --outDir prerendered --debug --waitUntil domcontentloaded
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
