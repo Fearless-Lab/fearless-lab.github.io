@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useBanPickInit } from "@/hooks/banPick/useBanPickInit";
 import { useBanPickController } from "./useBanPickController";
+import { initServerOffset } from "@/utils/serverTime";
 
 interface Teams {
   blue: string;
@@ -22,6 +23,10 @@ export const useBanPickLogic = ({
   mode,
   initialTeam,
 }: UseBanPickLogicOptions) => {
+  useEffect(() => {
+    initServerOffset();
+  }, []);
+
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [isReady, setIsReady] = useState(false);
   const [teams, setTeams] = useState<Teams | null>(null);
