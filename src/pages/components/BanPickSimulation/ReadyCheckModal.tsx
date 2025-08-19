@@ -9,6 +9,7 @@ import {
 import {
   // ArrowPathIcon,
   ClipboardDocumentListIcon,
+  MagnifyingGlassPlusIcon,
   NoSymbolIcon,
 } from "@heroicons/react/16/solid";
 import { useNavigate } from "react-router-dom";
@@ -69,6 +70,18 @@ const ReadyCheckModal = ({
               <ArrowPathIcon className="w-5 h-5 text-rose-400" />
               해당 세트의 밴픽을 처음부터 다시 시작합니다.
             </div> */}
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <MagnifyingGlassPlusIcon className="w-5 h-5 text-blue-400" />
+              화면이 작게 보인다면 브라우저 배율을 100%로 맞춰주세요.
+            </div>
+            <div className="text-xs text-gray-400 ml-7">
+              Windows: <kbd>Ctrl</kbd> + <kbd>0</kbd>
+              <br />
+              Mac: <kbd>⌘</kbd> + <kbd>0</kbd>
+            </div>
           </div>
         </div>
 

@@ -100,8 +100,8 @@ const BanPick = () => {
         <SubInfopill>{modeDescription[selectedMode]}</SubInfopill>
         <SubInfopill>{modeExtraDescription[selectedMode]}</SubInfopill>
 
-        <div className="w-[90%] md:w-full max-w-md flex gap-4 py-5">
-          <div className="flex flex-col text-left">
+        <div className="w-full max-w-md flex gap-4 py-5 justify-center">
+          <div className="flex flex-col text-left flex-1">
             <Label className="text-white mb-2">블루팀</Label>
             <Input
               className="h-12 px-4 text-sm bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60 backdrop-blur-md border border-white/10 shadow-lg text-white placeholder:text-blue-100 placeholder:text-xs md:placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-blue-300 hover:brightness-110 transition-all duration-200"
@@ -114,7 +114,7 @@ const BanPick = () => {
             )}
           </div>
 
-          <div className="flex flex-col text-left mb-4">
+          <div className="flex flex-col text-left flex-1">
             <Label className="text-white mb-2">레드팀</Label>
             <Input
               className="h-12 px-4 text-sm bg-gradient-to-r from-rose-400/40 via-rose-500/50 to-rose-700/60 backdrop-blur-md border border-white/10 shadow-lg text-white placeholder:text-rose-100 placeholder:text-xs md:placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 hover:brightness-110 transition-all duration-200"
