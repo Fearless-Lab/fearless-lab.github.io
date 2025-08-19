@@ -69,8 +69,6 @@ const BanPick = () => {
 
   return (
     <>
-      <title>롤 모의 밴픽 | 피어리스</title>
-
       <section
         id="banPick"
         ref={sectionRef}
