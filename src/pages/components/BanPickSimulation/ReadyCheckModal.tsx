@@ -9,7 +9,9 @@ import {
 import {
   // ArrowPathIcon,
   ClipboardDocumentListIcon,
+  HomeIcon,
   MagnifyingGlassPlusIcon,
+  MusicalNoteIcon,
   NoSymbolIcon,
 } from "@heroicons/react/16/solid";
 import { useNavigate } from "react-router-dom";
@@ -78,9 +80,20 @@ const ReadyCheckModal = ({
               화면이 작게 보인다면 브라우저 배율을 100%로 맞춰주세요.
             </div>
             <div className="text-xs text-gray-400 ml-7">
-              Windows: <kbd>Ctrl</kbd> + <kbd>0</kbd>
-              <br />
-              Mac: <kbd>⌘</kbd> + <kbd>0</kbd>
+              Windows: <kbd>Ctrl</kbd> + <kbd>0</kbd>,
+              <span className="ml-2">
+                Mac: <kbd>⌘</kbd> + <kbd>0</kbd>
+              </span>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <MusicalNoteIcon className="w-5 h-5 text-yellow-400" />
+              페이지 하단에 밴픽 브금 영상이 있습니다.
+            </div>
+            <div className="text-xs text-gray-400 ml-7">
+              틀고 진행하면 더 박진감 있게 즐기실 수 있어요 !
             </div>
           </div>
         </div>
@@ -93,9 +106,10 @@ const ReadyCheckModal = ({
           {isReady ? "상대가 아직 준비중입니다.." : "시작하기"}
         </CTAButton>
         <CTAButton
-          className="bg-rose-500 py-2 text-sm font-normal hover:bg-rose-400"
+          className="bg-rose-500 py-2 text-sm font-normal hover:bg-rose-400 flex items-center gap-2 justify-center"
           onClick={() => navigate("/banPick")}
         >
+          <HomeIcon className="w-5 h-5" />
           홈으로 돌아가기
         </CTAButton>
       </DialogContent>

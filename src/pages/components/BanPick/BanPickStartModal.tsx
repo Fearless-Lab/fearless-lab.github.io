@@ -131,7 +131,10 @@ const BanPickNoticeModal = ({
         <DialogDescription className="text-gray-400 mt-2 text-sm">
           밴픽을 진행할 팀별 전용 URL입니다.
           <br />
-          상대팀에게 URL을 공유해주세요.
+          상대팀에게 <span className="underline">
+            위의 주의사항과 함께
+          </span>{" "}
+          URL을 공유해주세요.
         </DialogDescription>
       </DialogContent>
     </Dialog>
