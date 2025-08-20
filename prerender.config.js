@@ -1,5 +1,5 @@
 export default {
-  routes: ["/", "/banPick", "/banPickSimulation", "/404"],
+  routes: ["/", "/banPick", "/banPickSimulation"],
   outDir: "prerendered",
   serveDir: "dist",
   flatOutput: false,
