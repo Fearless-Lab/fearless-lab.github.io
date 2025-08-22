@@ -163,14 +163,14 @@ const BanPickSimulation = () => {
     <>
       <div className="min-h-screen flex flex-col mt-22">
         <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
-          <div className="flex w-full h-15 rounded-tl-md rounded-tr-md overflow-hidden">
+          <div className="flex w-full h-18 rounded-tl-md rounded-tr-md overflow-hidden">
             <div className="flex-1 bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-lg text-white flex items-center justify-between font-bold px-4">
               <span>{teams ? teams.blue : "팀 정보 불러오는중"}</span>
               <span className="text-yellow-400 text-xl md:text-2xl">
                 {blueScore}
               </span>
             </div>
-            <div className="w-20 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
+            <div className="w-24 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
               {startedAt && (
                 <BanPickTimer
                   matchId={matchId}

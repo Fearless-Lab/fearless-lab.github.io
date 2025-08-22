@@ -109,20 +109,20 @@ const BanPickTimer = ({
   }, [startedAt, currentStep]);
 
   if (!startedAt || currentStep === null || currentStep >= PHASE.length)
-    return <div className="text-xl font-bold">:0</div>;
-
-  const timerColor =
-    remainingTime <= 3
-      ? "text-red-500"
-      : remainingTime <= 5
-      ? "text-yellow-500"
-      : "text-white";
+    return <div className="text-xl font-bold">--</div>;
 
   return (
     <div
-      className={`text-xl font-bold transition-all duration-300 ${timerColor}`}
+      key={remainingTime}
+      className={`text-3xl font-bold transition-all duration-300 ${
+        remainingTime <= 3
+          ? "text-red-500 animate-pop"
+          : remainingTime <= 5
+          ? "text-yellow-500 animate-pop"
+          : "text-white"
+      }`}
     >
-      :{Math.round(remainingTime)}
+      {Math.round(remainingTime)}
     </div>
   );
 };

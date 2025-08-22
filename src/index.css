@@ -172,10 +172,6 @@ body {
   }
 }
 
-.animate-soft-pulse {
-  animation: soft-pulse 1.5s ease-in-out infinite;
-}
-
 @keyframes border-ripple {
   0% {
     box-shadow: 0 0 0 0 var(--ripple-color, rgba(96, 165, 250, 1)),
@@ -195,4 +191,23 @@ body {
   animation: border-ripple 1.5s ease-in-out infinite;
   border-radius: 0.375rem; /* rounded-md */
   border: 2px solid var(--ripple-color, rgba(96, 165, 250, 1));
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(1.6);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-pop {
+  animation: pop 0.4s ease-out;
 }

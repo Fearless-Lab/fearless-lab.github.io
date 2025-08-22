@@ -50,7 +50,7 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   const baseClass =
     "px-8 py-3 font-semibold rounded-lg transform transition duration-300 shadow-xl border border-transparent relative outline-none cursor-pointer";
 
-  const enabledClass = "bg-[#027088] hover:brightness-90";
+  const enabledClass = "bg-[#6b6602] hover:brightness-90";
   const disabledClass = "bg-gray-400 cursor-not-allowed";
 
   const onClickHandler = async () => {
@@ -89,9 +89,17 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   return (
     <button
       onClick={onClickHandler}
+      style={
+        !disabled
+          ? ({
+              "--ripple-color": "#9c7e05",
+            } as React.CSSProperties)
+          : {}
+      }
       className={twMerge(
         baseClass,
-        disabled ? disabledClass : `${enabledClass} animate-soft-pulse`,
+        disabled ? disabledClass : enabledClass,
+        !disabled ? "animate-border-ripple" : "",
         className
       )}
       disabled={disabled}
