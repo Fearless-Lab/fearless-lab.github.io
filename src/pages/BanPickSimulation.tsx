@@ -25,6 +25,7 @@ import { useBanPickController } from "@/hooks/banPick/useBanPickController";
 import BanOverviewModal from "./components/BanPickSimulation/BanOverviewModal";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import MuteToggleButton from "./components/BanPickSimulation/MuteToggleButton";
+import VideoGallery from "./components/BanPickSimulation/VideoGallery";
 
 const BanPickSimulation = () => {
   const { matchId, teamName, oppositeTeam, mode, initialTeam, isGuest } =
@@ -416,17 +417,17 @@ const BanPickSimulation = () => {
           version={version}
         />
       </div>
-      <div className="my-2 flex justify-center">
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/BKATPpLnrcE"
-          title="YouTube video player"
-          style={{ border: "none" }}
-          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        ></iframe>
-      </div>
+
+      <VideoGallery
+        videos={[
+          "https://www.youtube.com/watch?v=BKATPpLnrcE",
+          "https://www.youtube.com/watch?v=LBqWADpKFRc",
+          "https://www.youtube.com/watch?v=Qb_Ol3eD0hA",
+          "https://www.youtube.com/watch?v=at_GgixKo5w",
+          "https://www.youtube.com/watch?v=R8FNnXHGZbc",
+          "https://www.youtube.com/watch?v=BkhpTA5c4Sw",
+        ]}
+      />
     </>
   );
 };
