@@ -80,7 +80,7 @@ export default function ChampionGrid({
         const pickCheck = previousPicks.has(champ.id);
 
         const isDisabled =
-          isGuest ||
+          mode !== "hardFearless" ||
           (currentPhaseType === "ban"
             ? baseCheck || banCheck
             : baseCheck || pickCheck);

@@ -12,9 +12,10 @@ import {
   HomeIcon,
   MagnifyingGlassPlusIcon,
   MusicalNoteIcon,
-  NoSymbolIcon,
+  // NoSymbolIcon,
 } from "@heroicons/react/16/solid";
 import { useNavigate } from "react-router-dom";
+import { Volume2 } from "lucide-react";
 
 type ReadyCheckModalProps = {
   open: boolean;
@@ -27,8 +28,8 @@ const ReadyCheckModal = ({
   open,
   onReadyClick,
   isReady,
-  mode,
-}: ReadyCheckModalProps) => {
+}: // mode,
+ReadyCheckModalProps) => {
   const navigate = useNavigate();
 
   return (
@@ -53,25 +54,40 @@ const ReadyCheckModal = ({
         </DialogHeader>
 
         <div className="mt-4 text-sm text-white space-y-3">
-          <div className="flex items-center gap-2">
-            <ClipboardDocumentListIcon className="w-5 h-5" />
-            이전 세트의 밴픽 기록을 확인할 수 있습니다.
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <ClipboardDocumentListIcon className="w-5 h-5" />
+              이전 세트의 밴픽 기록을 확인할 수 있습니다.
+            </div>
+            <div className="text-xs text-gray-400 ml-7">
+              1세트 종료 이후부터 확인할 수 있습니다.
+            </div>
           </div>
-          {mode !== "normal" && (
+          {/* {mode !== "normal" && (
             <div className="flex items-center gap-2">
               <NoSymbolIcon className="w-5 h-5 text-rose-400" />
               선택하신 모드에서의 금지 현황을 확인할 수 있습니다.
             </div>
-          )}
+          )} */}
 
-          <div className="flex flex-col gap-1">
+          {/* <div className="flex flex-col gap-1">
             <div className="text-xs text-gray-400 ml-7">
               ※ 1세트 종료 이후부터 확인할 수 있습니다.
             </div>
-            {/* <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <ArrowPathIcon className="w-5 h-5 text-rose-400" />
               해당 세트의 밴픽을 처음부터 다시 시작합니다.
-            </div> */}
+            </div>
+          </div> */}
+
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <Volume2 className="w-5 h-5" />
+              10초 이하가 되면 긴박감을 위해 북소리가 울립니다.
+            </div>
+            <div className="text-xs text-gray-400 ml-7">
+              버튼을 다시 누르면 음소거할 수 있습니다.
+            </div>
           </div>
 
           <div className="flex flex-col gap-1">

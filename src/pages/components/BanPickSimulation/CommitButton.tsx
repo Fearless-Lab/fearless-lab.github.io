@@ -7,6 +7,7 @@ import React, {
   type SetStateAction,
 } from "react";
 import { twMerge } from "tailwind-merge";
+import { useBanPickTimerStore } from "@/store/banPickTimerStore";
 
 interface CTAButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode;
@@ -41,6 +42,9 @@ const CommitButton: React.FC<CTAButtonProps> = ({
     commitSwapConfirm,
     commitTotalPickIfNeeded,
   } = useBanPickController(matchId);
+
+  const { remainingTime } = useBanPickTimerStore();
+
   const calledRef = useRef(false);
 
   useEffect(() => {
@@ -50,7 +54,11 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   const baseClass =
     "px-8 py-3 font-semibold rounded-lg transform transition duration-300 shadow-xl border border-transparent relative outline-none cursor-pointer";
 
-  const enabledClass = "bg-[#6b6602] hover:brightness-90";
+  const dynamicClass =
+    remainingTime <= 10 && currentStep <= 20
+      ? "bg-gradient-to-r from-red-800 via-rose-800 to-red-900 hover:from-red-900 hover:to-rose-900"
+      : "bg-gradient-to-r from-sky-500 via-cyan-500 to-blue-600 hover:from-sky-600 hover:to-blue-700";
+
   const disabledClass = "bg-gray-400 cursor-not-allowed";
 
   const onClickHandler = async () => {
@@ -92,13 +100,16 @@ const CommitButton: React.FC<CTAButtonProps> = ({
       style={
         !disabled
           ? ({
-              "--ripple-color": "#9c7e05",
+              "--ripple-color":
+                remainingTime <= 10 && currentStep <= 20
+                  ? "#7f1d1d" /* red-900 계열 */
+                  : "#0ea5e9" /* sky-500 */,
             } as React.CSSProperties)
           : {}
       }
       className={twMerge(
         baseClass,
-        disabled ? disabledClass : enabledClass,
+        disabled ? disabledClass : dynamicClass, // ✅ 동적 색상 적용
         !disabled ? "animate-border-ripple" : "",
         className
       )}

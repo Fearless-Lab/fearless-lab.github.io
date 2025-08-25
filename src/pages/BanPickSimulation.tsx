@@ -1,7 +1,6 @@
 import {
   ClipboardDocumentListIcon,
-  NoSymbolIcon,
-  // ArrowPathIcon,
+  // NoSymbolIcon,
 } from "@heroicons/react/24/outline";
 
 import PositionRow from "./components/BanPickSimulation/PositionRow";
@@ -25,6 +24,7 @@ import { positions, positionMap, type Position } from "@constants/positions";
 import { useBanPickController } from "@/hooks/banPick/useBanPickController";
 import BanOverviewModal from "./components/BanPickSimulation/BanOverviewModal";
 import { XMarkIcon } from "@heroicons/react/16/solid";
+import MuteToggleButton from "./components/BanPickSimulation/MuteToggleButton";
 
 const BanPickSimulation = () => {
   const { matchId, teamName, oppositeTeam, mode, initialTeam, isGuest } =
@@ -166,7 +166,7 @@ const BanPickSimulation = () => {
           <div className="flex w-full h-18 rounded-tl-md rounded-tr-md overflow-hidden">
             <div className="flex-1 bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-lg text-white flex items-center justify-between font-bold px-4">
               <span>{teams ? teams.blue : "팀 정보 불러오는중"}</span>
-              <span className="text-yellow-400 text-xl md:text-2xl">
+              <span className="text-[#b99504] text-xl md:text-2xl">
                 {blueScore}
               </span>
             </div>
@@ -186,25 +186,25 @@ const BanPickSimulation = () => {
                 />
               )}
               <div className="mt-1 flex items-center gap-4">
-                <ClipboardDocumentListIcon
-                  className="w-5 h-5 cursor-pointer hover:text-gray-300"
-                  onClick={() => setIsHistoryOpen(true)}
-                />
-                {mode !== "normal" && (
+                {(currentSet > 1 || currentStep === 21) && (
+                  <ClipboardDocumentListIcon
+                    className="w-5 h-5 cursor-pointer hover:text-gray-300"
+                    onClick={() => setIsHistoryOpen(true)}
+                  />
+                )}
+
+                {/* {mode !== "normal" && (
                   <NoSymbolIcon
                     className="w-5 h-5 text-rose-400 cursor-pointer hover:text-gray-300"
                     onClick={() => setIsBanOverviewOpen(true)}
                   />
-                )}
+                )} */}
 
-                {/* <ArrowPathIcon
-                className="w-5 h-5 cursor-pointer hover:text-red-800 text-rose-400"
-                onClick={() => alert("🚧 공사 중이에요")}
-              /> */}
+                {!isGuest && <MuteToggleButton />}
               </div>
             </div>
             <div className="flex-1 bg-gradient-to-r from-rose-400/40 via-rose-500/50 to-rose-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-lg text-white flex items-center justify-between font-bold px-4">
-              <span className="text-yellow-400 text-xl md:text-2xl">
+              <span className="text-[#b99504] text-xl md:text-2xl">
                 {redScore}
               </span>
               <span>{teams ? teams.red : "팀 정보 불러오는중"}</span>
@@ -399,13 +399,13 @@ const BanPickSimulation = () => {
           currentStep={currentStep}
           teamName={teamName}
           oppositeTeam={oppositeTeam}
-          open={isHistoryOpen && (currentSet > 1 || currentStep === 21)}
+          open={isHistoryOpen}
           onClose={() => setIsHistoryOpen(false)}
           version={version}
           winners={winners}
         />
         <BanOverviewModal
-          open={isBanOverviewOpen && (currentSet > 1 || currentStep === 21)}
+          open={isBanOverviewOpen}
           onClose={() => setIsBanOverviewOpen(false)}
           mode={mode}
           matchId={matchId}
