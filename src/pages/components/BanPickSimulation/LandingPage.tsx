@@ -18,7 +18,7 @@ const LandingPage = () => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center px-6 pt-32 pb-12 text-white"
+      className="flex flex-col items-center justify-center px-6 py-32 text-white"
       ref={divRef}
     >
       <section className="max-w-2xl w-full mb-12">
@@ -31,11 +31,11 @@ const LandingPage = () => {
             <span>피어리스 룰이 적용된 내전(스크림)을 자주 하시는 분들</span>
           </li>
           <li className="flex items-start gap-2">
-            <ExclamationTriangleIcon className="w-6 h-6 text-yellow-400 shrink-0" />
+            <ExclamationTriangleIcon className="w-6 h-6 text-rose-400 shrink-0" />
             <span>챔피언 부족으로 내전 진행에 어려움이 있는 분들</span>
           </li>
           <li className="flex items-start gap-2">
-            <TrophyIcon className="w-6 h-6 text-rose-400 shrink-0" />
+            <TrophyIcon className="w-6 h-6 text-yellow-400 shrink-0" />
             <span>대회 준비를 위해 밴픽 전략을 연구하고 싶은 분들</span>
           </li>
         </ul>
@@ -48,13 +48,13 @@ const LandingPage = () => {
         </p>
         <ul className="space-y-3">
           <li className="flex items-start gap-2">
-            <EnvelopeIcon className="w-6 h-6 text-sky-400 shrink-0 mt-0.5" />
+            <EnvelopeIcon className="w-6 h-6 text-emerald-400 shrink-0 mt-0.5" />
             <span>
               메일) <span className="font-mono">jyk41993@gmail.com</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
-            <ChatBubbleLeftRightIcon className="w-6 h-6 text-emerald-500 shrink-0 mt-0.5" />
+            <ChatBubbleLeftRightIcon className="w-6 h-6 text-yellow-500 shrink-0 mt-0.5" />
             <span>
               카카오톡){" "}
               <a
@@ -71,7 +71,9 @@ const LandingPage = () => {
       </section>
 
       <div className="max-w-2xl w-full text-left">
-        <CTAButton onClick={() => navigate("/banPick")}>시작하기</CTAButton>
+        <CTAButton onClick={() => navigate("/banPick")}>
+          시뮬레이션 시작하기
+        </CTAButton>
       </div>
     </div>
   );
