@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import ScreenshotCarousel from "./ScreenshotCarousel";
 
 const LandingPage = () => {
   const divRef = useRef<HTMLDivElement | null>(null);
@@ -39,6 +40,8 @@ const LandingPage = () => {
             <span>대회 준비를 위해 밴픽 전략을 연구하고 싶은 분들</span>
           </li>
         </ul>
+
+        <ScreenshotCarousel />
       </section>
 
       <section className="max-w-2xl w-full mb-12">
