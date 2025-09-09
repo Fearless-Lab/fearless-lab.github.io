@@ -6,12 +6,11 @@ const Footer = () => {
           © {new Date().getFullYear()} Jinyoung Kim. All rights reserved.
         </div>
         <div>
-          Contact me:{" "}
           <a
-            href="mailto:jyk41993@gmail.com"
+            href="/banPickSimulation"
             className="text-[#027b96] hover:underline"
           >
-            jyk41993@gmail.com
+            Contact & Who’s This For?
           </a>
           <p className="my-2">
             This site is not affiliated with or endorsed by Riot Games, Inc.
