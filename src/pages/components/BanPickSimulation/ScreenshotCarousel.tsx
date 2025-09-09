@@ -7,6 +7,8 @@ const screenshots = [
   "/screenshots/sim-3.png",
   "/screenshots/sim-4.png",
   "/screenshots/sim-5.png",
+  "/screenshots/sim-6.png",
+  "/screenshots/sim-7.png",
 ];
 
 const ScreenshotCarousel = () => {
@@ -26,7 +28,7 @@ const ScreenshotCarousel = () => {
           const diff = (i - index + screenshots.length) % screenshots.length;
 
           let className =
-            "absolute w-96 h-54 rounded-lg shadow-lg transition-all duration-500 overflow-hidden";
+            "absolute w-96 h-48 rounded-lg shadow-lg transition-all duration-500 overflow-hidden";
           let style: React.CSSProperties = {};
           let pointer: React.CSSProperties["pointerEvents"] = "none";
 
