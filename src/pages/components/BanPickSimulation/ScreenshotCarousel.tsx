@@ -20,13 +20,13 @@ const ScreenshotCarousel = () => {
   };
 
   return (
-    <div className="relative w-full max-w-3xl h-72 flex items-center justify-center overflow-hidden mt-8">
+    <div className="relative w-full h-80 flex items-center justify-center overflow-hidden mt-8">
       <div className="flex items-center justify-center w-full h-full relative">
         {screenshots.map((src, i) => {
           const diff = (i - index + screenshots.length) % screenshots.length;
 
           let className =
-            "absolute w-80 h-44 rounded-lg shadow-lg transition-all duration-500 overflow-hidden";
+            "absolute w-96 h-54 rounded-lg shadow-lg transition-all duration-500 overflow-hidden";
           let style: React.CSSProperties = {};
           let pointer: React.CSSProperties["pointerEvents"] = "none";
 
