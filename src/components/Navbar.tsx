@@ -50,6 +50,12 @@ const Navbar = () => {
           <Link to={dynamicLink.path}>{dynamicLink.title}</Link>
         </li>
       </ul> */}
+
+      <ul className="flex space-x-6 text-lg">
+        <li className="px-3 py-1">
+          <Link to="/banPickSimulation">About</Link>
+        </li>
+      </ul>
     </nav>
   );
 };
