@@ -22,7 +22,7 @@ const ScreenshotCarousel = () => {
   };
 
   return (
-    <div className="relative w-full h-80 flex items-center justify-center overflow-hidden mt-8">
+    <div className="relative w-full h-80 flex items-center justify-center overflow-hidden mt-4">
       <div className="flex items-center justify-center w-full h-full relative">
         {screenshots.map((src, i) => {
           const diff = (i - index + screenshots.length) % screenshots.length;

@@ -24,7 +24,7 @@ const LandingPage = () => {
       className="flex flex-col items-center justify-center px-6 py-32 text-white"
       ref={divRef}
     >
-      <section className="max-w-3xl w-full mb-12">
+      <section className="max-w-3xl w-full mb-12 text-sm">
         <h2 className="text-2xl font-semibold mb-4">
           Fearless는 이런 분들을 위한 서비스입니다
         </h2>
@@ -60,7 +60,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="max-w-3xl w-full mb-12">
+      <section className="max-w-3xl w-full mb-12 text-sm">
         <h2 className="text-2xl font-semibold mb-4">Contact</h2>
         <p className="mb-4 text-gray-300">
           피드백이나 추가되었으면 하는 기능이 있다면 언제든 편하게 연락주세요 !
