@@ -30,13 +30,11 @@ import { useLocation } from "react-router-dom";
 import LandingPage from "./components/BanPickSimulation/LandingPage";
 
 const BanPickSimulation = () => {
+  const location = useLocation();
+  if (!location.search) return <LandingPage />;
+
   const { matchId, teamName, oppositeTeam, mode, initialTeam, isGuest } =
     getBanPickQueryParams();
-  const location = useLocation();
-
-  if (!location.search) {
-    return <LandingPage />;
-  }
 
   const { champions, version } = useChampions();
 
