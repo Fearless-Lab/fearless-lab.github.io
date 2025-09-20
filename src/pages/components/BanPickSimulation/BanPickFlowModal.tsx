@@ -59,7 +59,9 @@ const BanPickFlowModal = ({
             <DialogDescription className="text-gray-400 mt-2 text-sm">
               이전 세트의 밴픽 진행 순서를 확인할 수 있어요.
               <br />
-              세트별로 위는 블루팀, 아래는 레드팀이에요.
+              {/* 세트별로 위는 블루팀, 아래는 레드팀이에요.
+              <br /> */}
+              상대의 의도를 파악하는 데 도움이 될 거예요.
             </DialogDescription>
           </div>
 
@@ -122,8 +124,14 @@ const BanPickFlowModal = ({
                     </span>
                   </h2>
 
-                  <div className="bg-neutral-800 p-2 rounded border border-neutral-700 inline-block overflow-x-auto w-full">
-                    <div className="flex items-center gap-1">
+                  <div className="relative bg-neutral-800 p-2 rounded border border-neutral-700 inline-block overflow-x-auto w-full">
+                    {/* Top blue gradient */}
+                    <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-blue-500/20 to-transparent pointer-events-none rounded-t" />
+                    {/* Bottom red gradient */}
+                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-red-500/20 to-transparent pointer-events-none rounded-b" />
+
+                    {/* --- Content --- */}
+                    <div className="flex items-center gap-1 relative z-10">
                       <BanBox champId={actionLog[0]} version={version} />
                       <BanBox champId={actionLog[2]} version={version} />
                       <BanBox champId={actionLog[4]} version={version} />
@@ -155,9 +163,9 @@ const BanPickFlowModal = ({
                       <PickBox champId={actionLog[18]} version={version} />
                     </div>
 
-                    <div className="h-px w-full bg-neutral-600 mt-2 opacity-50" />
+                    <div className="h-px w-full bg-neutral-600 mt-2 opacity-50 relative z-10" />
 
-                    <div className="flex items-center gap-1 mt-2 ml-2">
+                    <div className="flex items-center gap-1 mt-2 ml-2 relative z-10">
                       <BanBox champId={actionLog[1]} version={version} />
                       <BanBox champId={actionLog[3]} version={version} />
                       <BanBox champId={actionLog[5]} version={version} />

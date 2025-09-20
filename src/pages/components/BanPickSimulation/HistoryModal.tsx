@@ -99,9 +99,7 @@ const HistoryModal = ({
       >
         <div className="flex justify-between items-start">
           <div>
-            <DialogTitle className="text-lg md:text-xl">
-              챔피언 픽 기록판
-            </DialogTitle>
+            <DialogTitle className="text-lg md:text-xl">챔피언 픽</DialogTitle>
             <DialogDescription className="text-gray-400 mt-2 text-sm">
               이전 세트의 라인별 최종 픽 결과를 확인할 수 있어요.
             </DialogDescription>
