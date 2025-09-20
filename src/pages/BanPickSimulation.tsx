@@ -1,6 +1,7 @@
 import {
-  ClipboardDocumentListIcon,
+  ChevronDoubleRightIcon,
   // NoSymbolIcon,
+  DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 
 import PositionRow from "./components/BanPickSimulation/PositionRow";
@@ -28,6 +29,7 @@ import MuteToggleButton from "./components/BanPickSimulation/MuteToggleButton";
 import VideoGallery from "./components/BanPickSimulation/VideoGallery";
 import { useLocation } from "react-router-dom";
 import LandingPage from "./components/BanPickSimulation/LandingPage";
+import BanPickFlowModal from "./components/BanPickSimulation/BanPickFlowModal";
 
 const BanPickSimulation = () => {
   const location = useLocation();
@@ -119,6 +121,7 @@ const BanPickSimulation = () => {
     : (!isMyTurn && !isSwapPhase) || commited || (finished && !isSwapPhase);
 
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isBanPickFlowOpen, setIsBanPickFlowOpen] = useState(false);
   const [isBanOverviewOpen, setIsBanOverviewOpen] = useState(false);
 
   const [selectedPosition, setSelectedPosition] = useState<Position | null>(
@@ -191,9 +194,9 @@ const BanPickSimulation = () => {
                   isGuest={isGuest}
                 />
               )}
-              <div className="mt-1 flex items-center gap-4">
+              <div className="mt-1 flex items-center gap-2">
                 {(currentSet > 1 || currentStep === 21) && (
-                  <ClipboardDocumentListIcon
+                  <DocumentTextIcon
                     className="w-5 h-5 cursor-pointer hover:text-gray-300"
                     onClick={() => setIsHistoryOpen(true)}
                   />
@@ -205,6 +208,13 @@ const BanPickSimulation = () => {
                     onClick={() => setIsBanOverviewOpen(true)}
                   />
                 )} */}
+
+                {(currentSet > 1 || currentStep === 21) && (
+                  <ChevronDoubleRightIcon
+                    className="w-5 h-5 cursor-pointer hover:text-gray-300"
+                    onClick={() => setIsBanPickFlowOpen(true)}
+                  />
+                )}
 
                 {!isGuest && <MuteToggleButton />}
               </div>
@@ -279,6 +289,7 @@ const BanPickSimulation = () => {
 
                 <CommitButton
                   disabled={isGuest || isCommitButtonDisabled}
+                  currentSet={currentSet}
                   currentStep={currentStep}
                   teamName={teamName}
                   localPick={localPick}
@@ -343,6 +354,7 @@ const BanPickSimulation = () => {
 
               <CommitButton
                 disabled={isGuest || isCommitButtonDisabled}
+                currentSet={currentSet}
                 currentStep={currentStep}
                 teamName={teamName}
                 localPick={localPick}
@@ -409,6 +421,14 @@ const BanPickSimulation = () => {
           onClose={() => setIsHistoryOpen(false)}
           version={version}
           winners={winners}
+        />
+        <BanPickFlowModal
+          matchId={matchId}
+          currentSet={currentSet}
+          currentStep={currentStep}
+          open={isBanPickFlowOpen}
+          onClose={() => setIsBanPickFlowOpen(false)}
+          version={version}
         />
         <BanOverviewModal
           open={isBanOverviewOpen}

@@ -80,10 +80,13 @@ export const useBanPickController = (matchId: string) => {
       const newList = [...currentList];
       newList[PHASE[localStep].index] = champName;
 
+      const newActionLog = [...(setData.actionLog || []), champName];
+
       transaction.update(docRef, {
         [targetPath]: newList,
         [`sets.${currentSet}.currentStep`]: firestoreStep + 1,
         [`sets.${currentSet}.startedAt`]: serverTimestamp(),
+        [`sets.${currentSet}.actionLog`]: newActionLog,
       });
     });
   };
@@ -162,6 +165,11 @@ export const useBanPickController = (matchId: string) => {
               [oppositeTeam]: Array(5).fill(""),
             },
             startedAt: null,
+            commited: {
+              [teamName]: false,
+              [oppositeTeam]: false,
+            },
+            actionLog: [],
           },
           currentSet: nextSet,
           isNextSetPreparing: false,

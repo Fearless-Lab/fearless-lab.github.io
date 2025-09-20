@@ -15,6 +15,18 @@ import {
 } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
 
+import DiamondBot from "@/assets/Position_Diamond-Bot.png";
+import DiamondJungle from "@/assets/Position_Diamond-Jungle.png";
+import DiamondMid from "@/assets/Position_Diamond-Mid.png";
+import DiamondSupport from "@/assets/Position_Diamond-Support.png";
+import DiamondTop from "@/assets/Position_Diamond-Top.png";
+
+import GrandmasterBot from "@/assets/Position_Grandmaster-Bot.png";
+import GrandmasterJungle from "@/assets/Position_Grandmaster-Jungle.png";
+import GrandmasterMid from "@/assets/Position_Grandmaster-Mid.png";
+import GrandmasterSupport from "@/assets/Position_Grandmaster-Support.png";
+import GrandmasterTop from "@/assets/Position_Grandmaster-Top.png";
+
 interface HistoryModalProps {
   matchId: string;
   currentSet: number;
@@ -27,6 +39,25 @@ interface HistoryModalProps {
   winners: string[];
 }
 
+const roleOrder = ["Top", "Jungle", "Mid", "Bot", "Support"];
+
+const roleIcons: Record<"blue" | "red", Record<string, string>> = {
+  blue: {
+    Top: DiamondTop,
+    Jungle: DiamondJungle,
+    Mid: DiamondMid,
+    Bot: DiamondBot,
+    Support: DiamondSupport,
+  },
+  red: {
+    Top: GrandmasterTop,
+    Jungle: GrandmasterJungle,
+    Mid: GrandmasterMid,
+    Bot: GrandmasterBot,
+    Support: GrandmasterSupport,
+  },
+};
+
 const HistoryModal = ({
   matchId,
   currentSet,
@@ -38,7 +69,7 @@ const HistoryModal = ({
   version,
   winners,
 }: HistoryModalProps) => {
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(true);
   const isCurrentSetFinished = currentStep === 21;
 
   const queries = useQueries({
@@ -69,10 +100,10 @@ const HistoryModal = ({
         <div className="flex justify-between items-start">
           <div>
             <DialogTitle className="text-lg md:text-xl">
-              밴픽 기록판
+              챔피언 픽 기록판
             </DialogTitle>
             <DialogDescription className="text-gray-400 mt-2 text-sm">
-              이전 세트의 밴픽 기록을 확인할 수 있습니다.
+              이전 세트의 라인별 최종 픽 결과를 확인할 수 있어요.
             </DialogDescription>
 
             <div className="mt-4 mb-4 border-t border-neutral-700" />
@@ -156,7 +187,16 @@ const HistoryModal = ({
                           )}
                         >
                           <h3 className="text-sm font-semibold mb-3 text-white flex items-center gap-2">
-                            {team === teams.blue ? "🟦" : "🟥"} {team}
+                            <span
+                              className={cn(
+                                "text-xs px-2 py-1 rounded",
+                                team === teams.blue
+                                  ? "bg-blue-600/40 text-blue-300"
+                                  : "bg-red-600/40 text-red-300"
+                              )}
+                            >
+                              {team}
+                            </span>
                             {isWinner && (
                               <span className="text-yellow-400 text-xs font-bold ml-1">
                                 승리
@@ -164,53 +204,35 @@ const HistoryModal = ({
                             )}
                           </h3>
 
-                          <div className="flex items-center mb-2 gap-2">
-                            <span className="text-sm text-gray-400 w-10">
-                              PICK
-                            </span>
-                            <div className="flex gap-2 flex-wrap">
-                              {banPickByTeam[team].pick.map((champId) => (
-                                <img
-                                  key={champId}
-                                  src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champId}.png`}
-                                  alt={champId}
-                                  className="w-9 h-9 object-cover rounded border border-neutral-600"
-                                  title={champId}
-                                />
-                              ))}
-                            </div>
-                          </div>
+                          <div className="flex gap-3 flex-wrap">
+                            {banPickByTeam[team].pick.map(
+                              (champId: string, i: number) => {
+                                const role = roleOrder[i];
+                                return (
+                                  <div
+                                    key={champId || `pick-${i}`}
+                                    className="flex flex-col items-center gap-1"
+                                  >
+                                    <img
+                                      src={
+                                        roleIcons[
+                                          team === teams.blue ? "blue" : "red"
+                                        ][role]
+                                      }
+                                      alt={`${role} icon`}
+                                      className="w-5 h-5"
+                                    />
 
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm text-gray-400 w-10">
-                              BAN
-                            </span>
-                            <div className="flex gap-2 flex-wrap">
-                              {banPickByTeam[team].ban.map((champId, i) => (
-                                <div
-                                  key={champId || `ban-${i}`}
-                                  className="relative w-9 h-9 border border-neutral-600 bg-neutral-900 rounded-md overflow-hidden"
-                                >
-                                  {champId && (
                                     <img
                                       src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champId}.png`}
                                       alt={champId}
+                                      className="w-9 h-9 object-cover rounded border border-neutral-600"
                                       title={champId}
-                                      className="w-full h-full object-cover"
                                     />
-                                  )}
-                                  <div
-                                    className={`absolute w-[70%] h-[1.2px] rotate-45 top-1/2 left-1/2 
-                                                -translate-x-1/2 -translate-y-1/2 pointer-events-none 
-                                                ${
-                                                  champId
-                                                    ? "bg-white"
-                                                    : "bg-white/30"
-                                                }`}
-                                  />
-                                </div>
-                              ))}
-                            </div>
+                                  </div>
+                                );
+                              }
+                            )}
                           </div>
                         </div>
                       );
@@ -221,13 +243,13 @@ const HistoryModal = ({
             })}
         </div>
 
-        <button
+        {/* <button
           className="h-10 mt-6 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm"
           onClick={onClose}
           type="button"
         >
           닫기
-        </button>
+        </button> */}
       </DialogContent>
     </Dialog>
   );

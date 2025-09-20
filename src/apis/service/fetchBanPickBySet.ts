@@ -50,3 +50,30 @@ export const fetchBanPickBySet = async (
     },
   };
 };
+
+export interface BanPickFlowData {
+  actionLog: string[];
+  teams: {
+    blue: string;
+    red: string;
+  };
+}
+
+export const fetchBanPickFlowBySet = async (
+  matchId: string,
+  setNumber: number
+): Promise<BanPickFlowData | null> => {
+  const matchDocRef = doc(db, "banPickSimulations", matchId);
+  const docSnap = await getDoc(matchDocRef);
+
+  if (!docSnap.exists()) return null;
+
+  const data = docSnap.data();
+  const setData = data.sets?.[setNumber];
+  if (!setData || !setData.actionLog || !setData.teams) return null;
+
+  return {
+    actionLog: setData.actionLog as string[],
+    teams: setData.teams as { blue: string; red: string },
+  };
+};

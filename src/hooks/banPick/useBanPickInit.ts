@@ -60,6 +60,7 @@ export const useBanPickInit = ({
               [teamName]: false,
               [oppositeTeam]: false,
             },
+            actionLog: [], // ban pick flow를 보기 위한 배열(밴픽 순서가 보장된 배열)
           },
           winners: [],
         },
