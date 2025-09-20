@@ -71,14 +71,14 @@ const ScreenshotCarousel = () => {
 
       <button
         onClick={() => handleSlide("prev")}
-        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-2 rounded-full"
+        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-2 rounded-full cursor-pointer"
       >
         <ArrowLeftIcon className="w-6 h-6 text-white" />
       </button>
 
       <button
         onClick={() => handleSlide("next")}
-        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-2 rounded-full"
+        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-2 rounded-full cursor-pointer"
       >
         <ArrowRightIcon className="w-6 h-6 text-white" />
       </button>

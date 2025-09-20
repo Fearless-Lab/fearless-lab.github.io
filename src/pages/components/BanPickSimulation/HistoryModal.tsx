@@ -151,6 +151,12 @@ const HistoryModal = ({
             <p className="text-rose-400">데이터를 불러오는데 실패했습니다.</p>
           )}
 
+          {!queries.length && (
+            <p className="text-gray-400 flex items-center gap-2 justify-center">
+              앗.. 아직 경기 기록이 없네요 😢
+            </p>
+          )}
+
           {!isLoading &&
             !isError &&
             queries.map((q, idx) => {
@@ -243,13 +249,13 @@ const HistoryModal = ({
             })}
         </div>
 
-        {/* <button
+        <button
           className="h-10 mt-6 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm"
           onClick={onClose}
           type="button"
         >
           닫기
-        </button> */}
+        </button>
       </DialogContent>
     </Dialog>
   );

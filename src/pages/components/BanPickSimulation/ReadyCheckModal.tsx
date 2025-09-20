@@ -60,18 +60,12 @@ ReadyCheckModalProps) => {
               <DocumentTextIcon className="w-5 h-5" />
               이전 세트의 라인별 챔피언을 확인할 수 있습니다.
             </div>
-            <div className="text-xs text-gray-400 ml-7">
-              1세트 종료 이후부터 확인할 수 있습니다.
-            </div>
           </div>
 
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
               <ChevronDoubleRightIcon className="w-5 h-5" />
               이전 세트의 밴픽 흐름을 확인할 수 있습니다.
-            </div>
-            <div className="text-xs text-gray-400 ml-7">
-              1세트 종료 이후부터 확인할 수 있습니다.
             </div>
           </div>
 

@@ -195,12 +195,10 @@ const BanPickSimulation = () => {
                 />
               )}
               <div className="mt-1 flex items-center gap-2">
-                {(currentSet > 1 || currentStep === 21) && (
-                  <DocumentTextIcon
-                    className="w-5 h-5 cursor-pointer hover:text-gray-300"
-                    onClick={() => setIsHistoryOpen(true)}
-                  />
-                )}
+                <DocumentTextIcon
+                  className="w-5 h-5 cursor-pointer hover:text-gray-300"
+                  onClick={() => setIsHistoryOpen(true)}
+                />
 
                 {/* {mode !== "normal" && (
                   <NoSymbolIcon
@@ -209,12 +207,10 @@ const BanPickSimulation = () => {
                   />
                 )} */}
 
-                {(currentSet > 1 || currentStep === 21) && (
-                  <ChevronDoubleRightIcon
-                    className="w-5 h-5 cursor-pointer hover:text-gray-300"
-                    onClick={() => setIsBanPickFlowOpen(true)}
-                  />
-                )}
+                <ChevronDoubleRightIcon
+                  className="w-5 h-5 cursor-pointer hover:text-gray-300"
+                  onClick={() => setIsBanPickFlowOpen(true)}
+                />
 
                 {!isGuest && <MuteToggleButton />}
               </div>
