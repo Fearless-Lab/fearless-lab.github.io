@@ -43,7 +43,7 @@ export const gameMode = [
 ];
 
 export const modeDescription: Record<(typeof gameMode)[number], string> = {
-  "토너먼트 드래프트": "\n 자유롭게 선택할 수 있는 모드에요.",
+  "토너먼트 드래프트": "자유롭게 선택할 수 있는 모드에요.",
   "소프트 피어리스":
     "이전 세트들에서 우리 팀이 사용했던 챔피언은 다시 고를 수 없어요.",
   "하드 피어리스":

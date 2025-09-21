@@ -70,20 +70,21 @@ export default function ChampionGrid({
         const baseCheck = currentSetSelections.has(champ.id);
 
         let banCheck = false;
-
         if (mode === "hardFearless") {
           banCheck = previousPicks.has(champ.id);
         } else if (mode === "fearless") {
           banCheck = oppoPreviousPicks.has(champ.id);
         }
 
-        const pickCheck = previousPicks.has(champ.id);
+        const pickCheck =
+          mode === "hardFearless" || mode === "fearless"
+            ? previousPicks.has(champ.id)
+            : false;
 
         const isDisabled =
-          mode !== "hardFearless" ||
-          (currentPhaseType === "ban"
+          currentPhaseType === "ban"
             ? baseCheck || banCheck
-            : baseCheck || pickCheck);
+            : baseCheck || pickCheck;
 
         const isSelected =
           (currentPhaseType === "ban" &&
