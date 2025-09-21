@@ -284,8 +284,7 @@ const BanPickSimulation = () => {
                 </div>
 
                 <CommitButton
-                  disabled={isGuest || isCommitButtonDisabled}
-                  currentSet={currentSet}
+                  disabled={isGuest || isCommitButtonDisabled || isModalOpen}
                   currentStep={currentStep}
                   teamName={teamName}
                   localPick={localPick}
@@ -349,8 +348,7 @@ const BanPickSimulation = () => {
               </div>
 
               <CommitButton
-                disabled={isGuest || isCommitButtonDisabled}
-                currentSet={currentSet}
+                disabled={isGuest || isCommitButtonDisabled || isModalOpen}
                 currentStep={currentStep}
                 teamName={teamName}
                 localPick={localPick}

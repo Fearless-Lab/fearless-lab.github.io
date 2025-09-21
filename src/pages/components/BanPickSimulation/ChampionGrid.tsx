@@ -58,6 +58,11 @@ export default function ChampionGrid({
     ? champions.filter((champ) => champ.name.includes(searchTerm.trim()))
     : champions;
 
+  const preloadSplash = (champId: string) => {
+    const img = new Image();
+    img.src = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champId}_0.jpg`;
+  };
+
   return (
     <div
       className="grid justify-center auto-rows-[64px] grid-flow-row gap-5"
@@ -81,10 +86,12 @@ export default function ChampionGrid({
             ? previousPicks.has(champ.id)
             : false;
 
-        const isDisabled =
+        let isDisabled =
           currentPhaseType === "ban"
             ? baseCheck || banCheck
             : baseCheck || pickCheck;
+
+        if (mode === "fearless" && isGuest) isDisabled = true;
 
         const isSelected =
           (currentPhaseType === "ban" &&
@@ -95,6 +102,7 @@ export default function ChampionGrid({
         return (
           <div
             key={champ.id}
+            onMouseEnter={() => preloadSplash(champ.id)}
             onClick={() => {
               if (!isDisabled) onChampionClick(champ.id);
             }}

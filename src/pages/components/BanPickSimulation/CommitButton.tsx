@@ -12,7 +12,6 @@ import { useBanPickTimerStore } from "@/store/banPickTimerStore";
 interface CTAButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode;
   currentStep: number;
-  currentSet: number;
   teamName: string;
   localBan: string[];
   localPick: string[];
@@ -28,7 +27,6 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   className,
   disabled,
   currentStep,
-  currentSet,
   teamName,
   localBan,
   localPick,
@@ -57,9 +55,7 @@ const CommitButton: React.FC<CTAButtonProps> = ({
     "px-8 py-3 font-semibold rounded-lg transform transition duration-300 shadow-xl border border-transparent relative outline-none cursor-pointer";
 
   const dynamicClass =
-    currentSet === 1 && currentStep === 0
-      ? "bg-gradient-to-r from-sky-500 via-cyan-500 to-blue-600 hover:from-sky-600 hover:to-blue-700"
-      : remainingTime <= 10 && currentStep <= 20
+    remainingTime <= 10 && currentStep <= 20
       ? "bg-gradient-to-r from-red-800 via-rose-800 to-red-900 hover:from-red-900 hover:to-rose-900"
       : "bg-gradient-to-r from-sky-500 via-cyan-500 to-blue-600 hover:from-sky-600 hover:to-blue-700";
 
@@ -105,9 +101,7 @@ const CommitButton: React.FC<CTAButtonProps> = ({
         !disabled
           ? ({
               "--ripple-color":
-                currentSet === 1 && currentStep === 0
-                  ? "#0ea5e9"
-                  : remainingTime <= 10 && currentStep <= 20
+                remainingTime <= 10 && currentStep <= 20
                   ? "#7f1d1d"
                   : "#0ea5e9",
             } as React.CSSProperties)
