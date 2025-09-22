@@ -30,6 +30,7 @@
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-draggable": "^4.5.0",
     "react-router-dom": "^7.6.3",
     "recharts": "^3.0.2",
     "sweetalert2": "^11.22.2",

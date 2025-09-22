@@ -4,7 +4,7 @@ interface CategoryButtonProps {
   label: string;
   isSelected: boolean;
   onClick: () => void;
-  showSeparator?: boolean; // 구분선 표시 여부
+  showSeparator?: boolean;
 }
 
 const CategoryButton: React.FC<CategoryButtonProps> = ({
@@ -17,7 +17,7 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
     <>
       <button
         onClick={onClick}
-        className={`relative px-4 py-2 text-xs sm:text-sm font-medium focus:outline-none transition-colors duration-200
+        className={`relative px-1 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium focus:outline-none transition-colors duration-200
           ${
             isSelected
               ? "text-cyan-600 border-b-2 border-cyan-600"

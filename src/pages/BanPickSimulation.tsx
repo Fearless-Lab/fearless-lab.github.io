@@ -24,12 +24,13 @@ import HistoryModal from "./components/BanPickSimulation/HistoryModal";
 import { positions, positionMap, type Position } from "@constants/positions";
 import { useBanPickController } from "@/hooks/banPick/useBanPickController";
 import BanOverviewModal from "./components/BanPickSimulation/BanOverviewModal";
-import { XMarkIcon } from "@heroicons/react/16/solid";
+import { BookOpenIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import MuteToggleButton from "./components/BanPickSimulation/MuteToggleButton";
 import VideoGallery from "./components/BanPickSimulation/VideoGallery";
 import { useLocation } from "react-router-dom";
 import LandingPage from "./components/BanPickSimulation/LandingPage";
 import BanPickFlowModal from "./components/BanPickSimulation/BanPickFlowModal";
+import ChampNoteModal from "./components/BanPickSimulation/ChampNoteModal";
 
 const BanPickSimulation = () => {
   const location = useLocation();
@@ -123,6 +124,7 @@ const BanPickSimulation = () => {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isBanPickFlowOpen, setIsBanPickFlowOpen] = useState(false);
   const [isBanOverviewOpen, setIsBanOverviewOpen] = useState(false);
+  const [isNoteOpen, setIsNoteOpen] = useState(false);
 
   const [selectedPosition, setSelectedPosition] = useState<Position | null>(
     null
@@ -179,7 +181,7 @@ const BanPickSimulation = () => {
                 {blueScore}
               </span>
             </div>
-            <div className="w-24 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
+            <div className="w-28 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
               {startedAt && (
                 <BanPickTimer
                   matchId={matchId}
@@ -194,7 +196,7 @@ const BanPickSimulation = () => {
                   isGuest={isGuest}
                 />
               )}
-              <div className="mt-1 flex items-center gap-2">
+              <div className="mt-2 flex items-center gap-2">
                 <DocumentTextIcon
                   className="w-5 h-5 cursor-pointer hover:text-gray-300"
                   onClick={() => setIsHistoryOpen(true)}
@@ -211,6 +213,13 @@ const BanPickSimulation = () => {
                   className="w-5 h-5 cursor-pointer hover:text-gray-300"
                   onClick={() => setIsBanPickFlowOpen(true)}
                 />
+
+                {!isGuest && (
+                  <BookOpenIcon
+                    className="w-5 h-5 cursor-pointer hover:text-gray-300"
+                    onClick={() => setIsNoteOpen(true)}
+                  />
+                )}
 
                 {!isGuest && <MuteToggleButton />}
               </div>
@@ -392,11 +401,17 @@ const BanPickSimulation = () => {
             </div>
           </div>
         </div>
+
         <ReadyCheckModal
           open={!isGuest && isModalOpen}
+          currentSet={currentSet}
           onReadyClick={handleReady}
           isReady={isReady}
-          mode={mode}
+          mode={mode as "normal" | "fearless" | "hardFearless"}
+          champions={champions}
+          version={version}
+          previousPicks={previousPicks}
+          oppoPreviousPicks={oppoPreviousPicks}
         />
         <NextSetModal
           matchId={matchId}
@@ -423,6 +438,15 @@ const BanPickSimulation = () => {
           open={isBanPickFlowOpen}
           onClose={() => setIsBanPickFlowOpen(false)}
           version={version}
+        />
+        <ChampNoteModal
+          open={isNoteOpen}
+          onClose={() => setIsNoteOpen(false)}
+          version={version}
+          previousPicks={previousPicks}
+          oppoPreviousPicks={oppoPreviousPicks}
+          currentSetSelections={currentSetSelections}
+          mode={mode as "normal" | "fearless" | "hardFearless"}
         />
         <BanOverviewModal
           open={isBanOverviewOpen}
