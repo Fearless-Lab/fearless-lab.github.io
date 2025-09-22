@@ -7,8 +7,6 @@ const screenshots = [
   "/screenshots/sim-3.png",
   "/screenshots/sim-4.png",
   "/screenshots/sim-5.png",
-  "/screenshots/sim-6.png",
-  "/screenshots/sim-7.png",
 ];
 
 const ScreenshotCarousel = () => {
@@ -22,19 +20,19 @@ const ScreenshotCarousel = () => {
   };
 
   return (
-    <div className="relative w-full h-80 flex items-center justify-center overflow-hidden mt-4">
+    <div className="relative w-full h-100 flex items-center justify-center overflow-hidden mt-4">
       <div className="flex items-center justify-center w-full h-full relative">
         {screenshots.map((src, i) => {
           const diff = (i - index + screenshots.length) % screenshots.length;
 
           let className =
-            "absolute w-96 h-48 rounded-lg shadow-lg transition-all duration-500 overflow-hidden";
+            "absolute w-90 h-72 rounded-lg shadow-lg transition-all duration-500 overflow-hidden";
           let style: React.CSSProperties = {};
           let pointer: React.CSSProperties["pointerEvents"] = "none";
 
           if (diff === 0) {
             // Center
-            className += " scale-160 opacity-100 z-20 cursor-pointer";
+            className += " scale-180 opacity-100 z-20 cursor-pointer";
             style = { transform: "translateX(0%)" };
             pointer = "auto";
           } else if (diff === 1) {

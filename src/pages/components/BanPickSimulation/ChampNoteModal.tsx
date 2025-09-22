@@ -94,7 +94,7 @@ export default function ChampNoteModal({
       <Draggable nodeRef={nodeRef} handle=".modal-header">
         <div
           ref={nodeRef}
-          className="bg-neutral-900/90 rounded-2xl p-6 w-[40%] shadow-2xl"
+          className="bg-neutral-900/90 rounded-2xl p-6 w-[90%] md:w-[60%] lg:w-[50%] xl:w-[40%] shadow-2xl max-h-[70vh] overflow-y-scroll"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="modal-header flex justify-between items-center mb-2 cursor-move">
