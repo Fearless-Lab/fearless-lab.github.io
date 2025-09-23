@@ -9,6 +9,7 @@ import { useQueries } from "@tanstack/react-query";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
 import { fetchBanPickFlowBySet } from "@/apis/service/fetchBanPickBySet";
+import { ChevronDoubleRightIcon } from "@heroicons/react/16/solid";
 
 interface BanPickFlowModalProps {
   matchId: string;
@@ -55,7 +56,10 @@ const BanPickFlowModal = ({
       >
         <div className="flex justify-between items-start">
           <div>
-            <DialogTitle className="text-lg md:text-xl">밴픽 흐름</DialogTitle>
+            <DialogTitle className="text-lg md:text-xl flex gap-2 items-center">
+              <ChevronDoubleRightIcon className="w-5 h-5" />
+              밴픽 흐름
+            </DialogTitle>
             <DialogDescription className="text-gray-400 mt-2 text-sm">
               이전 세트의 밴픽 진행 순서를 확인할 수 있어요.
               <br />

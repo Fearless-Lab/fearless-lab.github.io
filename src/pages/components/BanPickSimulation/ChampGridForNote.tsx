@@ -5,6 +5,7 @@ import PositionRow from "./PositionRow";
 import { Input } from "@/components/ui/input";
 import { ArrowPathIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import CTAButton from "@/components/CTAButton";
+import { preloadSplash } from "@/utils/preload";
 
 type TeamNotes = {
   our: Record<Position, string[]>;
@@ -187,6 +188,7 @@ export default function ChampGridForNote({
               <div
                 key={champ.id}
                 className="w-12 flex flex-col items-center cursor-pointer"
+                onMouseEnter={() => preloadSplash(champ.id)}
                 onClick={() => handleToggleChampion(champ.id)}
               >
                 <div className="relative w-12 h-12 rounded-md transition">

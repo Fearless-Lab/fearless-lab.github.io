@@ -26,6 +26,7 @@ import GrandmasterJungle from "@/assets/Position_Grandmaster-Jungle.png";
 import GrandmasterMid from "@/assets/Position_Grandmaster-Mid.png";
 import GrandmasterSupport from "@/assets/Position_Grandmaster-Support.png";
 import GrandmasterTop from "@/assets/Position_Grandmaster-Top.png";
+import { DocumentTextIcon } from "@heroicons/react/16/solid";
 
 interface HistoryModalProps {
   matchId: string;
@@ -99,7 +100,10 @@ const HistoryModal = ({
       >
         <div className="flex justify-between items-start">
           <div>
-            <DialogTitle className="text-lg md:text-xl">챔피언 픽</DialogTitle>
+            <DialogTitle className="text-lg md:text-xl flex gap-2 items-center">
+              <DocumentTextIcon className="w-5 h-5" />
+              챔피언 픽
+            </DialogTitle>
             <DialogDescription className="text-gray-400 mt-2 text-sm">
               이전 세트의 라인별 최종 픽 결과를 확인할 수 있어요.
             </DialogDescription>

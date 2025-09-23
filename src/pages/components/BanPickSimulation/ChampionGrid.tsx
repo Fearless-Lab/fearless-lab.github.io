@@ -1,4 +1,5 @@
 import type { Champion } from "@/utils/generateRandomNickname";
+import { preloadSplash } from "@/utils/preload";
 import { PHASE } from "@constants/banPick";
 
 export interface ChampionGridProps {
@@ -57,11 +58,6 @@ export default function ChampionGrid({
   const filteredChampions = searchTerm
     ? champions.filter((champ) => champ.name.includes(searchTerm.trim()))
     : champions;
-
-  const preloadSplash = (champId: string) => {
-    const img = new Image();
-    img.src = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champId}_0.jpg`;
-  };
 
   return (
     <div
