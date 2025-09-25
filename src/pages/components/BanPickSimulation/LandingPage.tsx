@@ -5,7 +5,7 @@ import {
   ExclamationTriangleIcon,
   TrophyIcon,
   EnvelopeIcon,
-  ChatBubbleLeftRightIcon,
+  // ChatBubbleLeftRightIcon,
   MagnifyingGlassPlusIcon,
   VideoCameraIcon,
 } from "@heroicons/react/24/outline";
@@ -69,10 +69,10 @@ const LandingPage = () => {
           <li className="flex items-start gap-2">
             <EnvelopeIcon className="w-6 h-6 text-emerald-400 shrink-0 mt-0.5" />
             <span>
-              메일) <span className="font-mono">jyk41993@gmail.com</span>
+              <span className="font-mono">jyk41993@gmail.com</span>
             </span>
           </li>
-          <li className="flex items-start gap-2">
+          {/* <li className="flex items-start gap-2">
             <ChatBubbleLeftRightIcon className="w-6 h-6 text-yellow-500 shrink-0 mt-0.5" />
             <span>
               카카오톡){" "}
@@ -85,7 +85,7 @@ const LandingPage = () => {
                 오픈채팅방 링크
               </a>
             </span>
-          </li>
+          </li> */}
         </ul>
       </section>
 

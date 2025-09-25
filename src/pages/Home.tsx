@@ -24,7 +24,7 @@ const Home = () => {
         <Infopill>
           실전과 유사한 환경에서
           <br />
-          <strong>롤 모의 밴픽</strong>을 연습할 수 있는 도구입니다.
+          밴픽을 연습할 수 있는 도구입니다.
         </Infopill>
 
         <SubInfopill>

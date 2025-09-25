@@ -1,15 +1,9 @@
 import { useEffect, useState, useCallback, useRef } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 import CTAButton from "@/components/CTAButton";
 import { doc, onSnapshot, runTransaction } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useBanPickController } from "@/hooks/banPick/useBanPickController";
+import Draggable from "react-draggable";
 
 interface NextSetModalProps {
   open: boolean;
@@ -35,9 +29,10 @@ const NextSetModal = ({
   });
   const [loading, setLoading] = useState(false);
   const currentSetRef = useRef<number | null>(null);
+  const nodeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!matchId) return;
+    if (!matchId || !open) return;
 
     const docRef = doc(db, "banPickSimulations", matchId);
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
@@ -56,7 +51,7 @@ const NextSetModal = ({
     });
 
     return () => unsubscribe();
-  }, [matchId, teamName, oppositeTeam]);
+  }, [matchId, teamName, oppositeTeam, open]);
 
   const voteLoseTeam = useCallback(
     async (selectedLoseTeam: string) => {
@@ -113,70 +108,81 @@ const NextSetModal = ({
     await toggleIsNextSetPreparing(false);
   }, []);
 
+  if (!open) return null;
+
   return (
-    <Dialog open={open}>
-      <DialogContent
-        className="bg-neutral-900 border border-neutral-700 text-white w-full max-w-[calc(100%-2rem)] mx-auto z-100 outline-none"
-        showCloseButton={false}
+    <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/40">
+      <Draggable
+        nodeRef={nodeRef}
+        handle=".draggable-area"
+        cancel="button, .no-drag"
       >
-        <DialogHeader className="text-left">
-          <DialogTitle className="text-lg md:text-xl">패배 팀 선정</DialogTitle>
-          <DialogDescription className="text-gray-400 mt-2 text-sm">
-            이번 세트에서 패배한 팀을 골라주세요
-            <br />
-            패배한 팀이 진영을 선택할 수 있습니다
-          </DialogDescription>
-        </DialogHeader>
-
-        <div className="mt-6">
-          {!bothVoted || !votesMatch ? (
-            <div className="flex gap-3">
-              <CTAButton
-                className="w-1/2"
-                disabled={loading || votes[teamName] !== null}
-                onClick={() => voteLoseTeam(teamName)}
-              >
-                팀명: {teamName}
-              </CTAButton>
-              <CTAButton
-                className="w-1/2"
-                disabled={loading || votes[teamName] !== null}
-                onClick={() => voteLoseTeam(oppositeTeam)}
-              >
-                팀명: {oppositeTeam}
-              </CTAButton>
+        <div
+          ref={nodeRef}
+          className="draggable-area bg-neutral-900 border border-neutral-700 text-white w-full max-w-lg mx-auto rounded-xl shadow-xl p-2 cursor-grab active:cursor-grabbing"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex justify-between items-start p-4">
+            <div>
+              <h2 className="text-lg md:text-xl font-semibold">패배 팀 선정</h2>
+              <p className="text-gray-400 mt-1 text-sm">
+                이번 세트에서 패배한 팀을 골라주세요
+                <br />
+                패배한 팀이 진영을 선택할 수 있습니다
+              </p>
             </div>
-          ) : null}
+          </div>
 
-          {!finished && bothVoted && votesMatch && (
-            <>
-              {isUserLoseTeam ? (
-                <div className="flex gap-3">
-                  <CTAButton
-                    onClick={() => chooseSide("blue")}
-                    className="w-1/2 bg-blue-400 text-xs md:text-sm"
-                  >
-                    블루 진영 선택
-                  </CTAButton>
-                  <CTAButton
-                    onClick={() => chooseSide("red")}
-                    className="w-1/2 bg-rose-400 text-xs md:text-sm"
-                  >
-                    레드 진영 선택
-                  </CTAButton>
-                </div>
-              ) : (
-                <div className="text-sm text-gray-400">
-                  상대팀이 진영을 선택하고 있습니다
-                  <br />
-                  잠시만 기다려주세요 !
-                </div>
-              )}
-            </>
-          )}
+          <div className="p-4">
+            {!bothVoted || !votesMatch ? (
+              <div className="flex gap-3">
+                <CTAButton
+                  className="w-1/2"
+                  disabled={loading || votes[teamName] !== null}
+                  onClick={() => voteLoseTeam(teamName)}
+                >
+                  팀명: {teamName}
+                </CTAButton>
+                <CTAButton
+                  className="w-1/2"
+                  disabled={loading || votes[teamName] !== null}
+                  onClick={() => voteLoseTeam(oppositeTeam)}
+                >
+                  팀명: {oppositeTeam}
+                </CTAButton>
+              </div>
+            ) : null}
+
+            {!finished && bothVoted && votesMatch && (
+              <>
+                {isUserLoseTeam ? (
+                  <div className="flex gap-3">
+                    <CTAButton
+                      onClick={() => chooseSide("blue")}
+                      className="w-1/2 bg-blue-400 text-xs md:text-sm"
+                    >
+                      블루 진영 선택
+                    </CTAButton>
+                    <CTAButton
+                      onClick={() => chooseSide("red")}
+                      className="w-1/2 bg-rose-400 text-xs md:text-sm"
+                    >
+                      레드 진영 선택
+                    </CTAButton>
+                  </div>
+                ) : (
+                  <div className="text-sm text-gray-400">
+                    상대팀이 진영을 선택하고 있습니다
+                    <br />
+                    잠시만 기다려주세요 !
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </Draggable>
+    </div>
   );
 };
 

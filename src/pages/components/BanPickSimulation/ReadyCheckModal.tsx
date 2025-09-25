@@ -46,7 +46,6 @@ const ReadyCheckModal = ({
 }: ReadyCheckModalProps) => {
   const navigate = useNavigate();
   const [step, setStep] = useState<1 | 2>(1);
-
   return (
     <Dialog open={open}>
       <DialogContent
@@ -94,7 +93,7 @@ const ReadyCheckModal = ({
               </div>
               <div className="flex items-center gap-2">
                 <MagnifyingGlassPlusIcon className="w-5 h-5 text-blue-400" />
-                화면이 작게 보인다면 브라우저 배율을 100%로 맞춰주세요.
+                화면이 작게 보인다면 브라우저 배율을 높여주세요.
               </div>
               <div className="flex items-center gap-2">
                 <MusicalNoteIcon className="w-5 h-5 text-yellow-400" />

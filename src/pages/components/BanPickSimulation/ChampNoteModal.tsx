@@ -94,10 +94,10 @@ export default function ChampNoteModal({
       <Draggable nodeRef={nodeRef} handle=".modal-header">
         <div
           ref={nodeRef}
-          className="bg-neutral-900/90 rounded-2xl p-6 w-[90%] md:w-[60%] lg:w-[50%] xl:w-[40%] shadow-2xl max-h-[70vh] overflow-y-scroll"
+          className="modal-header bg-neutral-900/90 rounded-2xl p-6 w-[90%] md:w-[60%] lg:w-[50%] xl:w-[40%] shadow-2xl max-h-[70vh] overflow-y-scroll cursor-grab active:cursor-grabbing"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="modal-header flex justify-between items-center mb-2 cursor-grab active:cursor-grabbing">
+          <div className="flex justify-between items-center mb-2">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
               <BookOpenIcon className="w-5 h-5" />
               전략 노트
