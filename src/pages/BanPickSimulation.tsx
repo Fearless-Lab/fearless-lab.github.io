@@ -31,15 +31,29 @@ import { useLocation } from "react-router-dom";
 import LandingPage from "./components/BanPickSimulation/LandingPage";
 import BanPickFlowModal from "./components/BanPickSimulation/BanPickFlowModal";
 import ChampNoteModal from "./components/BanPickSimulation/ChampNoteModal";
+import { useVerifyBanPickRoom } from "@/hooks/banPick/useVerifyBanPickRoom";
+import Loading from "./components/BanPickSimulation/Loading";
+import ErrorPage from "./components/BanPickSimulation/ErrorPage";
 
 const BanPickSimulation = () => {
   const location = useLocation();
   if (!location.search) return <LandingPage />;
 
-  const { matchId, teamName, oppositeTeam, mode, initialTeam, isGuest } =
-    getBanPickQueryParams();
+  const query = getBanPickQueryParams();
+  if (query.isError) return <ErrorPage />;
 
-  const { champions, version } = useChampions();
+  const { matchId, teamName, oppositeTeam, mode, initialTeam, isGuest } = query;
+
+  const isValid = useVerifyBanPickRoom({
+    matchId,
+    teamName,
+    oppositeTeam,
+    mode,
+    initialTeam,
+    isGuest,
+  });
+
+  const { champions, version } = useChampions(isValid === true);
 
   const {
     isModalOpen,
@@ -169,6 +183,9 @@ const BanPickSimulation = () => {
 
   const blueScore = getWinsOf(teams?.blue);
   const redScore = getWinsOf(teams?.red);
+
+  if (isValid === null) return <Loading />;
+  if (!isValid) return <ErrorPage />;
 
   return (
     <>

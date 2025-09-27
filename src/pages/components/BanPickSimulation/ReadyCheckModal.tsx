@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CTAButton from "@/components/CTAButton";
 import {
   Dialog,
@@ -46,6 +46,13 @@ const ReadyCheckModal = ({
 }: ReadyCheckModalProps) => {
   const navigate = useNavigate();
   const [step, setStep] = useState<1 | 2>(1);
+
+  useEffect(() => {
+    if (currentSet >= 2) {
+      setStep(2);
+    }
+  }, [currentSet, step]);
+
   return (
     <Dialog open={open}>
       <DialogContent

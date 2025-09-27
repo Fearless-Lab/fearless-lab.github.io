@@ -9,13 +9,14 @@ import {
   ExclamationCircleIcon,
   CheckCircleIcon,
 } from "@heroicons/react/16/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CopyLinkButton from "./CopyLinkButton";
 import {
   koreanModeToEnglish,
   modalDescription,
   modeDescription,
 } from "@constants/category";
+import { initializeDoc } from "@/apis/firebase/initializeDoc";
 
 type BanpickNoticeModalProps = {
   open: boolean;
@@ -34,6 +35,19 @@ const BanPickNoticeModal = ({
   matchId,
   mode,
 }: BanpickNoticeModalProps) => {
+  const parsedMode = koreanModeToEnglish[mode];
+
+  useEffect(() => {
+    if (open) {
+      initializeDoc({
+        matchId,
+        mode: parsedMode,
+        blueTeamName,
+        redTeamName,
+      });
+    }
+  }, [open, matchId, mode, blueTeamName, redTeamName]);
+
   const [copied, setCopied] = useState<"blue" | "red" | "guest" | null>(null);
 
   const handleCopy = (team: "blue" | "red" | "guest") => {

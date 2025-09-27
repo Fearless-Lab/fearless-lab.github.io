@@ -111,7 +111,7 @@ const NextSetModal = ({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/40">
+    <div className="fixed inset-0 z-101 flex items-center justify-center bg-black/40">
       <Draggable
         nodeRef={nodeRef}
         handle=".draggable-area"

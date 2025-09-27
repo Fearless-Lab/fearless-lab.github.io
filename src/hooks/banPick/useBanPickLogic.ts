@@ -64,46 +64,18 @@ export const useBanPickLogic = ({
   // 라인별 정렬하고 완료했는지
   const [commited, setCommited] = useState(false);
 
-  const {
-    initializeDoc,
-    subscribeToStart,
-    markAsReady,
-    getCurrentTeams,
-    subscribeToSimulationDoc,
-  } = useBanPickInit({
-    matchId,
-    teamName,
-    oppositeTeam,
-    mode,
-    initialTeam,
-  });
+  const { subscribeToStart, markAsReady, subscribeToSimulationDoc } =
+    useBanPickInit({
+      matchId,
+      teamName,
+      initialTeam,
+    });
 
   const { setStartedAtIfNeeded, forceNextStepIfBothCommited } =
     useBanPickController(matchId);
 
-  // Firestore 문서 초기화 + 팀 정보 불러오기
-  useEffect(() => {
-    if (!matchId) return;
-
-    const initAndFetchTeams = async () => {
-      try {
-        await initializeDoc();
-        const data = await getCurrentTeams();
-        if (data) {
-          setTeams(data);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    initAndFetchTeams();
-  }, [matchId, initializeDoc, getCurrentTeams]);
-
   // 준비 완료 → 모달 닫기
   useEffect(() => {
-    if (!matchId) return;
-
     const unsubscribe = subscribeToStart(() => {
       setIsModalOpen(false);
     });
@@ -112,8 +84,6 @@ export const useBanPickLogic = ({
   }, [matchId, subscribeToStart]);
 
   useEffect(() => {
-    if (!matchId) return;
-
     const unsubscribe = subscribeToSimulationDoc((data) => {
       if (!data || data.currentSet === undefined) return;
 

@@ -1,73 +1,22 @@
 import { useMemo, useCallback } from "react";
-import { doc, getDoc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 
 interface UseBanPickInitOptions {
   matchId: string;
   teamName: string;
-  oppositeTeam: string;
-  mode: string;
   initialTeam: "blue" | "red";
 }
 
 export const useBanPickInit = ({
   matchId,
   teamName,
-  oppositeTeam,
-  mode,
   initialTeam,
 }: UseBanPickInitOptions) => {
   const docRef = useMemo(
     () => doc(db, "banPickSimulations", matchId),
     [matchId]
   );
-
-  const initializeDoc = useCallback(async () => {
-    const docSnap = await getDoc(docRef);
-
-    if (!docSnap.exists()) {
-      const firstSetNumber = 1;
-
-      await setDoc(docRef, {
-        mode,
-        isNextSetPreparing: false,
-        currentSet: firstSetNumber,
-        total: {
-          [teamName]: [],
-          [oppositeTeam]: [],
-        },
-        sets: {
-          [firstSetNumber]: {
-            teams: {
-              blue: initialTeam === "blue" ? teamName : oppositeTeam,
-              red: initialTeam === "red" ? teamName : oppositeTeam,
-            },
-            currentStep: 0,
-            started: {
-              blueTeam: "pending",
-              redTeam: "pending",
-            },
-            ban: {
-              [teamName]: Array(5).fill(""),
-              [oppositeTeam]: Array(5).fill(""),
-            },
-            pick: {
-              [teamName]: Array(5).fill(""),
-              [oppositeTeam]: Array(5).fill(""),
-            },
-            startedAt: null,
-            commited: {
-              [teamName]: false,
-              [oppositeTeam]: false,
-            },
-            actionLog: [], // ban pick flow를 보기 위한 배열(밴픽 순서가 보장된 배열)
-          },
-          winners: [],
-        },
-        finished: false,
-      });
-    }
-  }, [docRef, mode, initialTeam, teamName, oppositeTeam]);
 
   // 양쪽 팀의 준비 완료 상태를 실시간으로 감지하는 함수
   const subscribeToStart = useCallback(
@@ -139,25 +88,9 @@ export const useBanPickInit = ({
     });
   }, [docRef, initialTeam, teamName]);
 
-  const getCurrentTeams = useCallback(async () => {
-    const docSnap = await getDoc(docRef);
-    const data = docSnap.data();
-    const currentSet = data?.currentSet;
-    const teams = data?.sets?.[currentSet]?.teams;
-
-    if (!teams) return null;
-
-    return {
-      blue: teams.blue,
-      red: teams.red,
-    };
-  }, [docRef]);
-
   return {
-    initializeDoc,
     subscribeToStart,
     markAsReady,
-    getCurrentTeams,
     subscribeToSimulationDoc,
   };
 };

@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import CTAButton from "@/components/CTAButton";
 import { useScrollReveal } from "@/hooks/animation/useScrollReveal";
-import BanPickNoticeModal from "@componentsAboutBanPick/BanPickStartModal";
+import BanPickNoticeModal from "@/pages/components/BanPick/BanPickNoticeModal";
 import { v4 as uuidv4 } from "uuid";
 
 const BanPick = () => {
