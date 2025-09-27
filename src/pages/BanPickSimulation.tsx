@@ -172,9 +172,9 @@ const BanPickSimulation = () => {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col mt-22">
+      <div className="flex flex-col mt-22">
         <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
-          <div className="flex w-full h-18 rounded-tl-md rounded-tr-md overflow-hidden">
+          <div className="flex w-full h-[10vh] max-h-[90px] rounded-tl-md rounded-tr-md overflow-hidden">
             <div className="flex-1 bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-lg text-white flex items-center justify-between font-bold px-4">
               <span>{teams ? teams.blue : "팀 정보 불러오는중"}</span>
               <span className="text-[#b99504] text-xl md:text-2xl">
@@ -245,7 +245,7 @@ const BanPickSimulation = () => {
 
           <div className="max-w-6xl mx-auto mt-2 w-full">
             <div className="hidden md:grid md:grid-cols-4 gap-12 w-full">
-              <div className="md:col-span-1 border rounded-md min-h-92 flex flex-col divide-y">
+              <div className="md:col-span-1 border rounded-md h-[65vh] max-h-[500px] flex flex-col divide-y">
                 <PickColumn
                   team="blue"
                   picks={myTeam === "blue" ? localPick : enemyPick}
@@ -288,7 +288,7 @@ const BanPickSimulation = () => {
                   </div>
                 </div>
 
-                <div className="h-75 overflow-auto">
+                <div className="h-[42vh] max-h-[340px]  overflow-auto">
                   <ChampionGrid {...championGridProps} />
                 </div>
 
@@ -308,7 +308,7 @@ const BanPickSimulation = () => {
                 </CommitButton>
               </div>
 
-              <div className="md:col-span-1 border rounded-md min-h-92 flex flex-col divide-y">
+              <div className="md:col-span-1 border rounded-md h-[65vh] max-h-[500px] flex flex-col divide-y">
                 <PickColumn
                   team="red"
                   picks={myTeam === "red" ? localPick : enemyPick}

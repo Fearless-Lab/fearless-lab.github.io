@@ -4,7 +4,7 @@ const SubInfopill = ({ children }: { children: ReactNode }) => {
   return (
     <div className="mb-4">
       <h2
-        className="text-sm md:text-md text-gray-300 leading-relaxed"
+        className="text-xs sm:text-sm md:text-md text-gray-300 leading-relaxed"
         style={{ whiteSpace: "pre-line" }}
       >
         {children}

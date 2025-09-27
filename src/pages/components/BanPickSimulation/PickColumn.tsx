@@ -118,10 +118,7 @@ const PickColumn = ({
           {items.map((champion, index) => {
             const role = roleOrder[index];
             return (
-              <div
-                key={`${team}-pick-${index}`}
-                className="relative flex-1 h-[80px]"
-              >
+              <div key={`${team}-pick-${index}`} className="relative flex-1">
                 <img
                   src={roleIcons[team][role]}
                   alt={`${role} icon`}
@@ -149,7 +146,7 @@ const PickColumn = ({
         return (
           <div
             key={`${team}-pick-${i}`}
-            className={`flex-1 relative rounded-md h-[80px] bg-cover ${
+            className={`flex-1 relative rounded-md bg-cover ${
               isCurrentTeam && i === currentIndex
                 ? "border-2 animate-border-ripple"
                 : ""
