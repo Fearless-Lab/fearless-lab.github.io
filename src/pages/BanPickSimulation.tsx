@@ -27,7 +27,6 @@ import BanOverviewModal from "./components/BanPickSimulation/BanOverviewModal";
 import { BookOpenIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import MuteToggleButton from "./components/BanPickSimulation/MuteToggleButton";
 import VideoGallery from "./components/BanPickSimulation/VideoGallery";
-import { useLocation } from "react-router-dom";
 import LandingPage from "./components/BanPickSimulation/LandingPage";
 import BanPickFlowModal from "./components/BanPickSimulation/BanPickFlowModal";
 import ChampNoteModal from "./components/BanPickSimulation/ChampNoteModal";
@@ -36,10 +35,8 @@ import Loading from "./components/BanPickSimulation/Loading";
 import ErrorPage from "./components/BanPickSimulation/ErrorPage";
 
 const BanPickSimulation = () => {
-  const location = useLocation();
-  if (!location.search) return <LandingPage />;
-
   const query = getBanPickQueryParams();
+  if (query.isEmpty) return <LandingPage />;
   if (query.isError) return <ErrorPage />;
 
   const { matchId, teamName, oppositeTeam, mode, initialTeam, isGuest } = query;
