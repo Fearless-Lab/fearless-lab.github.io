@@ -15,7 +15,6 @@ import BanPick from "@/pages/BanPick";
 import NotFound from "./pages/NotFound";
 import { BASE_URL } from "./../constants/url";
 import BanPickSimulation from "./pages/BanPickSimulation";
-import Loading from "./pages/components/BanPickSimulation/Loading";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -29,16 +28,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/banPick" element={<BanPick />} />
-            <Route
-              path="/banPickSimulation"
-              element={
-                import.meta.env.VITE_PRERENDER === "true" ? (
-                  <Loading />
-                ) : (
-                  <BanPickSimulation />
-                )
-              }
-            />
+            <Route path="/banPickSimulation" element={<BanPickSimulation />} />
 
             {/* <Route
               path="/community"

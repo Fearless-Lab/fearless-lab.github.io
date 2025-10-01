@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:prerender": "vite build --mode prerender && react-static-prerender",
     "lint": "eslint .",
     "preview": "vite preview"
   },
