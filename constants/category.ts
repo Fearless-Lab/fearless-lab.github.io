@@ -38,7 +38,7 @@ export const PAGE_SIZE = 7;
 
 export const gameMode = [
   "하드 피어리스",
-  "소프트 피어리스",
+  // "소프트 피어리스",
   "토너먼트 드래프트",
 ];
 
