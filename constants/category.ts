@@ -51,7 +51,7 @@ export const modeDescription: Record<(typeof gameMode)[number], string> = {
 };
 
 export const modeExtraDescription: Record<(typeof gameMode)[number], string> = {
-  "토너먼트 드래프트": " \n",
+  "토너먼트 드래프트": " \n\n",
   "소프트 피어리스":
     "밴 페이즈에서는 상대가 이전 세트에서 사용했던 챔피언이 자동으로 비활성화돼요.\n" +
     "사용할 수 없는 챔피언을 다시 밴하는 실수를 막기 위한 처리예요.",
