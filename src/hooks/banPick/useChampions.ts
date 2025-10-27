@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import { fetchChampions, type Champion } from "@utils/generateRandomNickname";
+import { fetchChampions, type Champion } from "@/utils/fetchChampions";
 
-export function useChampions(enabled: boolean = true) {
+export function useChampions() {
   const [champions, setChampions] = useState<Champion[]>([]);
   const [version, setVersion] = useState("");
 
   useEffect(() => {
-    if (!enabled) return;
-
     async function load() {
       const { champions, version } = await fetchChampions();
       setChampions(champions);
@@ -15,7 +13,7 @@ export function useChampions(enabled: boolean = true) {
     }
 
     load();
-  }, [enabled]);
+  }, []);
 
   return { champions, version };
 }

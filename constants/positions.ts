@@ -204,7 +204,6 @@ export const SUPPORT_CHAMPIONS = new Set([
 export const positions = ["TOP", "JUNGLE", "MID", "ADC", "SUP"] as const;
 export type Position = (typeof positions)[number];
 
-// Record는 Keys 타입에 해당하는 모든 키가 있고, 그 키들의 값 타입이 Type인 객체 타입
 export const positionMap: Record<Position, Set<string>> = {
   TOP: TOP_CHAMPIONS,
   JUNGLE: JUNGLE_CHAMPIONS,

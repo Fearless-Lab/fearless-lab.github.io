@@ -21,3 +21,5 @@ export const PHASE = [
   { type: "pick", team: "red", duration: 30, index: 4 },
   { type: "swap", team: "both", duration: 59, index: 0 },
 ];
+
+export type Phase = (typeof PHASE)[number];

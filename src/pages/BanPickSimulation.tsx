@@ -1,6 +1,5 @@
 import {
   ChevronDoubleRightIcon,
-  // NoSymbolIcon,
   DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 
@@ -14,14 +13,13 @@ import { useBanPickLogic } from "@/hooks/banPick/useBanPickLogic";
 import { getBanPickQueryParams } from "@/utils/getQueryParams";
 import BanPickTimer from "./components/BanPickSimulation/BanPickTimer";
 import { useState } from "react";
-import { PHASE } from "@constants/banPick";
 import { useChampions } from "@/hooks/banPick/useChampions";
 import BanArea from "./components/BanPickSimulation/BanArea";
 import PickColumn from "./components/BanPickSimulation/PickColumn";
 import CommitButton from "./components/BanPickSimulation/CommitButton";
 import NextSetModal from "./components/BanPickSimulation/NextSetModal";
 import HistoryModal from "./components/BanPickSimulation/HistoryModal";
-import { positions, positionMap, type Position } from "@constants/positions";
+import { positions, type Position } from "@constants/positions";
 import { useBanPickController } from "@/hooks/banPick/useBanPickController";
 import BanOverviewModal from "./components/BanPickSimulation/BanOverviewModal";
 import { BookOpenIcon, XMarkIcon } from "@heroicons/react/16/solid";
@@ -33,6 +31,10 @@ import ChampNoteModal from "./components/BanPickSimulation/ChampNoteModal";
 import { useVerifyBanPickRoom } from "@/hooks/banPick/useVerifyBanPickRoom";
 import Loading from "./components/BanPickSimulation/Loading";
 import ErrorPage from "./components/BanPickSimulation/ErrorPage";
+import { checkTeam } from "@/helper/banPickSimulation/checkTeam";
+import { getTeamScores } from "@/helper/banPickSimulation/getTeamScores";
+import { getActionText } from "@/helper/banPickSimulation/getActionText";
+import { getBanPickDerivedState } from "@/helper/banPickSimulation/getBanPickDerivedState";
 
 const BanPickSimulation = () => {
   const query = getBanPickQueryParams();
@@ -50,7 +52,7 @@ const BanPickSimulation = () => {
     isGuest,
   });
 
-  const { champions, version } = useChampions(isValid === true);
+  const { champions, version } = useChampions();
 
   const {
     isModalOpen,
@@ -83,55 +85,7 @@ const BanPickSimulation = () => {
 
   const { commitSwapOrder } = useBanPickController(matchId);
 
-  const checkTeam = () => {
-    if (teams?.blue === teamName) return "blue";
-    else if (teams?.red === teamName) return "red";
-  };
-
-  const convertTypeToKo = (type: string) => {
-    if (type === "pick") return "챔피언 선택";
-    else if (type === "ban") return "챔피언 금지";
-    else if (type === "swap")
-      return "드래그로 순서를 정한 뒤, 버튼을 눌러 확정해주세요";
-    else return "대기 중";
-  };
-
-  const myTeam = checkTeam();
-  const phase = PHASE[currentStep];
-  const isSwapPhase = phase?.type === "swap";
-  const isGameEnd = currentStep === 21;
-
-  const isMyTurn = !isSwapPhase && phase?.team === myTeam;
-
-  let actionText = "상대 차례입니다";
-
-  if (isGuest) {
-    if (finished) actionText = "경기가 종료되었습니다";
-    else if (currentStep === 21) {
-      actionText = "패배팀 투표 중입니다";
-    } else if (isSwapPhase) {
-      actionText = "스왑 중입니다";
-    } else {
-      actionText = "관전 중입니다";
-    }
-  } else {
-    if (finished)
-      actionText =
-        "5세트까지 진행되었습니다.\n기록판을 참고해 전략을 세워보세요!";
-    else if (currentStep === 21) {
-      actionText = "패배 팀 투표하기";
-    } else if (isSwapPhase) {
-      if (commited) actionText = "상대팀이 아직 스왑 진행 중이에요";
-      else actionText = convertTypeToKo("swap");
-    } else if (isMyTurn) {
-      actionText = convertTypeToKo(PHASE[currentStep]?.type);
-    }
-  }
-
-  const isCommitButtonDisabled = isGameEnd
-    ? false
-    : (!isMyTurn && !isSwapPhase) || commited || (finished && !isSwapPhase);
-
+  // 로컬 UI 상태
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isBanPickFlowOpen, setIsBanPickFlowOpen] = useState(false);
   const [isBanOverviewOpen, setIsBanOverviewOpen] = useState(false);
@@ -142,19 +96,48 @@ const BanPickSimulation = () => {
   );
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredByPosition = selectedPosition
-    ? champions.filter((champ) => positionMap[selectedPosition].has(champ.name))
-    : champions;
+  // 팀 판별
+  const myTeam = checkTeam(teams ?? undefined, teamName);
 
-  const filteredBySearch = searchTerm
-    ? filteredByPosition.filter((champ) =>
-        champ.name.includes(searchTerm.trim())
-      )
-    : filteredByPosition;
+  // 파생 상태 계산 (챔피언 필터링, 단계, 스왑 등)
+  const {
+    filteredChampions,
+    phase,
+    isSwapPhase,
+    isGameEnd,
+    isMyTurn,
+    isCommitButtonDisabled,
+  } = getBanPickDerivedState({
+    champions,
+    selectedPosition,
+    searchTerm,
+    currentStep,
+    commited,
+    finished,
+    myTeam,
+  });
 
+  // 액션 문구 계산
+  const actionText = getActionText({
+    phase,
+    isGuest,
+    commited,
+    finished,
+    isSwapPhase,
+    isGameEnd,
+    isMyTurn,
+  });
+
+  // 점수 계산
+  const { blue: blueScore, red: redScore } = getTeamScores(
+    winners,
+    teams ?? undefined
+  );
+
+  // 챔피언 그리드 props 구성
   const championGridProps: ChampionGridProps = {
     searchTerm,
-    champions: filteredBySearch,
+    champions: filteredChampions,
     version,
     currentStep,
     myTeam,
@@ -174,13 +157,6 @@ const BanPickSimulation = () => {
     commitSwapOrder(teamName, cleanedOrder);
   };
 
-  // header용 점수
-  const getWinsOf = (name?: string) =>
-    name ? winners.filter((w) => w === name).length : 0;
-
-  const blueScore = getWinsOf(teams?.blue);
-  const redScore = getWinsOf(teams?.red);
-
   if (isValid === null) return <Loading />;
   if (!isValid) return <ErrorPage />;
 
@@ -190,7 +166,7 @@ const BanPickSimulation = () => {
         <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
           <div className="flex w-full h-[10vh] max-h-[90px] rounded-tl-md rounded-tr-md overflow-hidden">
             <div className="flex-1 bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-lg text-white flex items-center justify-between font-bold px-4">
-              <span>{teams ? teams.blue : "팀 정보 불러오는중"}</span>
+              <span>{teams!.blue}</span>
               <span className="text-[#b99504] text-xl md:text-2xl">
                 {blueScore}
               </span>
@@ -216,13 +192,6 @@ const BanPickSimulation = () => {
                   onClick={() => setIsHistoryOpen(true)}
                 />
 
-                {/* {mode !== "normal" && (
-                  <NoSymbolIcon
-                    className="w-5 h-5 text-rose-400 cursor-pointer hover:text-gray-300"
-                    onClick={() => setIsBanOverviewOpen(true)}
-                  />
-                )} */}
-
                 <ChevronDoubleRightIcon
                   className="w-5 h-5 cursor-pointer hover:text-gray-300"
                   onClick={() => setIsBanPickFlowOpen(true)}
@@ -242,7 +211,7 @@ const BanPickSimulation = () => {
               <span className="text-[#b99504] text-xl md:text-2xl">
                 {redScore}
               </span>
-              <span>{teams ? teams.red : "팀 정보 불러오는중"}</span>
+              <span>{teams!.red}</span>
             </div>
           </div>
 
