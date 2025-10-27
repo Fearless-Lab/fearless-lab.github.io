@@ -9,6 +9,9 @@ export const getBanPickQueryParams = () => {
   const mode = searchParams.get("mode");
   const initialTeam = searchParams.get("initialTeam") as "blue" | "red" | null;
   const isGuest = searchParams.get("guest") === "true";
+  const bestOfParam = searchParams.get("bestOf");
+
+  const bestOf = Number(bestOfParam);
 
   // 1) 쿼리 자체가 없음 → 랜딩 페이지
   if (
@@ -35,6 +38,7 @@ export const getBanPickQueryParams = () => {
     mode,
     initialTeam,
     isGuest,
+    bestOf,
     isEmpty: false,
     isError: false,
   } as const;

@@ -14,6 +14,7 @@ import CTAButton from "@/components/CTAButton";
 import { useScrollReveal } from "@/hooks/animation/useScrollReveal";
 import BanPickNoticeModal from "@/pages/components/BanPick/BanPickNoticeModal";
 import { v4 as uuidv4 } from "uuid";
+import { BestOfSelector } from "./components/BanPick/BestOfSelector";
 
 const BanPick = () => {
   const [selectedMode, setSelectedMode] = useState(gameMode[0]);
@@ -25,6 +26,8 @@ const BanPick = () => {
   const [openNotice, setOpenNotice] = useState(false);
 
   const [error, setError] = useState<{ blue?: string; red?: string }>({});
+
+  const [bestOf, setBestOf] = useState(5);
 
   const handleCategoryClick = (mode: string) => {
     setSelectedMode(mode);
@@ -128,7 +131,10 @@ const BanPick = () => {
           </div>
         </div>
 
-        <CTAButton onClick={handleStart}>시작하기</CTAButton>
+        <div className="flex flex-row items-center justify-center gap-4">
+          <BestOfSelector bestOf={bestOf} onSelect={setBestOf} />
+          <CTAButton onClick={handleStart}>시작하기</CTAButton>
+        </div>
       </section>
 
       <BanPickNoticeModal
@@ -138,6 +144,7 @@ const BanPick = () => {
         redTeamName={redTeamName.trim()}
         matchId={matchId}
         mode={selectedMode}
+        bestOf={bestOf}
       />
     </>
   );

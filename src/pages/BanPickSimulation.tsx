@@ -35,13 +35,22 @@ import { checkTeam } from "@/helper/banPickSimulation/checkTeam";
 import { getTeamScores } from "@/helper/banPickSimulation/getTeamScores";
 import { getActionText } from "@/helper/banPickSimulation/getActionText";
 import { getBanPickDerivedState } from "@/helper/banPickSimulation/getBanPickDerivedState";
+import { SeriesScore } from "./components/BanPickSimulation/SeriesScore";
 
 const BanPickSimulation = () => {
   const query = getBanPickQueryParams();
   if (query.isEmpty) return <LandingPage />;
   if (query.isError) return <ErrorPage />;
 
-  const { matchId, teamName, oppositeTeam, mode, initialTeam, isGuest } = query;
+  const {
+    matchId,
+    teamName,
+    oppositeTeam,
+    mode,
+    initialTeam,
+    isGuest,
+    bestOf,
+  } = query;
 
   const isValid = useVerifyBanPickRoom({
     matchId,
@@ -167,9 +176,7 @@ const BanPickSimulation = () => {
           <div className="flex w-full h-[10vh] max-h-[90px] rounded-tl-md rounded-tr-md overflow-hidden">
             <div className="flex-1 bg-gradient-to-l from-blue-400/40 via-blue-500/50 to-blue-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-lg text-white flex items-center justify-between font-bold px-4">
               <span>{teams!.blue}</span>
-              <span className="text-[#b99504] text-xl md:text-2xl">
-                {blueScore}
-              </span>
+              <SeriesScore wins={blueScore} bestOf={bestOf} />
             </div>
             <div className="w-28 bg-black text-white flex flex-col items-center justify-center font-mono font-semibold text-sm md:text-lg relative">
               {startedAt && (
@@ -208,9 +215,7 @@ const BanPickSimulation = () => {
               </div>
             </div>
             <div className="flex-1 bg-gradient-to-r from-rose-400/40 via-rose-500/50 to-rose-700/60 backdrop-blur-md border border-white/10 shadow-lg text-md md:text-lg text-white flex items-center justify-between font-bold px-4">
-              <span className="text-[#b99504] text-xl md:text-2xl">
-                {redScore}
-              </span>
+              <SeriesScore wins={redScore} bestOf={bestOf} />
               <span>{teams!.red}</span>
             </div>
           </div>
@@ -402,6 +407,7 @@ const BanPickSimulation = () => {
           teamName={teamName}
           oppositeTeam={oppositeTeam}
           finished={finished}
+          bestOf={bestOf}
         />
         <HistoryModal
           matchId={matchId}

@@ -92,9 +92,9 @@ export const useBanPickLogic = ({
       if (!setData) return;
 
       setCurrentSet((prev) => {
-        const isGameOver = currentSetIndex === 5 && setData.currentStep === 21;
         const isSetChanged = prev !== currentSetIndex;
         const hasStartedAlready = !!setData.startedAt;
+        const isGameOver = !!data.finished;
 
         if (isSetChanged && !isGameOver && !hasStartedAlready) {
           setIsModalOpen(true);

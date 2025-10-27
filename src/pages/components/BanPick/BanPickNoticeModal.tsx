@@ -18,14 +18,15 @@ import {
 } from "@constants/category";
 import { initializeDoc } from "@/apis/firebase/initializeDoc";
 
-type BanpickNoticeModalProps = {
+interface BanpickNoticeModalProps {
   open: boolean;
   onClose: () => void;
   blueTeamName: string;
   redTeamName: string;
   matchId: string;
   mode: string;
-};
+  bestOf: number;
+}
 
 const BanPickNoticeModal = ({
   open,
@@ -34,6 +35,7 @@ const BanPickNoticeModal = ({
   redTeamName,
   matchId,
   mode,
+  bestOf,
 }: BanpickNoticeModalProps) => {
   const parsedMode = koreanModeToEnglish[mode];
 
@@ -46,7 +48,7 @@ const BanPickNoticeModal = ({
         redTeamName,
       });
     }
-  }, [open, matchId, mode, blueTeamName, redTeamName]);
+  }, [open, matchId, mode, blueTeamName, redTeamName, bestOf]);
 
   const [copied, setCopied] = useState<"blue" | "red" | "guest" | null>(null);
 
@@ -65,13 +67,18 @@ const BanPickNoticeModal = ({
       : teamNames.blue;
 
     const basePath = `${window.location.origin}`;
-    const url = `${basePath}/banPickSimulation?matchId=${matchId}&teamName=${encodeURIComponent(
-      teamName
-    )}&mode=${koreanModeToEnglish[mode]}&initialTeam=${
-      team === "guest" ? "blue" : team
-    }&oppositeTeam=${encodeURIComponent(oppositeTeamName)}${
-      isGuest ? "&guest=true" : ""
-    }`;
+    const params = new URLSearchParams({
+      matchId,
+      teamName: encodeURIComponent(teamName),
+      mode: koreanModeToEnglish[mode],
+      initialTeam: team === "guest" ? "blue" : team,
+      oppositeTeam: encodeURIComponent(oppositeTeamName),
+      bestOf: bestOf.toString(),
+    });
+
+    if (isGuest) params.append("guest", "true");
+
+    const url = `${basePath}/banPickSimulation?${params.toString()}`;
 
     navigator.clipboard.writeText(url);
     setCopied(team);

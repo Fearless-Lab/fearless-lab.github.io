@@ -28,7 +28,7 @@ export function getActionText({
   }
 
   if (finished)
-    return "5세트까지 진행되었습니다.\n기록판을 참고해 전략을 세워보세요!";
+    return "경기가 종료되었습니다.\n기록판을 참고해 전략을 세워보세요!";
   if (isGameEnd) return "패배 팀 투표하기";
   if (isSwapPhase)
     return commited

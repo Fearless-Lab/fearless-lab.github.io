@@ -11,6 +11,7 @@ interface NextSetModalProps {
   teamName: string;
   oppositeTeam: string;
   finished: boolean;
+  bestOf: number;
 }
 
 const NextSetModal = ({
@@ -19,6 +20,7 @@ const NextSetModal = ({
   teamName,
   oppositeTeam,
   finished,
+  bestOf,
 }: NextSetModalProps) => {
   const { toggleIsNextSetPreparing, createNextSet } =
     useBanPickController(matchId);
@@ -63,13 +65,15 @@ const NextSetModal = ({
       await runTransaction(db, async (transaction) => {
         const snap = await transaction.get(docRef);
         const data = snap.data();
-        const currentSet = data?.currentSet;
-        const votes = data?.sets?.[currentSet]?.votes || {};
-        const otherVote = votes[oppositeTeam];
+        if (!data) return;
 
-        const winners = data?.winners ?? [];
+        const currentSet = data.currentSet;
+        const votes = data.sets?.[currentSet]?.votes || {};
+        const otherVote = votes[oppositeTeam];
+        const winners = data.winners ?? [];
 
         if (otherVote && otherVote !== selectedLoseTeam) {
+          // 서로 다른 팀을 선택한 경우 → 투표 초기화
           transaction.update(docRef, {
             [`sets.${currentSet}.votes.${teamName}`]: null,
             [`sets.${currentSet}.votes.${oppositeTeam}`]: null,
@@ -80,13 +84,28 @@ const NextSetModal = ({
           };
 
           if (otherVote === selectedLoseTeam) {
+            // 두 팀의 투표가 일치 → 승리 팀 확정
             const winningTeam =
               selectedLoseTeam === teamName ? oppositeTeam : teamName;
-            updates["winners"] = [...winners, winningTeam];
+            const updatedWinners = [...winners, winningTeam];
 
-            if (currentSet === 5) {
-              updates["finished"] = true;
-            }
+            // bestOf 기반 종료 판정
+            const targetWins = Math.ceil(bestOf / 2);
+            const blueTeam = data.sets[currentSet]?.teams?.blue;
+            const redTeam = data.sets[currentSet]?.teams?.red;
+
+            const blueWins = updatedWinners.filter(
+              (w: string) => w === blueTeam
+            ).length;
+            const redWins = updatedWinners.filter(
+              (w: string) => w === redTeam
+            ).length;
+
+            const isGameFinished =
+              blueWins >= targetWins || redWins >= targetWins;
+
+            updates["winners"] = updatedWinners;
+            if (isGameFinished) updates["finished"] = true;
           }
 
           transaction.update(docRef, updates);
@@ -95,7 +114,7 @@ const NextSetModal = ({
 
       setLoading(false);
     },
-    [loading, matchId, teamName, oppositeTeam]
+    [loading, matchId, teamName, oppositeTeam, bestOf]
   );
 
   const bothVoted = votes[teamName] !== null && votes[oppositeTeam] !== null;
