@@ -69,10 +69,10 @@ const BanPickNoticeModal = ({
     const basePath = `${window.location.origin}`;
     const params = new URLSearchParams({
       matchId,
-      teamName: encodeURIComponent(teamName),
+      teamName: teamName,
       mode: koreanModeToEnglish[mode],
       initialTeam: team === "guest" ? "blue" : team,
-      oppositeTeam: encodeURIComponent(oppositeTeamName),
+      oppositeTeam: oppositeTeamName,
       bestOf: bestOf.toString(),
     });
 
