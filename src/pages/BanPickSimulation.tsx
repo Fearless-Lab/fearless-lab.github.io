@@ -21,7 +21,6 @@ import NextSetModal from "./components/BanPickSimulation/NextSetModal";
 import HistoryModal from "./components/BanPickSimulation/HistoryModal";
 import { positions, type Position } from "@constants/positions";
 import { useBanPickController } from "@/hooks/banPick/useBanPickController";
-import BanOverviewModal from "./components/BanPickSimulation/BanOverviewModal";
 import { BookOpenIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import MuteToggleButton from "./components/BanPickSimulation/MuteToggleButton";
 import VideoGallery from "./components/BanPickSimulation/VideoGallery";
@@ -97,7 +96,6 @@ const BanPickSimulation = () => {
   // 로컬 UI 상태
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isBanPickFlowOpen, setIsBanPickFlowOpen] = useState(false);
-  const [isBanOverviewOpen, setIsBanOverviewOpen] = useState(false);
   const [isNoteOpen, setIsNoteOpen] = useState(false);
 
   const [selectedPosition, setSelectedPosition] = useState<Position | null>(
@@ -436,17 +434,6 @@ const BanPickSimulation = () => {
           oppoPreviousPicks={oppoPreviousPicks}
           currentSetSelections={currentSetSelections}
           mode={mode as "normal" | "fearless" | "hardFearless"}
-        />
-        <BanOverviewModal
-          open={isBanOverviewOpen}
-          onClose={() => setIsBanOverviewOpen(false)}
-          mode={mode}
-          matchId={matchId}
-          currentSet={currentSet}
-          currentStep={currentStep}
-          teamName={teamName}
-          oppositeTeam={oppositeTeam}
-          version={version}
         />
       </div>
 

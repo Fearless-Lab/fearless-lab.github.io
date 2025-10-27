@@ -4,22 +4,23 @@ interface SeriesScoreProps {
 }
 
 export const SeriesScore = ({ wins, bestOf }: SeriesScoreProps) => {
-  const totalBoxes = 3;
   const visibleBoxes = Math.ceil(bestOf / 2);
   const boxes = Array.from({ length: visibleBoxes });
+  const reversed = [...boxes].reverse();
 
   return (
-    <div className="flex flex-col justify-center items-center h-full py-1 w-8 gap-[2px]">
-      {boxes.map((_, i) => {
-        const isFilled = i < wins;
+    <div className="flex flex-col justify-center items-center h-full py-1 w-8 gap-[3px]">
+      {reversed.map((_, revIndex) => {
+        const indexFromBottom = visibleBoxes - revIndex - 1;
+        const isFilled = indexFromBottom < wins;
+
         return (
           <div
-            key={i}
-            style={{ height: `${100 / totalBoxes}%` }}
-            className={`w-full border border-gray-600 transition-all duration-200 ${
+            key={revIndex}
+            className={`w-full h-[25%] border transition-all duration-300 ${
               isFilled
-                ? "bg-gradient-to-t from-yellow-400 via-orange-400 to-amber-500 shadow-[0_0_6px_rgba(255,200,0,0.6)]"
-                : "bg-neutral-800/70"
+                ? "border-white bg-gradient-to-b from-white via-zinc-100 to-zinc-200 shadow-[0_0_6px_rgba(255,255,255,0.55)]"
+                : "border-white/40 bg-zinc-400/30"
             }`}
           />
         );

@@ -51,11 +51,11 @@ const Navbar = () => {
         </li>
       </ul> */}
 
-      <ul className="flex space-x-6 text-lg">
+      {/* <ul className="flex space-x-6 text-lg">
         <li className="px-3 py-1">
           <Link to="/banPickSimulation">About</Link>
         </li>
-      </ul>
+      </ul> */}
     </nav>
   );
 };

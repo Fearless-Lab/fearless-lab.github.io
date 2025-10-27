@@ -58,7 +58,7 @@ export const useBanPickLogic = ({
   // 승리 팀 Array
   const [winners, setWinners] = useState<string[]>([]);
 
-  // 5세트까지 진행됐는지
+  // 경기 종료됐는지
   const [finished, setFinished] = useState(false);
 
   // 라인별 정렬하고 완료했는지
