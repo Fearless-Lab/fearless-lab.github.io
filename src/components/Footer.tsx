@@ -6,10 +6,7 @@ const Footer = () => {
           © {new Date().getFullYear()} Jinyoung Kim. All rights reserved.
         </div>
         <div>
-          <a
-            href="/banPickSimulation"
-            className="text-[#027b96] hover:underline"
-          >
+          <a href="/about" className="text-[#027b96] hover:underline">
             Contact & Who’s This For?
           </a>
           <p className="my-2">

@@ -24,7 +24,6 @@ import { useBanPickController } from "@/hooks/banPick/useBanPickController";
 import { BookOpenIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import MuteToggleButton from "./components/BanPickSimulation/MuteToggleButton";
 import VideoGallery from "./components/BanPickSimulation/VideoGallery";
-import LandingPage from "./components/BanPickSimulation/LandingPage";
 import BanPickFlowModal from "./components/BanPickSimulation/BanPickFlowModal";
 import ChampNoteModal from "./components/BanPickSimulation/ChampNoteModal";
 import { useVerifyBanPickRoom } from "@/hooks/banPick/useVerifyBanPickRoom";
@@ -38,7 +37,7 @@ import { SeriesScore } from "./components/BanPickSimulation/SeriesScore";
 
 const BanPickSimulation = () => {
   const query = getBanPickQueryParams();
-  if (query.isEmpty) return <LandingPage />;
+  if (query.isEmpty) return <Loading />; // 로딩으로 뺌. 크롤러는 /banPickSimulation 으로 들어오면 로딩 화면을 크롤링함
   if (query.isError) return <ErrorPage />;
 
   const {
