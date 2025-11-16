@@ -36,8 +36,8 @@ jobs:
       - name: Prerender static HTML
         run: npx react-static-prerender --debug
 
-      # - name: Ensure 404.html in root
-      #   run: cp public/404.html prerendered/404.html
+      - name: Ensure 404.html in root
+        run: cp public/404.html prerendered/404.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
