@@ -102,12 +102,12 @@ export default function ChampionGrid({
             onClick={() => {
               if (!isDisabled) onChampionClick(champ.id);
             }}
-            className={`w-16 flex flex-col items-center cursor-pointer ${
+            className={`w-16 flex flex-col items-center ${
               isDisabled
-                ? "pointer-events-none opacity-90"
+                ? "cursor-not-allowed opacity-90"
                 : isSelected
-                ? "border-2 border-yellow-400 rounded-md"
-                : "hover:border hover:border-white rounded-md"
+                ? "cursor-pointer border-2 border-yellow-400 rounded-md"
+                : "cursor-pointer hover:border hover:border-white rounded-md"
             }`}
           >
             <img

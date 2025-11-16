@@ -15,7 +15,7 @@ import BanPick from "@/pages/BanPick";
 import NotFound from "./pages/NotFound";
 import { BASE_URL } from "./../constants/url";
 import BanPickSimulation from "./pages/BanPickSimulation";
-import LandingPage from "./pages/components/BanPickSimulation/LandingPage";
+import About from "./pages/About";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -30,7 +30,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/banPick" element={<BanPick />} />
             <Route path="/banPickSimulation" element={<BanPickSimulation />} />
-            <Route path="/about" element={<LandingPage />} />
+            <Route path="/about" element={<About />} />
 
             {/* <Route
               path="/community"

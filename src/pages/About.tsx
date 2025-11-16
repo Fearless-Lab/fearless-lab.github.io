@@ -11,9 +11,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import ScreenshotCarousel from "./ScreenshotCarousel";
+import ScreenshotCarousel from "./components/BanPickSimulation/ScreenshotCarousel";
 
-const LandingPage = () => {
+const About = () => {
   const divRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
 
@@ -98,4 +98,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default About;
