@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <>
@@ -6,9 +8,9 @@ const Footer = () => {
           © {new Date().getFullYear()} Jinyoung Kim. All rights reserved.
         </div>
         <div>
-          <a href="/about" className="text-[#027b96] hover:underline">
+          <Link to="/about" className="text-[#027b96] hover:underline">
             Contact & Who’s This For?
-          </a>
+          </Link>
           <p className="my-2">
             This site is not affiliated with or endorsed by Riot Games, Inc.
           </p>
@@ -21,4 +23,5 @@ const Footer = () => {
     </>
   );
 };
+
 export default Footer;

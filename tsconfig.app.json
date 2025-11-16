@@ -28,10 +28,6 @@
       "@/*": ["./src/*"],
       "@constants/*": ["./constants/*"],
       "@commonComponents/*": ["./src/components/*"],
-      "@animationHooks/*": ["./src/hooks/animation/*"],
-      "@componentsAboutHome/*": ["./src/pages/components/Home/*"],
-      "@componentsAboutCommunity/*": ["./src/pages/components/Community/*"],
-      "@componentsAboutBanPick/*": ["./src/pages/components/BanPick/*"],
       "@utils/*": ["./src/utils/*"]
     }
   },
