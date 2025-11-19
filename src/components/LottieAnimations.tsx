@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 const LottieAnimations = () => {
   const location = useLocation();
+  console.log(location.pathname);
   if (location.pathname === "/banPickSimulation") return null;
 
   return (
