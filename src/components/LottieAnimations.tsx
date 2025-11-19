@@ -1,10 +1,9 @@
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { useLocation } from "react-router-dom";
 
 const LottieAnimations = () => {
-  const location = useLocation();
-  console.log(location.pathname);
-  if (location.pathname === "/banPickSimulation") return null;
+  const path = window.location.pathname;
+
+  if (path.startsWith("/banPickSimulation")) return null;
 
   return (
     <>
