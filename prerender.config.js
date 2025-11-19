@@ -3,4 +3,5 @@ export default {
   outDir: "prerendered",
   serveDir: "dist",
   flatOutput: false,
+  skipPrerenderSelector: "[data-skip-prerender]",
 };
