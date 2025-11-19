@@ -10,7 +10,6 @@ import NotFound from "./pages/NotFound";
 import { BASE_URL } from "./../constants/url";
 import BanPickSimulation from "./pages/BanPickSimulation";
 import About from "./pages/About";
-import LottieAnimations from "@/components/LottieAnimations";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -21,8 +20,6 @@ function App() {
         <Navbar />
 
         <main className="flex-grow">
-          <LottieAnimations />
-
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/banPick" element={<BanPick />} />
