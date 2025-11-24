@@ -143,13 +143,15 @@ const PickColumn = ({
     <>
       {picks.map((champion, i) => {
         const role = roleOrder[i];
+        const isEmpty = !champion;
+
         return (
           <div
             key={`${team}-pick-${i}`}
-            className={`flex-1 relative rounded-md bg-cover ${
+            className={`flex-1 relative rounded-md overflow-hidden bg-cover transition-all duration-200 ${
               isCurrentTeam && i === currentIndex
-                ? "border-2 animate-border-ripple"
-                : ""
+                ? "animate-border-ripple"
+                : "border-transparent"
             }`}
             style={
               {
@@ -166,10 +168,11 @@ const PickColumn = ({
             <img
               src={roleIcons[team][role]}
               alt={`${role} icon`}
-              className={`absolute top-1 w-5 h-5 pointer-events-none z-10 bg-black/70 rounded ${
+              className={`absolute top-1 w-5 h-5 pointer-events-none bg-black/70 rounded z-10 ${
                 team === "blue" ? "right-1" : "left-1"
               }`}
             />
+
             {champion && (
               <div
                 className={`absolute top-1 px-1 py-0.5 text-[9px] md:text-xs font-semibold text-white bg-black/70 rounded ${
@@ -177,6 +180,20 @@ const PickColumn = ({
                 }`}
               >
                 {champion}
+              </div>
+            )}
+
+            {isEmpty && (
+              <div className="absolute inset-0 rounded-md bg-white/5 backdrop-blur-sm border border-white/10 shadow-inner overflow-hidden">
+                <div className="absolute inset-0 pointer-events-none">
+                  <div
+                    className="absolute inset-0 rounded-md"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0) 60%)",
+                    }}
+                  />
+                </div>
               </div>
             )}
           </div>

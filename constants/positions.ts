@@ -29,6 +29,7 @@ export const TOP_CHAMPIONS = new Set([
   "워윅",
   "이렐리아",
   "일라오이",
+  "자헨",
   "잭스",
   "제이스",
   "초가스",

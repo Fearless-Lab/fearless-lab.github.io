@@ -230,7 +230,7 @@ const BanPickSimulation = () => {
 
           <div className="max-w-6xl mx-auto mt-2 w-full">
             <div className="hidden md:grid md:grid-cols-4 gap-12 w-full">
-              <div className="md:col-span-1 border rounded-md h-[65vh] max-h-[500px] flex flex-col divide-y">
+              <div className="md:col-span-1 h-[65vh] max-h-[500px] flex flex-col">
                 <PickColumn
                   team="blue"
                   picks={myTeam === "blue" ? localPick : enemyPick}
@@ -293,7 +293,7 @@ const BanPickSimulation = () => {
                 </CommitButton>
               </div>
 
-              <div className="md:col-span-1 border rounded-md h-[65vh] max-h-[500px] flex flex-col divide-y">
+              <div className="md:col-span-1 h-[65vh] max-h-[500px] flex flex-col">
                 <PickColumn
                   team="red"
                   picks={myTeam === "red" ? localPick : enemyPick}
@@ -438,12 +438,12 @@ const BanPickSimulation = () => {
 
       <VideoGallery
         videos={[
-          "https://www.youtube.com/watch?v=BKATPpLnrcE",
+          "https://www.youtube.com/watch?v=MJzqr9qdopQ",
+          "https://www.youtube.com/watch?v=--L-mTldcvs",
           "https://www.youtube.com/watch?v=LBqWADpKFRc",
           "https://www.youtube.com/watch?v=Qb_Ol3eD0hA",
           "https://www.youtube.com/watch?v=at_GgixKo5w",
           "https://www.youtube.com/watch?v=R8FNnXHGZbc",
-          "https://www.youtube.com/watch?v=BkhpTA5c4Sw",
         ]}
       />
     </>
