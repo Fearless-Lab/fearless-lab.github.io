@@ -358,7 +358,7 @@ const BanPickSimulation = () => {
               </CommitButton>
 
               <div className="flex w-full max-w-[500px] gap-4 mx-auto">
-                <div className="flex-1 rounded-md aspect-[1/2] flex flex-col">
+                <div className="flex-1 rounded-md aspect-[2/5] flex flex-col">
                   <PickColumn
                     team="blue"
                     picks={myTeam === "blue" ? localPick : enemyPick}
@@ -371,7 +371,7 @@ const BanPickSimulation = () => {
                   />
                 </div>
 
-                <div className="flex-1 rounded-md aspect-[1/2] flex flex-col">
+                <div className="flex-1 rounded-md aspect-[2/5] flex flex-col">
                   <PickColumn
                     team="red"
                     picks={myTeam === "red" ? localPick : enemyPick}

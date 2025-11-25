@@ -5,7 +5,6 @@ import {
   ExclamationTriangleIcon,
   TrophyIcon,
   EnvelopeIcon,
-  // ChatBubbleLeftRightIcon,
   MagnifyingGlassPlusIcon,
   VideoCameraIcon,
 } from "@heroicons/react/24/outline";
@@ -26,7 +25,7 @@ const About = () => {
     >
       <section className="max-w-3xl w-full mb-12 text-sm">
         <h2 className="text-2xl font-semibold mb-4">
-          Fearless는 이런 분들을 위한 서비스입니다
+          이런 분들을 위한 서비스입니다
         </h2>
         <ul className="space-y-4">
           <li className="flex items-start gap-2">
@@ -72,20 +71,6 @@ const About = () => {
               <span className="font-mono">jyk41993@gmail.com</span>
             </span>
           </li>
-          {/* <li className="flex items-start gap-2">
-            <ChatBubbleLeftRightIcon className="w-6 h-6 text-yellow-500 shrink-0 mt-0.5" />
-            <span>
-              카카오톡){" "}
-              <a
-                href="https://open.kakao.com/o/sKtOtKMh"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sky-300 hover:underline"
-              >
-                오픈채팅방 링크
-              </a>
-            </span>
-          </li> */}
         </ul>
       </section>
 
