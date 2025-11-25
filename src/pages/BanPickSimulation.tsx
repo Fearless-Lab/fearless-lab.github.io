@@ -307,6 +307,7 @@ const BanPickSimulation = () => {
               </div>
             </div>
 
+            {/* mobile */}
             <div className="flex flex-col md:hidden gap-4 w-[90%] mx-auto">
               <div className="px-4 flex flex-col items-center">
                 <PositionRow
@@ -356,8 +357,8 @@ const BanPickSimulation = () => {
                 {actionText}
               </CommitButton>
 
-              <div className="flex w-[85%] gap-12 mx-auto">
-                <div className="flex-1 border rounded-md min-h-84 flex flex-col divide-y">
+              <div className="flex w-full max-w-[500px] gap-4 mx-auto">
+                <div className="flex-1 rounded-md aspect-[1/2] flex flex-col">
                   <PickColumn
                     team="blue"
                     picks={myTeam === "blue" ? localPick : enemyPick}
@@ -370,7 +371,7 @@ const BanPickSimulation = () => {
                   />
                 </div>
 
-                <div className="flex-1 border rounded-md min-h-84 flex flex-col divide-y">
+                <div className="flex-1 rounded-md aspect-[1/2] flex flex-col">
                   <PickColumn
                     team="red"
                     picks={myTeam === "red" ? localPick : enemyPick}
