@@ -6,7 +6,6 @@ const screenshots = [
   "/screenshots/sim-2.png",
   "/screenshots/sim-3.png",
   "/screenshots/sim-4.png",
-  "/screenshots/sim-5.png",
 ];
 
 const ScreenshotCarousel = () => {

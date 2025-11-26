@@ -7,7 +7,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import type { DragEndEvent } from "@dnd-kit/core";
+import type { DragEndEvent, DragOverEvent } from "@dnd-kit/core";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -76,6 +76,7 @@ const PickColumn = ({
   const isDraggable = isSwapPhase && team === myTeam && !commited;
 
   const [items, setItems] = useState(picks);
+  const [overId, setOverId] = useState<string | null>(null);
 
   useEffect(() => {
     setItems(picks);
@@ -85,7 +86,17 @@ const PickColumn = ({
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
   );
 
+  const handleDragStart = () => {
+    setOverId(null);
+  };
+
+  const handleDragOver = (event: DragOverEvent) => {
+    const { over } = event;
+    setOverId(over ? String(over.id) : null);
+  };
+
   const handleDragEnd = (event: DragEndEvent) => {
+    setOverId(null);
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
@@ -109,6 +120,8 @@ const PickColumn = ({
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
         <SortableContext
@@ -117,8 +130,18 @@ const PickColumn = ({
         >
           {items.map((champion, index) => {
             const role = roleOrder[index];
+            const itemId = champion ?? `empty-${index}`;
+            const isOverThis = overId === itemId;
+
             return (
-              <div key={`${team}-pick-${index}`} className="relative flex-1">
+              <div
+                key={`${team}-pick-${index}`}
+                className={`relative flex-1 transition-all duration-200 rounded-md ${
+                  isOverThis
+                    ? "bg-white/10 bg-gradient-to-br from-white/20 to-white/5"
+                    : ""
+                }`}
+              >
                 <img
                   src={roleIcons[team][role]}
                   alt={`${role} icon`}
@@ -126,11 +149,7 @@ const PickColumn = ({
                     team === "blue" ? "right-1" : "left-1"
                   }`}
                 />
-                <SortableItem
-                  id={champion ?? `empty-${index}`}
-                  champion={champion}
-                  team={team}
-                />
+                <SortableItem id={itemId} champion={champion} team={team} />
               </div>
             );
           })}

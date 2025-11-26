@@ -20,8 +20,9 @@ const SortableItem = ({ id, champion, team }: SortableItemProps) => {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    cursor: "grab",
+    cursor: isDragging ? "grabbing" : "grab",
     opacity: isDragging ? 0.8 : 1,
+    zIndex: isDragging ? 9999 : "auto",
   };
 
   return (
