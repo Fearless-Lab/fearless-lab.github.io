@@ -12,7 +12,7 @@ import ReadyCheckModal from "./components/BanPickSimulation/ReadyCheckModal";
 import { useBanPickLogic } from "@/hooks/banPick/useBanPickLogic";
 import { getBanPickQueryParams } from "@/utils/getQueryParams";
 import BanPickTimer from "./components/BanPickSimulation/BanPickTimer";
-import { useState } from "react";
+import { Activity, useState } from "react";
 import { useChampions } from "@/hooks/banPick/useChampions";
 import BanArea from "./components/BanPickSimulation/BanArea";
 import PickColumn from "./components/BanPickSimulation/PickColumn";
@@ -426,15 +426,17 @@ const BanPickSimulation = () => {
           onClose={() => setIsBanPickFlowOpen(false)}
           version={version}
         />
-        <ChampNoteModal
-          open={isNoteOpen}
-          onClose={() => setIsNoteOpen(false)}
-          version={version}
-          previousPicks={previousPicks}
-          oppoPreviousPicks={oppoPreviousPicks}
-          currentSetSelections={currentSetSelections}
-          mode={mode as "normal" | "fearless" | "hardFearless"}
-        />
+
+        <Activity mode={isNoteOpen ? "visible" : "hidden"}>
+          <ChampNoteModal
+            onClose={() => setIsNoteOpen(false)}
+            version={version}
+            previousPicks={previousPicks}
+            oppoPreviousPicks={oppoPreviousPicks}
+            currentSetSelections={currentSetSelections}
+            mode={mode as "normal" | "fearless" | "hardFearless"}
+          />
+        </Activity>
       </div>
 
       <VideoGallery

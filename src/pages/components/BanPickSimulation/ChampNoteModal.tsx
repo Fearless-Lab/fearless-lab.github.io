@@ -30,7 +30,6 @@ const emptyNotes: TeamNotes = {
 };
 
 type ChampNoteModalProps = {
-  open: boolean;
   onClose: () => void;
   version: string;
   previousPicks: Set<string>;
@@ -40,7 +39,6 @@ type ChampNoteModalProps = {
 };
 
 export default function ChampNoteModal({
-  open,
   onClose,
   version,
   previousPicks,
@@ -65,19 +63,15 @@ export default function ChampNoteModal({
   }, []);
 
   useEffect(() => {
-    if (open) {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          setTeamNotes(JSON.parse(saved));
-        } catch {
-          setTeamNotes(emptyNotes);
-        }
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        setTeamNotes(JSON.parse(saved));
+      } catch {
+        setTeamNotes(emptyNotes);
       }
     }
-  }, [open]);
-
-  if (!open) return null;
+  }, []);
 
   const getIsDisabled = (champId: string, side: "our" | "oppo") => {
     let isDisabled = false;
