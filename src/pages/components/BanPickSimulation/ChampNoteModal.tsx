@@ -29,14 +29,28 @@ const emptyNotes: TeamNotes = {
   oppo: { TOP: [], JUNGLE: [], MID: [], ADC: [], SUP: [] },
 };
 
-type ChampNoteModalProps = {
+const loadTeamNotes = (): TeamNotes => {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try {
+      // TODO: 더 방어적인 에러 처리 필요
+      // - JSON 파싱 실패, 데이터 구조 검증
+      return JSON.parse(saved);
+    } catch {
+      return emptyNotes;
+    }
+  }
+  return emptyNotes;
+};
+
+interface ChampNoteModalProps {
   onClose: () => void;
   version: string;
   previousPicks: Set<string>;
   oppoPreviousPicks: Set<string>;
   currentSetSelections: Set<string>;
   mode: "normal" | "fearless" | "hardFearless";
-};
+}
 
 export default function ChampNoteModal({
   onClose,
@@ -46,7 +60,9 @@ export default function ChampNoteModal({
   currentSetSelections,
   mode,
 }: ChampNoteModalProps) {
-  const [teamNotes, setTeamNotes] = useState<TeamNotes>(emptyNotes);
+  // 초기 렌더에서 localStorage 값을 바로 읽어 깜빡임 방지
+  const [teamNotes, setTeamNotes] = useState(loadTeamNotes);
+
   const nodeRef = useRef<HTMLDivElement>(null);
 
   // 모바일에서 드래그를 비활성화 하기 위한 상태
@@ -63,14 +79,7 @@ export default function ChampNoteModal({
   }, []);
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        setTeamNotes(JSON.parse(saved));
-      } catch {
-        setTeamNotes(emptyNotes);
-      }
-    }
+    setTeamNotes(loadTeamNotes());
   }, []);
 
   const getIsDisabled = (champId: string, side: "our" | "oppo") => {
