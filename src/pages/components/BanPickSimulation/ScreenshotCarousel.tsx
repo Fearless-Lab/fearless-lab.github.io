@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
 const screenshots = [
@@ -9,74 +10,42 @@ const screenshots = [
 ];
 
 const ScreenshotCarousel = () => {
-  const [index, setIndex] = useState(0);
-
-  const handleSlide = (dir: "prev" | "next") => {
-    setIndex((prev) => {
-      if (dir === "next") return (prev + 1) % screenshots.length;
-      else return (prev - 1 + screenshots.length) % screenshots.length;
-    });
-  };
-
   return (
-    <div className="relative w-full h-100 flex items-center justify-center overflow-hidden mt-4">
-      <div className="flex items-center justify-center w-full h-full relative">
-        {screenshots.map((src, i) => {
-          const diff = (i - index + screenshots.length) % screenshots.length;
-
-          let className =
-            "absolute w-90 h-72 rounded-lg shadow-lg transition-all duration-500 overflow-hidden";
-          let style: React.CSSProperties = {};
-          let pointer: React.CSSProperties["pointerEvents"] = "none";
-
-          if (diff === 0) {
-            // Center
-            className += " scale-180 opacity-100 z-20 cursor-pointer";
-            style = { transform: "translateX(0%)" };
-            pointer = "auto";
-          } else if (diff === 1) {
-            // Right
-            className += " scale-75 opacity-30 z-10";
-            style = { transform: "translateX(120%)" };
-          } else if (diff === screenshots.length - 1) {
-            // Left
-            className += " scale-75 opacity-30 z-10";
-            style = { transform: "translateX(-120%)" };
-          } else {
-            // Others (hidden)
-            className += " scale-75 opacity-0 z-0";
-          }
-
-          return (
-            <div
-              key={i}
-              className={className}
-              style={{ ...style, pointerEvents: pointer }}
-              onClick={() => {
-                if (diff === 0) window.open(src, "_blank");
-              }}
-            >
+    <div className="hidden sm:block relative w-full mt-4">
+      <Swiper
+        modules={[Navigation, Pagination]}
+        grabCursor={true}
+        slidesPerView={1}
+        spaceBetween={0}
+        loop={true}
+        pagination={{
+          clickable: true,
+          bulletClass: "swiper-pagination-bullet !bg-white/30",
+          bulletActiveClass: "swiper-pagination-bullet-active !bg-cyan-400",
+        }}
+        navigation={{
+          prevEl: ".swiper-button-prev-custom",
+          nextEl: ".swiper-button-next-custom",
+        }}
+        className="!pb-12"
+      >
+        {screenshots.map((src, index) => (
+          <SwiperSlide key={index}>
+            <div className="rounded-lg overflow-hidden">
               <img
                 src={src}
-                alt={`screenshot-${i + 1}`}
-                className="w-full h-full object-contain bg-black"
+                alt={`screenshot-${index + 1}`}
+                className="w-full h-auto object-contain bg-black"
               />
             </div>
-          );
-        })}
-      </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-      <button
-        onClick={() => handleSlide("prev")}
-        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-2 rounded-full cursor-pointer"
-      >
+      <button className="swiper-button-prev-custom absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 p-2 rounded-full cursor-pointer transition-all">
         <ArrowLeftIcon className="w-6 h-6 text-white" />
       </button>
-
-      <button
-        onClick={() => handleSlide("next")}
-        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-2 rounded-full cursor-pointer"
-      >
+      <button className="swiper-button-next-custom absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 p-2 rounded-full cursor-pointer transition-all">
         <ArrowRightIcon className="w-6 h-6 text-white" />
       </button>
     </div>

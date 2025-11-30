@@ -1,6 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Outfit:wght@100..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+@import "swiper/css/effect-coverflow";
+@import "swiper/css/zoom";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -8,8 +13,16 @@
   --font-outfit: "Outfit", serif;
 }
 
-@utility solution-bg {
-  @apply w-full rounded-[19px] bg-gradient-to-tl from-[#027088cc] to-[#00232a33];
+@utility app-bg {
+  background: linear-gradient(
+    135deg,
+    #0d1f1f 0%,
+    #1a2d3a 25%,
+    #1f1f3a 50%,
+    #2d1f3a 75%,
+    #3a1f2d 90%,
+    #3a2d1f 100%
+  );
 }
 
 /* scrollbar 커스텀 (Chrome/Safari/Edge) */

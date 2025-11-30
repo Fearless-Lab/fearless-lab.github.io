@@ -18,7 +18,6 @@ const Navbar = () => {
       },
       {
         backdropFilter: "blur(5px)",
-        borderBottom: "1px solid #011d2e",
         duration: 0.3,
       }
     );
@@ -26,7 +25,6 @@ const Navbar = () => {
     if (window.scrollY > 0) {
       gsap.set("nav", {
         backdropFilter: "blur(5px)",
-        borderBottom: "1px solid #011d2e",
         duration: 0.3,
       });
     }

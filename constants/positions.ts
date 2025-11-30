@@ -72,6 +72,7 @@ export const JUNGLE_CHAMPIONS = new Set([
   "신 짜오",
   "아무무",
   "아이번",
+  "암베사",
   "에코",
   "엘리스",
   "오공",
