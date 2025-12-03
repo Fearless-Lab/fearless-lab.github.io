@@ -72,6 +72,17 @@ const BanPick = () => {
 
   return (
     <>
+      <title>모의 밴픽 | 시작하기</title>
+      <meta
+        name="description"
+        content="팀 이름을 입력하고 롤 모의 밴픽을 시작하세요. Best of 3/5 경기 모드를 선택하고 실시간으로 밴픽 전략을 구상할 수 있습니다."
+      />
+      <meta
+        name="keywords"
+        content="롤 밴픽 시작, 팀 전략 구상, 밴픽 전략, Best of 5, 진영 선택, 롤 시뮬레이터 시작"
+      />
+      <link rel="canonical" href="https://fearless-lab.github.io/banPick" />
+
       <section
         id="banPick"
         ref={sectionRef}
