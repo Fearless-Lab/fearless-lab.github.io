@@ -441,9 +441,9 @@ const BanPickSimulation = () => {
 
       <VideoGallery
         videos={[
+          "https://www.youtube.com/watch?v=V1gTYew5k4U",
+          "https://www.youtube.com/watch?v=VqqdO_EGq-8",
           "https://www.youtube.com/watch?v=MJzqr9qdopQ",
-          "https://www.youtube.com/watch?v=--L-mTldcvs",
-          "https://www.youtube.com/watch?v=LBqWADpKFRc",
           "https://www.youtube.com/watch?v=Qb_Ol3eD0hA",
           "https://www.youtube.com/watch?v=at_GgixKo5w",
           "https://www.youtube.com/watch?v=R8FNnXHGZbc",
