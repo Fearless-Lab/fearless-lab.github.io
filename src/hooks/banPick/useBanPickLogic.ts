@@ -24,7 +24,9 @@ export const useBanPickLogic = ({
   initialTeam,
 }: UseBanPickLogicOptions) => {
   useEffect(() => {
-    initServerOffset();
+    const initOffset = async () => await initServerOffset();
+
+    initOffset();
   }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(true);

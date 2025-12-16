@@ -113,7 +113,7 @@ const BanPickTimer = ({
           goToNextStep(currentStep);
         }
       }
-    }, 100);
+    }, 50);
 
     return () => clearInterval(interval);
   }, [startedAt, currentStep, isMuted]);
