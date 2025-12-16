@@ -261,7 +261,7 @@ const Quiz = () => {
               <button
                 type="submit"
                 disabled={feedback.type !== null}
-                className="w-full py-2.5 bg-white/20 hover:bg-white/30 rounded-lg font-semibold transition-all duration-200 border border-white/30 disabled:opacity-50 cursor-pointer"
+                className="w-full py-2.5 bg-white/20 hover:bg-white/30 rounded-lg font-semibold transition-all duration-200 border border-white/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white/20 cursor-pointer"
               >
                 제출
               </button>
