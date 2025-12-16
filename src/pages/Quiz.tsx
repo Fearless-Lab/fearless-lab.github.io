@@ -124,8 +124,9 @@ const Quiz = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-2xl">아이템 데이터를 불러오는 중...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+        <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+        <p className="text-sm text-white/60">아이템 불러오는 중...</p>
       </div>
     );
   }
