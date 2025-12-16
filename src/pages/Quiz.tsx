@@ -65,6 +65,15 @@ const Quiz = () => {
     setUserInput("");
     setFeedback({ type: null, message: "" });
     setGameState("playing");
+
+    // Google Analytics 이벤트 전송
+    if (typeof window.gtag !== "undefined") {
+      window.gtag("event", "quiz_start", {
+        event_category: "Quiz",
+        event_label: "Item Quiz Started",
+        question_count: questionCount,
+      });
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -101,6 +110,21 @@ const Quiz = () => {
       }, 1500);
     } else {
       setTimeout(() => {
+        const finalScore = normalizedAnswer === normalizedInput ? score + 1 : score;
+        const totalQuestions = selectedItems.length;
+        const accuracy = ((finalScore / totalQuestions) * 100).toFixed(1);
+
+        // Google Analytics 게임 완료 이벤트 전송
+        if (typeof window.gtag !== "undefined") {
+          window.gtag("event", "quiz_complete", {
+            event_category: "Quiz",
+            event_label: "Item Quiz Completed",
+            question_count: totalQuestions,
+            score: finalScore,
+            accuracy: parseFloat(accuracy),
+          });
+        }
+
         setGameState("finished");
       }, 1500);
     }
