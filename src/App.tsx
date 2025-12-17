@@ -11,6 +11,7 @@ import { BASE_URL } from "./../constants/url";
 import BanPickSimulation from "./pages/BanPickSimulation";
 import About from "./pages/About";
 import Quiz from "@/pages/Quiz";
+import ReactionSpeed from "@/pages/ReactionSpeed";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/banPickSimulation" element={<BanPickSimulation />} />
             <Route path="/about" element={<About />} />
             <Route path="/quiz" element={<Quiz />} />
+            <Route path="/reactionSpeed" element={<ReactionSpeed />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

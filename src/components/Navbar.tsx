@@ -59,6 +59,9 @@ const Navbar = () => {
         <li className="px-3 py-1 rounded-md transition-all duration-200 hover:bg-white/10">
           <Link to="/quiz">Quiz</Link>
         </li>
+        <li className="px-3 py-1 rounded-md transition-all duration-200 hover:bg-white/10">
+          <Link to="/reactionSpeed">Reaction-Speed</Link>
+        </li>
       </ul>
 
       <DropdownMenu.Root open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
@@ -94,6 +97,15 @@ const Navbar = () => {
                 className="flex items-center px-3 py-2 text-base rounded-md outline-none cursor-pointer hover:bg-white/10 focus:bg-white/10 transition-colors"
               >
                 Quiz
+              </Link>
+            </DropdownMenu.Item>
+
+            <DropdownMenu.Item asChild>
+              <Link
+                to="/reactionSpeed"
+                className="flex items-center px-3 py-2 text-base rounded-md outline-none cursor-pointer hover:bg-white/10 focus:bg-white/10 transition-colors"
+              >
+                Reaction-Speed
               </Link>
             </DropdownMenu.Item>
           </DropdownMenu.Content>
