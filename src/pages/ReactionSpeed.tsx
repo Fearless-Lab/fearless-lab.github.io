@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Zap, Hourglass, Target, AlertTriangle, Trophy } from "lucide-react";
+import { saveReactionSpeed } from "@/apis/firebase/reactionSpeed";
 
 type GameState =
   | "ready"
@@ -32,12 +33,12 @@ const ReactionSpeed = () => {
 
     timeoutRef.current = window.setTimeout(() => {
       setGameState("click");
-      startTimeRef.current = performance.now();
-    }, waitTime);
 
-    // waitTime 이후 콜백 실행.
-    // 게임 상태가 click 으로 바뀌고,
-    // startTimeRef(초록색으로 바뀐 시점)에 현재 시간이 담김
+      // 브라우저가 실제로 화면을 그린 직후에 시작 시간 기록
+      requestAnimationFrame(() => {
+        startTimeRef.current = performance.now();
+      });
+    }, waitTime);
   };
 
   const startTest = () => {
@@ -67,7 +68,8 @@ const ReactionSpeed = () => {
         return;
       }
 
-      const reactionTime = Math.round(performance.now() - startTimeRef.current);
+      // mouseDown 시점을 기준으로 측정 (더 정확함)
+      const reactionTime = Math.round(mouseDownTimeRef.current - startTimeRef.current);
       setCurrentReactionTime(reactionTime);
 
       const newAttempts = [...attempts, reactionTime];
@@ -75,6 +77,14 @@ const ReactionSpeed = () => {
 
       if (newAttempts.length >= 5) {
         setGameState("finished");
+
+        // Firebase에 평균값 저장 (익명 데이터)
+        const avgTime = Math.round(
+          newAttempts.reduce((a, b) => a + b, 0) / newAttempts.length
+        );
+        saveReactionSpeed(avgTime).catch((error) => {
+          console.error("Failed to save reaction speed:", error);
+        });
       } else {
         setGameState("result");
         setTimeout(() => {
@@ -107,18 +117,18 @@ const ReactionSpeed = () => {
   const getBackgroundColor = () => {
     switch (gameState) {
       case "ready":
-        return "bg-white/10 border-white/20";
+        return "bg-white/10 border-white/20 transition-all duration-200";
       case "waiting":
-        return "bg-red-500/20 border-red-500/50";
+        return "bg-red-500/20 border-red-500/50"; // transition 없음 (즉시 변경)
       case "click":
       case "result":
-        return "bg-green-500/20 border-green-500/50";
+        return "bg-green-500/20 border-green-500/50"; // transition 없음 (즉시 변경)
       case "tooEarly":
-        return "bg-yellow-500/20 border-yellow-500/50";
+        return "bg-yellow-500/20 border-yellow-500/50 transition-all duration-200";
       case "finished":
-        return "bg-white/10 border-white/20";
+        return "bg-white/10 border-white/20 transition-all duration-200";
       default:
-        return "bg-white/10 border-white/20";
+        return "bg-white/10 border-white/20 transition-all duration-200";
     }
   };
 
@@ -184,7 +194,7 @@ const ReactionSpeed = () => {
 
       <div className="min-h-[100dvh] flex flex-col items-center justify-center p-6">
         <div
-          className={`max-w-lg w-full h-[400px] backdrop-blur-md rounded-xl p-8 shadow-2xl border-2 transition-all duration-200 select-none flex flex-col justify-center ${getBackgroundColor()} ${getCursorStyle()}`}
+          className={`max-w-lg w-full h-[400px] backdrop-blur-md rounded-xl p-8 shadow-2xl border-2 select-none flex flex-col justify-center ${getBackgroundColor()} ${getCursorStyle()}`}
           onClick={handleClick}
           onMouseDown={handleMouseDown}
         >
