@@ -110,7 +110,8 @@ const Quiz = () => {
       }, 1500);
     } else {
       setTimeout(() => {
-        const finalScore = normalizedAnswer === normalizedInput ? score + 1 : score;
+        const finalScore =
+          normalizedAnswer === normalizedInput ? score + 1 : score;
         const totalQuestions = selectedItems.length;
         const accuracy = ((finalScore / totalQuestions) * 100).toFixed(1);
 
@@ -148,7 +149,7 @@ const Quiz = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+      <div className="min-h-[100dvh] flex flex-col items-center justify-center gap-4">
         <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin" />
         <p className="text-sm text-white/60">아이템 불러오는 중...</p>
       </div>
@@ -171,7 +172,7 @@ const Quiz = () => {
 
       <link rel="canonical" href="https://fearless-lab.github.io/item-quiz" />
 
-      <div className="min-h-screen flex flex-col items-center justify-center p-6">
+      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-6">
         {gameState === "setup" && (
           <div className="max-w-md w-full bg-white/10 backdrop-blur-md rounded-xl p-8 shadow-2xl border border-white/20">
             <DotLottieReact
