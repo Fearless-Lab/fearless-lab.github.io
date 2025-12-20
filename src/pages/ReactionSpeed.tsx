@@ -56,7 +56,7 @@ const ReactionSpeed = () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current); // 타이머 해제
       }
-      setGameState("tooEarly"); // 88 line
+      setGameState("tooEarly"); // 101 line
       return;
     }
 
@@ -69,7 +69,9 @@ const ReactionSpeed = () => {
       }
 
       // mouseDown 시점을 기준으로 측정 (더 정확함)
-      const reactionTime = Math.round(mouseDownTimeRef.current - startTimeRef.current);
+      const reactionTime = Math.round(
+        mouseDownTimeRef.current - startTimeRef.current
+      );
       setCurrentReactionTime(reactionTime);
 
       const newAttempts = [...attempts, reactionTime];
