@@ -191,7 +191,7 @@ const ReactionSpeed = () => {
       />
       <link
         rel="canonical"
-        href="https://fearless-lab.github.io/reaction-speed"
+        href="https://fearless-lab.github.io/reactionSpeed"
       />
 
       <div className="min-h-[100dvh] flex flex-col items-center justify-center p-6">

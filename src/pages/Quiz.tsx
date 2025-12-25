@@ -170,7 +170,7 @@ const Quiz = () => {
         content="리그오브레전드, 롤 아이템, LoL 아이템 퀴즈, 롤 아이템 맞추기, 롤 아이템 퀴즈"
       />
 
-      <link rel="canonical" href="https://fearless-lab.github.io/item-quiz" />
+      <link rel="canonical" href="https://fearless-lab.github.io/quiz" />
 
       <div className="min-h-[100dvh] flex flex-col items-center justify-center p-6">
         {gameState === "setup" && (
