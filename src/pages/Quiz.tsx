@@ -27,6 +27,7 @@ const Quiz = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["items"],
     queryFn: fetchItems,
+    enabled: gameState !== "setup", // setup 단계에서는 데이터 페칭하지 않음
   });
 
   const startGame = () => {
@@ -42,12 +43,13 @@ const Quiz = () => {
       return;
     }
 
+    setSetupError("");
+
+    // 데이터가 아직 로드되지 않았다면 로딩 상태로 전환
     if (!data?.items || data.items.length < questionCount) {
-      setSetupError("아이템 데이터를 불러올 수 없습니다.");
+      setGameState("playing"); // enabled 옵션이 활성화되어 데이터 페칭 시작
       return;
     }
-
-    setSetupError("");
 
     const uniqueItems = Array.from(
       new Map(
@@ -147,14 +149,35 @@ const Quiz = () => {
     }
   }, [gameState]);
 
-  if (isLoading) {
-    return (
-      <div className="min-h-[100dvh] flex flex-col items-center justify-center gap-4">
-        <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin" />
-        <p className="text-sm text-white/60">아이템 불러오는 중...</p>
-      </div>
-    );
-  }
+  // 데이터 로드 완료 시 게임 자동 시작
+  useEffect(() => {
+    if (gameState === "playing" && data?.items && selectedItems.length === 0) {
+      const questionCount = parseInt(questionCountInput);
+
+      if (data.items.length >= questionCount) {
+        const uniqueItems = Array.from(
+          new Map(
+            data.items.map((item) => [item.name.toLowerCase(), item])
+          ).values()
+        );
+
+        const shuffled = [...uniqueItems].sort(() => Math.random() - 0.5);
+        const selected = shuffled.slice(0, questionCount);
+
+        setSelectedItems(selected);
+        setVersion(data.version);
+
+        // Google Analytics 이벤트 전송
+        if (typeof window.gtag !== "undefined") {
+          window.gtag("event", "quiz_start", {
+            event_category: "Quiz",
+            event_label: "Item Quiz Started",
+            question_count: questionCount,
+          });
+        }
+      }
+    }
+  }, [gameState, data, selectedItems.length, questionCountInput]);
 
   return (
     <>
@@ -227,7 +250,14 @@ const Quiz = () => {
           </div>
         )}
 
-        {gameState === "playing" && selectedItems.length > 0 && (
+        {gameState === "playing" && isLoading && (
+          <div className="max-w-md w-full bg-white/10 backdrop-blur-md rounded-xl p-8 shadow-2xl border border-white/20 flex flex-col items-center gap-4">
+            <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+            <p className="text-sm text-white/60">아이템 불러오는 중...</p>
+          </div>
+        )}
+
+        {gameState === "playing" && !isLoading && selectedItems.length > 0 && (
           <div
             className={`max-w-sm w-full bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-2xl border-2 transition-colors duration-300 ${
               feedback.type === "correct"
