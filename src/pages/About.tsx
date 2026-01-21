@@ -16,7 +16,7 @@ const About = () => {
 
   return (
     <>
-      <title>모의 밴픽 | Fearless</title>
+      <title>Fearless 소개 | 롤 모의 밴픽</title>
       <meta
         name="description"
         content="Fearless는 스크림, 대회 준비, 밴픽 중계를 위한 리그오브레전드 모의 밴픽 도구입니다. 피어리스 룰을 지원하며 챔피언 부족 문제를 해결합니다."
@@ -26,6 +26,29 @@ const About = () => {
         content="모의 밴픽, 피어리스 밴픽, Fearless 소개, 롤 스크림, 대회 준비, 밴픽 중계, 피어리스 룰, 롤 시뮬레이터, 롤 밴픽 도구"
       />
       <link rel="canonical" href="https://fearless-lab.github.io/about" />
+
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="Fearless 소개 - 롤 모의 밴픽 도구" />
+      <meta
+        property="og:description"
+        content="스크림, 대회 준비, 밴픽 중계를 위한 리그오브레전드 모의 밴픽 도구입니다."
+      />
+      <meta
+        property="og:image"
+        content="https://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png"
+      />
+      <meta property="og:url" content="https://fearless-lab.github.io/about" />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Fearless 소개 - 롤 모의 밴픽 도구" />
+      <meta
+        name="twitter:description"
+        content="스크림, 대회 준비, 밴픽 중계를 위한 리그오브레전드 모의 밴픽 도구입니다."
+      />
+      <meta
+        name="twitter:image"
+        content="https://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png"
+      />
 
       <div
         className="flex flex-col items-center justify-center px-6 py-32 text-white"

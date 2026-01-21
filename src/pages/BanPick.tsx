@@ -72,7 +72,7 @@ const BanPick = () => {
 
   return (
     <>
-      <title>모의 밴픽 | 시작하기</title>
+      <title>모의 밴픽 시작하기 | Fearless</title>
       <meta
         name="description"
         content="팀 이름을 입력하고 롤 모의 밴픽을 시작하세요. Best of 3/5 경기 모드를 선택하고 실시간으로 밴픽 전략을 구상할 수 있습니다."
@@ -82,6 +82,29 @@ const BanPick = () => {
         content="롤 밴픽 시작, 팀 전략 구상, 밴픽 전략, Best of 5, 진영 선택, 롤 시뮬레이터 시작"
       />
       <link rel="canonical" href="https://fearless-lab.github.io/banPick" />
+
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="모의 밴픽 시작하기 - Fearless" />
+      <meta
+        property="og:description"
+        content="팀 이름을 입력하고 롤 모의 밴픽을 시작하세요. Best of 3/5 경기 모드 지원."
+      />
+      <meta
+        property="og:image"
+        content="https://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png"
+      />
+      <meta property="og:url" content="https://fearless-lab.github.io/banPick" />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="모의 밴픽 시작하기 - Fearless" />
+      <meta
+        name="twitter:description"
+        content="팀 이름을 입력하고 롤 모의 밴픽을 시작하세요. Best of 3/5 경기 모드 지원."
+      />
+      <meta
+        name="twitter:image"
+        content="https://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png"
+      />
 
       <section
         id="banPick"

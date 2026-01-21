@@ -180,7 +180,7 @@ const ReactionSpeed = () => {
 
   return (
     <>
-      <title>반응속도 테스트</title>
+      <title>반응속도 테스트 | Fearless</title>
       <meta
         name="description"
         content="당신의 반응속도를 측정해보세요. 5번의 측정으로 평균 반응속도를 확인할 수 있습니다."
@@ -192,6 +192,32 @@ const ReactionSpeed = () => {
       <link
         rel="canonical"
         href="https://fearless-lab.github.io/reactionSpeed"
+      />
+
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="반응속도 테스트 - Fearless" />
+      <meta
+        property="og:description"
+        content="5번의 측정으로 평균 반응속도를 확인해보세요."
+      />
+      <meta
+        property="og:image"
+        content="https://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png"
+      />
+      <meta
+        property="og:url"
+        content="https://fearless-lab.github.io/reactionSpeed"
+      />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="반응속도 테스트 - Fearless" />
+      <meta
+        name="twitter:description"
+        content="5번의 측정으로 평균 반응속도를 확인해보세요."
+      />
+      <meta
+        name="twitter:image"
+        content="https://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png"
       />
 
       <div className="min-h-[100dvh] flex flex-col items-center justify-center p-6">
