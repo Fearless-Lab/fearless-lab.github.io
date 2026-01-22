@@ -1,14 +1,12 @@
-import CTAButton from "@/components/CTAButton";
 import { useScrollReveal } from "@/hooks/animation/useScrollReveal";
 import HighlightBadge from "@commonComponents/HighlightBadge";
 import Infopill from "@commonComponents/Infopill";
 import SubInfopill from "@commonComponents/SubInfopill";
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const navigate = useNavigate();
 
   useScrollReveal(sectionRef);
 
@@ -68,7 +66,12 @@ const Home = () => {
           전략 수립 및 팀 커뮤니케이션을 효율적으로 연습해보세요.
         </SubInfopill>
 
-        <CTAButton onClick={() => navigate("./banPick")}>시작하기</CTAButton>
+        <Link
+          to="/banPick"
+          className="px-8 py-3 font-semibold rounded-lg transform transition duration-300 shadow-xl border border-transparent bg-[#027088] hover:brightness-90"
+        >
+          시작하기
+        </Link>
       </section>
     </>
   );

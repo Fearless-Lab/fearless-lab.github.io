@@ -14,17 +14,20 @@ const Privacy = () => {
         property="og:description"
         content="Fearless 개인정보처리방침 및 쿠키 정책 안내"
       />
-      <meta property="og:url" content="https://fearless-lab.github.io/privacy" />
+      <meta
+        property="og:url"
+        content="https://fearless-lab.github.io/privacy"
+      />
 
       <div className="min-h-[100dvh] flex flex-col items-center justify-center px-6 py-32 text-white">
         <div className="max-w-3xl w-full">
-          <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+          <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
             개인정보처리방침
           </h1>
 
-          <div className="space-y-8 text-gray-300 leading-relaxed">
+          <div className="space-y-6 text-sm text-gray-300 leading-relaxed">
             <section>
-              <h2 className="text-xl font-semibold text-white mb-3">
+              <h2 className="text-base font-semibold text-white mb-2">
                 1. 수집하는 정보
               </h2>
               <p>Fearless는 다음과 같은 정보를 수집합니다:</p>
@@ -41,7 +44,7 @@ const Privacy = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-white mb-3">
+              <h2 className="text-base font-semibold text-white mb-2">
                 2. 정보 이용 목적
               </h2>
               <ul className="list-disc list-inside space-y-1 text-gray-400">
@@ -60,7 +63,7 @@ const Privacy = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-white mb-3">
+              <h2 className="text-base font-semibold text-white mb-2">
                 3. 쿠키(Cookie) 사용
               </h2>
               <p>
@@ -70,7 +73,7 @@ const Privacy = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-white mb-3">
+              <h2 className="text-base font-semibold text-white mb-2">
                 4. 제3자 서비스
               </h2>
               <p>본 서비스는 다음 제3자 서비스를 사용합니다:</p>
@@ -100,33 +103,12 @@ const Privacy = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-white mb-3">
+              <h2 className="text-base font-semibold text-white mb-2">
                 5. 이용자의 권리
               </h2>
               <p>
                 이용자는 언제든지 브라우저 설정을 통해 쿠키 수집을 거부하거나
                 저장된 쿠키를 삭제할 수 있습니다.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-white mb-3">
-                6. 문의처
-              </h2>
-              <p>개인정보 관련 문의사항은 아래 이메일로 연락해 주세요:</p>
-              <p className="mt-2">
-                <a
-                  href="mailto:jyk41993@gmail.com"
-                  className="text-cyan-400 hover:underline"
-                >
-                  jyk41993@gmail.com
-                </a>
-              </p>
-            </section>
-
-            <section className="pt-4 border-t border-white/10">
-              <p className="text-sm text-gray-500">
-                본 개인정보처리방침은 2025년 1월 22일부터 적용됩니다.
               </p>
             </section>
           </div>
