@@ -7,10 +7,16 @@ const Footer = () => {
         <div>
           © {new Date().getFullYear()} Jinyoung Kim. All rights reserved.
         </div>
-        <div>
-          <Link to="/about" className="text-[#027b96] hover:underline">
-            Contact & Who’s This For?
+        <div className="flex justify-center gap-4 my-2">
+          <Link to="/privacy" className="text-white hover:underline">
+            개인정보처리방침
           </Link>
+          <span className="text-gray-600">|</span>
+          <Link to="/terms" className="text-white hover:underline">
+            이용약관
+          </Link>
+        </div>
+        <div>
           <p className="my-2">
             This site is not affiliated with or endorsed by Riot Games, Inc.
           </p>

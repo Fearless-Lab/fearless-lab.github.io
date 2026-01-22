@@ -12,6 +12,8 @@ import BanPickSimulation from "./pages/BanPickSimulation";
 import About from "./pages/About";
 import Quiz from "@/pages/Quiz";
 import ReactionSpeed from "@/pages/ReactionSpeed";
+import Privacy from "@/pages/Privacy";
+import Terms from "@/pages/Terms";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -29,6 +31,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/reactionSpeed" element={<ReactionSpeed />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

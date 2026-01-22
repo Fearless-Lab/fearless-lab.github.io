@@ -1,0 +1,139 @@
+const Privacy = () => {
+  return (
+    <>
+      <title>개인정보처리방침 | Fearless</title>
+      <meta
+        name="description"
+        content="Fearless 개인정보처리방침. Google Analytics, Google AdSense 사용 및 쿠키 정책에 대해 안내합니다."
+      />
+      <link rel="canonical" href="https://fearless-lab.github.io/privacy" />
+
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="개인정보처리방침 - Fearless" />
+      <meta
+        property="og:description"
+        content="Fearless 개인정보처리방침 및 쿠키 정책 안내"
+      />
+      <meta property="og:url" content="https://fearless-lab.github.io/privacy" />
+
+      <div className="min-h-[100dvh] flex flex-col items-center justify-center px-6 py-32 text-white">
+        <div className="max-w-3xl w-full">
+          <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+            개인정보처리방침
+          </h1>
+
+          <div className="space-y-8 text-gray-300 leading-relaxed">
+            <section>
+              <h2 className="text-xl font-semibold text-white mb-3">
+                1. 수집하는 정보
+              </h2>
+              <p>Fearless는 다음과 같은 정보를 수집합니다:</p>
+              <ul className="list-disc list-inside mt-2 space-y-1 text-gray-400">
+                <li>
+                  <strong>자동 수집 정보:</strong> 서비스 이용 통계 (Google
+                  Analytics)
+                </li>
+                <li>
+                  <strong>서비스 이용 정보:</strong> 밴픽 기록 (서비스 기능 제공
+                  목적으로만 사용)
+                </li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold text-white mb-3">
+                2. 정보 이용 목적
+              </h2>
+              <ul className="list-disc list-inside space-y-1 text-gray-400">
+                <li>
+                  <strong>Google Analytics:</strong> 서비스 이용 통계 분석 및
+                  서비스 개선
+                </li>
+                <li>
+                  <strong>Google AdSense:</strong> 광고 제공
+                </li>
+                <li>
+                  <strong>밴픽 기록:</strong> 사용자의 밴픽 시뮬레이션 기능 제공
+                  (다른 목적으로 활용되지 않음)
+                </li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold text-white mb-3">
+                3. 쿠키(Cookie) 사용
+              </h2>
+              <p>
+                본 웹사이트는 Google Analytics와 Google AdSense에서 쿠키를
+                사용합니다. 브라우저 설정에서 쿠키를 거부할 수 있습니다.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold text-white mb-3">
+                4. 제3자 서비스
+              </h2>
+              <p>본 서비스는 다음 제3자 서비스를 사용합니다:</p>
+              <ul className="list-disc list-inside mt-2 space-y-1 text-gray-400">
+                <li>
+                  <strong>Google Analytics:</strong> 웹사이트 트래픽 분석
+                </li>
+                <li>
+                  <strong>Google AdSense:</strong> 광고 제공
+                </li>
+                <li>
+                  <strong>Firebase:</strong> 밴픽 기록 저장
+                </li>
+              </ul>
+              <p className="mt-2">
+                Google의 개인정보 처리에 대한 자세한 내용은{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-400 hover:underline"
+                >
+                  Google 개인정보처리방침
+                </a>
+                을 참조하세요.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold text-white mb-3">
+                5. 이용자의 권리
+              </h2>
+              <p>
+                이용자는 언제든지 브라우저 설정을 통해 쿠키 수집을 거부하거나
+                저장된 쿠키를 삭제할 수 있습니다.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold text-white mb-3">
+                6. 문의처
+              </h2>
+              <p>개인정보 관련 문의사항은 아래 이메일로 연락해 주세요:</p>
+              <p className="mt-2">
+                <a
+                  href="mailto:jyk41993@gmail.com"
+                  className="text-cyan-400 hover:underline"
+                >
+                  jyk41993@gmail.com
+                </a>
+              </p>
+            </section>
+
+            <section className="pt-4 border-t border-white/10">
+              <p className="text-sm text-gray-500">
+                본 개인정보처리방침은 2025년 1월 22일부터 적용됩니다.
+              </p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Privacy;

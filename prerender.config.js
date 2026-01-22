@@ -6,6 +6,8 @@ export default {
     "/about",
     "/quiz",
     "/reactionSpeed",
+    "/privacy",
+    "/terms",
   ],
   outDir: "prerendered",
   serveDir: "dist",
