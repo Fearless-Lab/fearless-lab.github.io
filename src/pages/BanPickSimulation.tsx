@@ -34,6 +34,7 @@ import { getTeamScores } from "@/helper/banPickSimulation/getTeamScores";
 import { getActionText } from "@/helper/banPickSimulation/getActionText";
 import { getBanPickDerivedState } from "@/helper/banPickSimulation/getBanPickDerivedState";
 import { SeriesScore } from "./components/BanPickSimulation/SeriesScore";
+import AdSection from "@/components/AdSection";
 
 const BanPickSimulation = () => {
   const query = getBanPickQueryParams();
@@ -98,7 +99,7 @@ const BanPickSimulation = () => {
   const [isNoteOpen, setIsNoteOpen] = useState(false);
 
   const [selectedPosition, setSelectedPosition] = useState<Position | null>(
-    null
+    null,
   );
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -137,7 +138,7 @@ const BanPickSimulation = () => {
   // 점수 계산
   const { blue: blueScore, red: redScore } = getTeamScores(
     winners,
-    teams ?? undefined
+    teams ?? undefined,
   );
 
   // 챔피언 그리드 props 구성
@@ -387,6 +388,8 @@ const BanPickSimulation = () => {
             </div>
           </div>
         </div>
+
+        <AdSection />
 
         <ReadyCheckModal
           open={!isGuest && isModalOpen}

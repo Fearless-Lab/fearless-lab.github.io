@@ -2,7 +2,6 @@ import { useScrollReveal } from "@/hooks/animation/useScrollReveal";
 import HighlightBadge from "@commonComponents/HighlightBadge";
 import Infopill from "@commonComponents/Infopill";
 import SubInfopill from "@commonComponents/SubInfopill";
-import AdSection from "@commonComponents/AdSection";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 
@@ -74,8 +73,6 @@ const Home = () => {
           시작하기
         </Link>
       </section>
-
-      <AdSection />
     </>
   );
 };

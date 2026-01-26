@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Zap, Hourglass, Target, AlertTriangle, Trophy } from "lucide-react";
 import { saveReactionSpeed } from "@/apis/firebase/reactionSpeed";
+import AdSection from "@/components/AdSection";
 
 type GameState =
   | "ready"
@@ -14,7 +15,7 @@ const ReactionSpeed = () => {
   const [gameState, setGameState] = useState<GameState>("ready");
   const [attempts, setAttempts] = useState<number[]>([]);
   const [currentReactionTime, setCurrentReactionTime] = useState<number | null>(
-    null
+    null,
   );
 
   const startTimeRef = useRef<number>(0);
@@ -70,7 +71,7 @@ const ReactionSpeed = () => {
 
       // mouseDown 시점을 기준으로 측정 (더 정확함)
       const reactionTime = Math.round(
-        mouseDownTimeRef.current - startTimeRef.current
+        mouseDownTimeRef.current - startTimeRef.current,
       );
       setCurrentReactionTime(reactionTime);
 
@@ -82,7 +83,7 @@ const ReactionSpeed = () => {
 
         // Firebase에 평균값 저장 (익명 데이터)
         const avgTime = Math.round(
-          newAttempts.reduce((a, b) => a + b, 0) / newAttempts.length
+          newAttempts.reduce((a, b) => a + b, 0) / newAttempts.length,
         );
         saveReactionSpeed(avgTime).catch((error) => {
           console.error("Failed to save reaction speed:", error);
@@ -262,6 +263,8 @@ const ReactionSpeed = () => {
           </div>
         </div>
       </div>
+
+      <AdSection />
     </>
   );
 };

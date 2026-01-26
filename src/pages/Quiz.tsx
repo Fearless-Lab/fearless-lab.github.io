@@ -113,7 +113,6 @@ const Quiz = () => {
           />
         )}
       </div>
-
       <AdSection />
     </>
   );
