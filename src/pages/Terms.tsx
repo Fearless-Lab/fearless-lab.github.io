@@ -1,3 +1,5 @@
+import AdSection from "@/components/AdSection";
+
 const Terms = () => {
   return (
     <>
@@ -126,6 +128,8 @@ const Terms = () => {
           </div>
         </div>
       </div>
+
+      <AdSection />
     </>
   );
 };

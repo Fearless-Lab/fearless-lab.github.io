@@ -4,6 +4,7 @@ import QuizSetup from "./components/Quiz/QuizSetup";
 import QuizLoading from "./components/Quiz/QuizLoading";
 import QuizQuestion from "./components/Quiz/QuizQuestion";
 import QuizResults from "./components/Quiz/QuizResults";
+import AdSection from "@/components/AdSection";
 
 const Quiz = () => {
   const {
@@ -112,6 +113,8 @@ const Quiz = () => {
           />
         )}
       </div>
+
+      <AdSection />
     </>
   );
 };

@@ -1,3 +1,5 @@
+import AdSection from "@/components/AdSection";
+
 const Privacy = () => {
   return (
     <>
@@ -114,6 +116,8 @@ const Privacy = () => {
           </div>
         </div>
       </div>
+
+      <AdSection />
     </>
   );
 };

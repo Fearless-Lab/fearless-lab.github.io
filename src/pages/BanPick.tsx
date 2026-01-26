@@ -1,6 +1,7 @@
 import HighlightBadge from "@/components/HighlightBadge";
 import Infopill from "@/components/Infopill";
 import SubInfopill from "@/components/SubInfopill";
+import AdSection from "@/components/AdSection";
 import {
   gameMode,
   modeDescription,
@@ -170,6 +171,8 @@ const BanPick = () => {
           <CTAButton onClick={handleStart}>시작하기</CTAButton>
         </div>
       </section>
+
+      <AdSection />
 
       <BanPickNoticeModal
         open={openNotice}
