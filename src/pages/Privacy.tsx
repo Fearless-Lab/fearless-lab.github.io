@@ -6,7 +6,7 @@ const Privacy = () => {
       <title>개인정보처리방침 | Fearless</title>
       <meta
         name="description"
-        content="Fearless 개인정보처리방침. Google Analytics, Google AdSense 사용 및 쿠키 정책에 대해 안내합니다."
+        content="Fearless 개인정보처리방침. Google Analytics, 카카오 애드핏 사용 및 쿠키 정책에 대해 안내합니다."
       />
       <link rel="canonical" href="https://fearless-lab.github.io/privacy" />
 
@@ -55,7 +55,7 @@ const Privacy = () => {
                   서비스 개선
                 </li>
                 <li>
-                  <strong>Google AdSense:</strong> 광고 제공
+                  <strong>카카오 애드핏:</strong> 광고 제공
                 </li>
                 <li>
                   <strong>밴픽 기록:</strong> 사용자의 밴픽 시뮬레이션 기능 제공
@@ -69,8 +69,9 @@ const Privacy = () => {
                 3. 쿠키(Cookie) 사용
               </h2>
               <p>
-                본 웹사이트는 Google Analytics와 Google AdSense에서 쿠키를
-                사용합니다. 브라우저 설정에서 쿠키를 거부할 수 있습니다.
+                본 웹사이트는 Google Analytics와 카카오 애드핏에서 쿠키를
+                사용합니다. 브라우저 설정에서 쿠키를 거부할 수 있으며, 이 경우
+                맞춤형 광고 대신 일반 광고가 표시됩니다.
               </p>
             </section>
 
@@ -84,7 +85,7 @@ const Privacy = () => {
                   <strong>Google Analytics:</strong> 웹사이트 트래픽 분석
                 </li>
                 <li>
-                  <strong>Google AdSense:</strong> 광고 제공
+                  <strong>카카오 애드핏:</strong> 광고 제공
                 </li>
                 <li>
                   <strong>Firebase:</strong> 밴픽 기록 저장
@@ -99,6 +100,15 @@ const Privacy = () => {
                   className="text-cyan-400 hover:underline"
                 >
                   Google 개인정보처리방침
+                </a>
+                을, 카카오의 개인정보 처리에 대한 자세한 내용은{" "}
+                <a
+                  href="https://www.kakao.com/policy/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-400 hover:underline"
+                >
+                  카카오 개인정보처리방침
                 </a>
                 을 참조하세요.
               </p>
