@@ -107,25 +107,27 @@ const Privacy = () => {
                 >
                   Google 개인정보처리방침
                 </a>
-                을, 카카오의 개인정보 처리에 대한 자세한 내용은{" "}
-                <a
-                  href="https://www.kakao.com/policy/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-cyan-400 hover:underline"
-                >
-                  카카오 개인정보처리방침
-                </a>
-                을, 쿠팡의 개인정보 처리에 대한 자세한 내용은{" "}
-                <a
-                  href="https://www.coupang.com/np/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-cyan-400 hover:underline"
-                >
-                  쿠팡 개인정보처리방침
-                </a>
                 을 참조하세요.
+                <br />
+                맞춤형 광고 설정은{" "}
+                <a
+                  href="https://info.ds.kakao.com/optout.do"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-400 hover:underline"
+                >
+                  카카오 광고 설정
+                </a>
+                ,{" "}
+                <a
+                  href="https://ads-partners.coupang.com/web/ads-settings/why-this-ad"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-400 hover:underline"
+                >
+                  쿠팡 광고 설정
+                </a>
+                에서 변경할 수 있습니다.
               </p>
             </section>
 
