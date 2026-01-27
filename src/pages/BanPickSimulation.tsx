@@ -389,7 +389,7 @@ const BanPickSimulation = () => {
           </div>
         </div>
 
-        <AdSection />
+        <AdSection showSearchBanner={false} />
 
         <ReadyCheckModal
           open={!isGuest && isModalOpen}

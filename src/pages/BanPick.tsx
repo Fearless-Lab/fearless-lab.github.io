@@ -94,7 +94,10 @@ const BanPick = () => {
         property="og:image"
         content="https://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png"
       />
-      <meta property="og:url" content="https://fearless-lab.github.io/banPick" />
+      <meta
+        property="og:url"
+        content="https://fearless-lab.github.io/banPick"
+      />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="모의 밴픽 시작하기 - Fearless" />
@@ -110,7 +113,7 @@ const BanPick = () => {
       <section
         id="banPick"
         ref={sectionRef}
-        className="flex flex-col items-center justify-center my-28 text-center scroll-mt-20"
+        className="flex flex-col items-center justify-center mt-28 text-center scroll-mt-20"
       >
         <HighlightBadge>롤 모의 밴픽 시뮬레이터</HighlightBadge>
 

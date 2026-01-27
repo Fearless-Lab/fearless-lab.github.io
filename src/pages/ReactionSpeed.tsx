@@ -221,7 +221,7 @@ const ReactionSpeed = () => {
         content="https://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png"
       />
 
-      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-6">
+      <div className="flex flex-col items-center justify-center p-6 mt-18">
         <div
           className={`max-w-lg w-full h-[400px] backdrop-blur-md rounded-xl p-8 shadow-2xl border-2 select-none flex flex-col justify-center ${getBackgroundColor()} ${getCursorStyle()}`}
           onClick={handleClick}

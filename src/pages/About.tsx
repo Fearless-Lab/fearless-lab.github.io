@@ -52,7 +52,7 @@ const About = () => {
       />
 
       <div
-        className="flex flex-col items-center justify-center px-6 py-32 text-white"
+        className="flex flex-col items-center justify-center px-6 pt-32 text-white"
         ref={divRef}
       >
         <section className="max-w-4xl w-full mb-16">
