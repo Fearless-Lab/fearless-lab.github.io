@@ -1,6 +1,5 @@
 interface QuizQuestionProps {
-  currentQuestionIndex: number;
-  totalQuestions: number;
+  timeLeft: number;
   score: number;
   itemImageUrl: string;
   imageLoading: boolean;
@@ -16,8 +15,7 @@ interface QuizQuestionProps {
 }
 
 const QuizQuestion = ({
-  currentQuestionIndex,
-  totalQuestions,
+  timeLeft,
   score,
   itemImageUrl,
   imageLoading,
@@ -28,6 +26,12 @@ const QuizQuestion = ({
   onSubmit,
   answerInputRef,
 }: QuizQuestionProps) => {
+  const formatTime = (seconds: number): string => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
   return (
     <div
       className={`max-w-sm w-full bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-2xl border-2 transition-colors duration-300 ${
@@ -38,11 +42,15 @@ const QuizQuestion = ({
           : "border-white/20"
       }`}
     >
-      <div className="mb-4 flex justify-between">
-        <span>
-          {currentQuestionIndex + 1} / {totalQuestions}
+      <div className="mb-4 flex justify-between items-center">
+        <span
+          className={`text-2xl font-bold ${
+            timeLeft <= 10 ? "text-red-400 animate-pulse" : ""
+          }`}
+        >
+          {formatTime(timeLeft)}
         </span>
-        <span className="font-bold">맞은 개수: {score}</span>
+        <span className="font-bold text-lg">🎯 {score}</span>
       </div>
 
       <div className="mb-4 flex justify-center relative">

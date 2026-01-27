@@ -11,12 +11,10 @@ const Quiz = () => {
     gameState,
     currentQuestionIndex,
     score,
-    selectedItems,
+    currentItem,
     version,
+    timeLeft,
     feedback,
-    questionCountInput,
-    setQuestionCountInput,
-    setupError,
     userInput,
     setUserInput,
     isLoading,
@@ -36,18 +34,18 @@ const Quiz = () => {
 
   useEffect(() => {
     setImageLoading(true);
-  }, [currentQuestionIndex]);
+  }, [currentItem]);
 
   return (
     <>
       <title>LoL 아이템 퀴즈 | Fearless</title>
       <meta
         name="description"
-        content="리그 오브 레전드 아이템 이미지를 보고 이름을 맞히는 퀴즈 게임입니다. 롤 아이템을 얼마나 알고 있는지 테스트해보세요!"
+        content="리그 오브 레전드 아이템 이미지를 보고 이름을 맞히는 퀴즈 게임입니다. 60초 안에 최대한 많은 아이템을 맞춰보세요!"
       />
       <meta
         name="keywords"
-        content="리그오브레전드, 롤 아이템, LoL 아이템 퀴즈, 롤 아이템 맞추기, 롤 아이템 퀴즈, 롤 퀴즈"
+        content="리그오브레전드, 롤 아이템, LoL 아이템 퀴즈, 롤 아이템 맞추기, 롤 아이템 퀴즈, 롤 퀴즈, 타임어택"
       />
       <link rel="canonical" href="https://fearless-lab.github.io/quiz" />
 
@@ -55,7 +53,7 @@ const Quiz = () => {
       <meta property="og:title" content="LoL 아이템 퀴즈 - Fearless" />
       <meta
         property="og:description"
-        content="롤 아이템 이미지를 보고 이름을 맞히는 퀴즈 게임. 아이템을 얼마나 알고 있나요?"
+        content="롤 아이템 이미지를 보고 이름을 맞히는 퀴즈 게임. 60초 타임어택!"
       />
       <meta
         property="og:image"
@@ -67,7 +65,7 @@ const Quiz = () => {
       <meta name="twitter:title" content="LoL 아이템 퀴즈 - Fearless" />
       <meta
         name="twitter:description"
-        content="롤 아이템 이미지를 보고 이름을 맞히는 퀴즈 게임. 아이템을 얼마나 알고 있나요?"
+        content="롤 아이템 이미지를 보고 이름을 맞히는 퀴즈 게임. 60초 타임어택!"
       />
       <meta
         name="twitter:image"
@@ -76,25 +74,16 @@ const Quiz = () => {
 
       <div className="flex flex-col items-center justify-center p-6 mt-18">
         {gameState === "setup" && (
-          <QuizSetup
-            questionCountInput={questionCountInput}
-            setQuestionCountInput={setQuestionCountInput}
-            setupError={setupError}
-            onStartGame={(e: React.FormEvent) => {
-              e.preventDefault();
-              startGame();
-            }}
-          />
+          <QuizSetup onStartGame={startGame} />
         )}
 
         {gameState === "playing" && isLoading && <QuizLoading />}
 
-        {gameState === "playing" && !isLoading && selectedItems.length > 0 && (
+        {gameState === "playing" && !isLoading && currentItem && (
           <QuizQuestion
-            currentQuestionIndex={currentQuestionIndex}
-            totalQuestions={selectedItems.length}
+            timeLeft={timeLeft}
             score={score}
-            itemImageUrl={`https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${selectedItems[currentQuestionIndex].image}`}
+            itemImageUrl={`https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${currentItem.image}`}
             imageLoading={imageLoading}
             onImageLoad={() => setImageLoading(false)}
             feedback={feedback}
@@ -108,7 +97,7 @@ const Quiz = () => {
         {gameState === "finished" && (
           <QuizResults
             score={score}
-            totalQuestions={selectedItems.length}
+            totalAttempts={currentQuestionIndex}
             onRestart={resetGame}
           />
         )}
