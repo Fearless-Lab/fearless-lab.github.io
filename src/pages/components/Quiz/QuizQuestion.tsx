@@ -34,12 +34,12 @@ const QuizQuestion = ({
 
   return (
     <div
-      className={`max-w-sm w-full bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-2xl border-2 transition-colors duration-300 ${
+      className={`max-w-sm w-full min-h-[380px] bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-2xl border-2 transition-colors duration-300 ${
         feedback.type === "correct"
           ? "border-green-500"
           : feedback.type === "incorrect"
-          ? "border-red-500"
-          : "border-white/20"
+            ? "border-red-500"
+            : "border-white/20"
       }`}
     >
       <div className="mb-4 flex justify-between items-center">
