@@ -29,6 +29,7 @@ import ChampNoteModal from "./components/BanPickSimulation/ChampNoteModal";
 import { useVerifyBanPickRoom } from "@/hooks/banPick/useVerifyBanPickRoom";
 import Loading from "./components/BanPickSimulation/Loading";
 import ErrorPage from "./components/BanPickSimulation/ErrorPage";
+import About from "./About";
 import { checkTeam } from "@/helper/banPickSimulation/checkTeam";
 import { getTeamScores } from "@/helper/banPickSimulation/getTeamScores";
 import { getActionText } from "@/helper/banPickSimulation/getActionText";
@@ -38,7 +39,12 @@ import AdSection from "@/components/AdSection";
 
 const BanPickSimulation = () => {
   const query = getBanPickQueryParams();
-  if (query.isEmpty) return <Loading />; // 로딩으로 뺌. 크롤러는 /banPickSimulation 으로 들어오면 로딩 화면을 크롤링함
+
+  if (query.isEmpty) {
+    const isPrerender = /HeadlessChrome/.test(navigator.userAgent);
+    if (isPrerender) return <Loading />; // 프리렌더: Loading 저장
+    return <About />; // 일반 브라우저: About 표시
+  }
   if (query.isError) return <ErrorPage />;
 
   const {
