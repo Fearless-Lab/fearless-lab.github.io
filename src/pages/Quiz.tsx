@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useQuizGame } from "@/hooks/quiz/useQuizGame";
 import QuizSetup from "./components/Quiz/QuizSetup";
 import QuizLoading from "./components/Quiz/QuizLoading";
@@ -17,13 +17,13 @@ const Quiz = () => {
     feedback,
     userInput,
     setUserInput,
-    isLoading,
     startGame,
     handleSubmit,
     resetGame,
+    imageLoading,
+    onImageLoad,
   } = useQuizGame();
 
-  const [imageLoading, setImageLoading] = useState<boolean>(true);
   const answerInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -31,10 +31,6 @@ const Quiz = () => {
       answerInputRef.current?.focus();
     }
   }, [gameState, currentQuestionIndex]);
-
-  useEffect(() => {
-    setImageLoading(true);
-  }, [currentItem]);
 
   return (
     <>
@@ -77,15 +73,15 @@ const Quiz = () => {
           <QuizSetup onStartGame={startGame} />
         )}
 
-        {gameState === "playing" && isLoading && <QuizLoading />}
+        {gameState === "playing" && !currentItem && <QuizLoading />}
 
-        {gameState === "playing" && !isLoading && currentItem && (
+        {gameState === "playing" && currentItem && (
           <QuizQuestion
             timeLeft={timeLeft}
             score={score}
             itemImageUrl={`https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${currentItem.image}`}
             imageLoading={imageLoading}
-            onImageLoad={() => setImageLoading(false)}
+            onImageLoad={onImageLoad}
             feedback={feedback}
             userInput={userInput}
             setUserInput={setUserInput}

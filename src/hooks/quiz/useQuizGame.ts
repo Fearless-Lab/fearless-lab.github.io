@@ -13,6 +13,7 @@ interface UseQuizGameReturn {
   currentItem: Item | null;
   version: string;
   timeLeft: number;
+  imageLoading: boolean;
 
   feedback: {
     type: "correct" | "incorrect" | null;
@@ -26,6 +27,7 @@ interface UseQuizGameReturn {
   handleSubmit: (e: React.FormEvent) => void;
   resetGame: () => void;
   setUserInput: (value: string) => void;
+  onImageLoad: () => void;
 }
 
 export const useQuizGame = (): UseQuizGameReturn => {
@@ -34,6 +36,7 @@ export const useQuizGame = (): UseQuizGameReturn => {
   const [score, setScore] = useState<number>(0);
   const [userInput, setUserInput] = useState<string>("");
   const [currentItem, setCurrentItem] = useState<Item | null>(null);
+  const [nextItem, setNextItem] = useState<Item | null>(null);
   const [version, setVersion] = useState<string>("");
   const [timeLeft, setTimeLeft] = useState<number>(GAME_DURATION);
   const [allItems, setAllItems] = useState<Item[]>([]);
@@ -45,6 +48,8 @@ export const useQuizGame = (): UseQuizGameReturn => {
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const usedItemsRef = useRef<Set<string>>(new Set());
+  const isNextImageReadyRef = useRef<boolean>(false);
+  const [imageLoading, setImageLoading] = useState<boolean>(true);
 
   const { data, isLoading } = useQuery({
     queryKey: ["items"],
@@ -84,7 +89,11 @@ export const useQuizGame = (): UseQuizGameReturn => {
     usedItemsRef.current.clear();
     setAllItems(uniqueItems);
     setVersion(data.version);
-    setCurrentItem(getNextItem(uniqueItems));
+    const firstItem = getNextItem(uniqueItems);
+    const secondItem = getNextItem(uniqueItems);
+    setCurrentItem(firstItem);
+    setNextItem(secondItem);
+    setImageLoading(true);
     setCurrentQuestionIndex(0);
     setScore(0);
     setUserInput("");
@@ -150,6 +159,18 @@ export const useQuizGame = (): UseQuizGameReturn => {
     }
   }, [timeLeft, gameState, endGame]);
 
+  // 다음 이미지 prefetch
+  useEffect(() => {
+    if (nextItem && version) {
+      isNextImageReadyRef.current = false;
+      const img = new Image();
+      img.onload = () => {
+        isNextImageReadyRef.current = true;
+      };
+      img.src = `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${nextItem.image}`;
+    }
+  }, [nextItem, version]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (feedback.type !== null || !currentItem) return;
@@ -173,7 +194,9 @@ export const useQuizGame = (): UseQuizGameReturn => {
 
     setTimeout(() => {
       setCurrentQuestionIndex((prev) => prev + 1);
-      setCurrentItem(getNextItem(allItems));
+      setCurrentItem(nextItem);
+      setImageLoading(!isNextImageReadyRef.current);
+      setNextItem(getNextItem(allItems));
       setUserInput("");
       setFeedback({ type: null, message: "" });
     }, 1000);
@@ -190,6 +213,7 @@ export const useQuizGame = (): UseQuizGameReturn => {
     setScore(0);
     setUserInput("");
     setCurrentItem(null);
+    setNextItem(null);
     setTimeLeft(GAME_DURATION);
     setAllItems([]);
   };
@@ -206,7 +230,11 @@ export const useQuizGame = (): UseQuizGameReturn => {
       usedItemsRef.current.clear();
       setAllItems(uniqueItems);
       setVersion(data.version);
-      setCurrentItem(getNextItem(uniqueItems));
+      const firstItem = getNextItem(uniqueItems);
+      const secondItem = getNextItem(uniqueItems);
+      setCurrentItem(firstItem);
+      setNextItem(secondItem);
+      setImageLoading(true);
 
       if (typeof window.gtag !== "undefined") {
         window.gtag("event", "quiz_start", {
@@ -218,6 +246,8 @@ export const useQuizGame = (): UseQuizGameReturn => {
     }
   }, [gameState, data, currentItem, getNextItem]);
 
+  const onImageLoad = () => setImageLoading(false);
+
   return {
     gameState,
     currentQuestionIndex,
@@ -225,6 +255,7 @@ export const useQuizGame = (): UseQuizGameReturn => {
     currentItem,
     version,
     timeLeft,
+    imageLoading,
 
     feedback,
 
@@ -235,5 +266,6 @@ export const useQuizGame = (): UseQuizGameReturn => {
     handleSubmit,
     resetGame,
     setUserInput,
+    onImageLoad,
   };
 };
