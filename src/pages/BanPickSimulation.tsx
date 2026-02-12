@@ -175,6 +175,7 @@ const BanPickSimulation = () => {
 
   return (
     <>
+      <title>모의 밴픽</title>
       <div className="flex flex-col mt-22">
         <div className="flex flex-col w-full max-w-6xl mx-auto px-4 text-xs md:text-base">
           <div className="flex w-full h-[10vh] max-h-[90px] rounded-tl-md rounded-tr-md overflow-hidden">

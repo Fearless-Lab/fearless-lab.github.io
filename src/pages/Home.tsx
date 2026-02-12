@@ -15,7 +15,7 @@ const Home = () => {
       <title>롤 모의 밴픽 | Fearless</title>
       <meta
         name="description"
-        content="Fearless는 리그오브레전드(LoL) 모의 밴픽 시뮬레이터입니다. 실전 같은 환경에서 팀 전략을 연습하고, 챔피언 밴픽 타이머, 세트 기록, 스왑 기능을 통해 대회 준비와 스크림 훈련을 효율적으로 진행하세요."
+        content="Fearless는 리그오브레전드(LoL) 모의 밴픽 시뮬레이터입니다. 실전 같은 환경에서 팀 전략을 연습하고, 세트 기록, 스왑 기능을 통해 대회 준비와 스크림 훈련을 효율적으로 진행하세요."
       />
       <meta
         name="keywords"
