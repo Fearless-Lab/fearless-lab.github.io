@@ -84,7 +84,7 @@ const HistoryModal = ({
             fetchBanPickBySet(matchId, setNum, teamName, oppositeTeam),
           staleTime: Infinity,
         };
-      }
+      },
     ),
   });
 
@@ -164,7 +164,6 @@ const HistoryModal = ({
             queries.map((q, idx) => {
               const data = q.data;
               if (!data) return null;
-
               const { teams, banPickByTeam } = data;
               const orderedTeams = [teamName, oppositeTeam];
               const winner = winners?.[idx];
@@ -178,7 +177,7 @@ const HistoryModal = ({
                   <div
                     className={cn(
                       "flex flex-col gap-4",
-                      isFullscreen && "sm:flex-row sm:items-start"
+                      isFullscreen && "sm:flex-row sm:items-start",
                     )}
                   >
                     {orderedTeams.map((team) => {
@@ -191,7 +190,7 @@ const HistoryModal = ({
                             isFullscreen && "sm:w-1/2",
                             isWinner
                               ? "border-yellow-400 shadow-md shadow-yellow-400/30"
-                              : "border-neutral-700"
+                              : "border-neutral-700",
                           )}
                         >
                           <h3 className="text-sm font-semibold mb-3 text-white flex items-center gap-2">
@@ -200,7 +199,7 @@ const HistoryModal = ({
                                 "text-xs px-2 py-1 rounded",
                                 team === teams.blue
                                   ? "bg-blue-600/40 text-blue-300"
-                                  : "bg-red-600/40 text-red-300"
+                                  : "bg-red-600/40 text-red-300",
                               )}
                             >
                               {team}
@@ -239,7 +238,7 @@ const HistoryModal = ({
                                     />
                                   </div>
                                 );
-                              }
+                              },
                             )}
                           </div>
                         </div>

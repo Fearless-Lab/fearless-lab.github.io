@@ -35,7 +35,7 @@ import { getTeamScores } from "@/helper/banPickSimulation/getTeamScores";
 import { getActionText } from "@/helper/banPickSimulation/getActionText";
 import { getBanPickDerivedState } from "@/helper/banPickSimulation/getBanPickDerivedState";
 import { SeriesScore } from "./components/BanPickSimulation/SeriesScore";
-import AdSection from "@/components/AdSection";
+import ChampionsByLane from "@/pages/components/BanPickSimulation/ChampionsByLane";
 
 const BanPickSimulation = () => {
   const query = getBanPickQueryParams();
@@ -315,6 +315,17 @@ const BanPickSimulation = () => {
               </div>
             </div>
 
+            <Activity mode={mode === "hardFearless" ? "visible" : "hidden"}>
+              <ChampionsByLane
+                matchId={matchId}
+                currentSet={currentSet}
+                currentStep={currentStep}
+                teamName={teamName}
+                oppositeTeam={oppositeTeam}
+                version={version}
+              />
+            </Activity>
+
             {/* mobile */}
             <div className="flex flex-col md:hidden gap-4 w-[90%] mx-auto">
               <div className="px-4 flex flex-col items-center">
@@ -395,8 +406,6 @@ const BanPickSimulation = () => {
             </div>
           </div>
         </div>
-
-        <AdSection showSearchBanner={false} />
 
         <ReadyCheckModal
           open={!isGuest && isModalOpen}
