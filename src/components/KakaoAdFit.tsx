@@ -21,7 +21,7 @@ const KakaoAdFit: React.FC<KakaoAdFitProps> = ({
     initialized.current = true;
 
     const script = document.createElement("script");
-    script.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
+    script.src = "https://t1.kakaocdn.net/kas/static/ba.min.js";
     script.async = true;
     containerRef.current?.appendChild(script);
 
