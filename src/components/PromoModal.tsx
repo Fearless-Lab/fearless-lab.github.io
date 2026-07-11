@@ -65,7 +65,9 @@ function PromoModal({ open, onOpenChange }: PromoModalProps) {
           <img
             src="/diract.svg"
             alt="홍보 이미지"
-            className="block w-full h-auto max-h-[70vh] object-contain cursor-pointer transition-[filter] duration-200 group-hover:blur-sm group-hover:brightness-75 group-active:blur-sm group-active:brightness-75"
+            width={1024}
+            height={500}
+            className="block w-full h-auto max-h-[70vh] aspect-[1024/500] object-contain cursor-pointer transition-[filter] duration-200 group-hover:blur-sm group-hover:brightness-75 group-active:blur-sm group-active:brightness-75"
           />
           <span className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-active:opacity-100">
             <span className="text-base font-medium text-white">
