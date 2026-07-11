@@ -4,7 +4,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 
 import gsap from "gsap";
@@ -33,9 +33,12 @@ function shouldShowPromoModal(pathname: string) {
 
 function AppContent() {
   const location = useLocation();
-  const [isPromoOpen, setIsPromoOpen] = useState(() =>
-    shouldShowPromoModal(location.pathname)
-  );
+  const [isPromoOpen, setIsPromoOpen] = useState(false);
+
+  useEffect(() => {
+    setIsPromoOpen(shouldShowPromoModal(location.pathname));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
