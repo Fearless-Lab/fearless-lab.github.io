@@ -27,6 +27,9 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 function shouldShowPromoModal(pathname: string) {
   if (pathname === "/banPickSimulation") return false;
 
+  const isPrerender = /HeadlessChrome/.test(navigator.userAgent);
+  if (isPrerender) return false;
+
   const hideUntil = Number(localStorage.getItem(HIDE_UNTIL_KEY));
   return !hideUntil || Date.now() > hideUntil;
 }
