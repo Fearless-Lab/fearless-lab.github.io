@@ -24,8 +24,19 @@ import PromoModal, { HIDE_UNTIL_KEY } from "./components/PromoModal";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
+const PROMO_HIDDEN_PATHS = ["/banpicksimulation"];
+
+// 프리렌더 결과가 디렉터리로 배포되어 pathname 끝에 "/"가 붙는 경우가 있어 정규화한다.
+function normalizePath(pathname: string) {
+  return pathname.replace(/\/+$/, "").toLowerCase() || "/";
+}
+
+function isPromoHiddenPath(pathname: string) {
+  return PROMO_HIDDEN_PATHS.includes(normalizePath(pathname));
+}
+
 function shouldShowPromoModal(pathname: string) {
-  if (pathname === "/banPickSimulation") return false;
+  if (isPromoHiddenPath(pathname)) return false;
 
   const isPrerender = /HeadlessChrome/.test(navigator.userAgent);
   if (isPrerender) return false;
@@ -64,7 +75,7 @@ function AppContent() {
 
       <Footer />
 
-      {location.pathname !== "/banPickSimulation" && (
+      {!isPromoHiddenPath(location.pathname) && (
         <PromoModal open={isPromoOpen} onOpenChange={setIsPromoOpen} />
       )}
     </>
