@@ -3,25 +3,10 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
-const HIDE_UNTIL_KEY = "promoModalHideUntil";
-const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
-
-const APP_STORE_URL =
-  "https://apps.apple.com/kr/app/%EB%94%94%EB%9E%99%ED%8A%B8-diract-%EC%95%88%EB%AC%B4-%EC%97%B0%EC%8A%B5-%EA%B3%B5%EA%B0%84/id6754757174";
-const PLAY_STORE_URL =
-  "https://play.google.com/store/apps/details?id=com.baek.diract&hl=ko";
-
-function getStoreUrl() {
-  const ua = navigator.userAgent;
-
-  if (/iPhone|iPad|iPod|Macintosh/.test(ua)) return APP_STORE_URL;
-  return PLAY_STORE_URL;
-}
+import { getStoreUrl } from "@utils/getStoreUrl";
 
 interface PromoModalProps {
   open: boolean;
@@ -29,11 +14,6 @@ interface PromoModalProps {
 }
 
 function PromoModal({ open, onOpenChange }: PromoModalProps) {
-  const handleHideForAWeek = () => {
-    localStorage.setItem(HIDE_UNTIL_KEY, String(Date.now() + WEEK_MS));
-    onOpenChange(false);
-  };
-
   const handleImageClick = () => {
     if (typeof window.gtag !== "undefined") {
       window.gtag("event", "promo_modal_click", {
@@ -48,12 +28,21 @@ function PromoModal({ open, onOpenChange }: PromoModalProps) {
       <DialogContent
         showCloseButton={false}
         onOpenAutoFocus={(e) => e.preventDefault()}
-        className="z-[110] w-[90vw] sm:w-fit max-w-[90vw] sm:max-w-xl max-h-[90vh] overflow-hidden rounded-none rounded-b-2xl bg-[#19191c] p-0 gap-0 border-0 shadow-2xl"
+        className="z-[110] w-[90vw] max-w-[min(90vw,36rem,calc(90vh*1.3333))] max-h-[90vh] overflow-hidden rounded-lg bg-[#19191c] p-0 gap-0 border-0 shadow-2xl"
       >
         <DialogHeader className="sr-only">
           <DialogTitle>홍보용 모달 제목</DialogTitle>
           <DialogDescription>여기에 홍보 문구가 들어갑니다.</DialogDescription>
         </DialogHeader>
+
+        <button
+          type="button"
+          onClick={() => onOpenChange(false)}
+          aria-label="닫기"
+          className="absolute right-3 top-3 z-10 inline-flex items-center justify-center rounded-full bg-black/50 p-1.5 text-white backdrop-blur-sm transition-colors hover:bg-black/70 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+        >
+          <XIcon className="size-5" />
+        </button>
 
         <a
           href={getStoreUrl()}
@@ -63,40 +52,21 @@ function PromoModal({ open, onOpenChange }: PromoModalProps) {
           className="group relative block"
         >
           <img
-            src="/diract.svg"
+            src="/sora_modal.webp"
             alt="홍보 이미지"
-            width={1024}
-            height={500}
-            className="block w-full h-auto max-h-[70vh] aspect-[1024/500] object-contain cursor-pointer transition-[filter] duration-200 group-hover:blur-sm group-hover:brightness-75 group-active:blur-sm group-active:brightness-75"
+            width={1600}
+            height={1200}
+            className="block w-full h-auto aspect-[3548/2661] object-cover cursor-pointer transition-[filter] duration-200 group-hover:blur-[2px] group-hover:brightness-75 group-active:blur-[2px] group-active:brightness-75"
           />
           <span className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-active:opacity-100">
-            <span className="text-base font-medium text-white">
+            <span className="text-base font-semibold text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
               클릭하여 자세히 보기
             </span>
           </span>
         </a>
-
-        <DialogFooter className="flex-row items-center justify-between bg-neutral-100 px-6 py-4 sm:justify-between">
-          <button
-            type="button"
-            onClick={handleHideForAWeek}
-            className="text-sm text-neutral-700 hover:text-neutral-900 underline-offset-4 hover:underline cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 rounded"
-          >
-            일주일간 보지 않기
-          </button>
-          <button
-            type="button"
-            onClick={() => onOpenChange(false)}
-            className="inline-flex items-center gap-1 text-sm text-neutral-700 hover:text-neutral-900 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 rounded"
-          >
-            닫기
-            <XIcon className="size-4" />
-          </button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
 
-export { HIDE_UNTIL_KEY };
 export default PromoModal;

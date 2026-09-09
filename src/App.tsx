@@ -20,7 +20,7 @@ import Quiz from "@/pages/Quiz";
 import ReactionSpeed from "@/pages/ReactionSpeed";
 import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
-import PromoModal, { HIDE_UNTIL_KEY } from "./components/PromoModal";
+import PromoModal from "./components/PromoModal";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -41,8 +41,7 @@ function shouldShowPromoModal(pathname: string) {
   const isPrerender = /HeadlessChrome/.test(navigator.userAgent);
   if (isPrerender) return false;
 
-  const hideUntil = Number(localStorage.getItem(HIDE_UNTIL_KEY));
-  return !hideUntil || Date.now() > hideUntil;
+  return true;
 }
 
 function AppContent() {
