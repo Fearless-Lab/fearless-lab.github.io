@@ -1,4 +1,3 @@
-import AdSection from "@/components/AdSection";
 
 const Privacy = () => {
   return (
@@ -6,7 +5,7 @@ const Privacy = () => {
       <title>개인정보처리방침 | Fearless</title>
       <meta
         name="description"
-        content="Fearless 개인정보처리방침. Google Analytics, 카카오 애드핏, 쿠팡파트너스 사용 및 쿠키 정책에 대해 안내합니다."
+        content="Fearless 개인정보처리방침. Google Analytics 사용 및 쿠키 정책에 대해 안내합니다."
       />
       <link rel="canonical" href="https://fearless-lab.github.io/privacy" />
 
@@ -54,12 +53,14 @@ const Privacy = () => {
                   <strong>Google Analytics:</strong> 서비스 이용 통계 분석 및
                   서비스 개선
                 </li>
+                {/* 광고 중단으로 주석 처리
                 <li>
                   <strong>카카오 애드핏:</strong> 광고 제공
                 </li>
                 <li>
                   <strong>쿠팡파트너스:</strong> 제휴 광고 제공
                 </li>
+                */}
                 <li>
                   <strong>밴픽 기록:</strong> 사용자의 밴픽 시뮬레이션 기능 제공
                   (다른 목적으로 활용되지 않음)
@@ -71,10 +72,16 @@ const Privacy = () => {
               <h2 className="text-base font-semibold text-white mb-2">
                 3. 쿠키(Cookie) 사용
               </h2>
+              {/* 광고 중단으로 주석 처리
               <p>
                 본 웹사이트는 Google Analytics, 카카오 애드핏, 쿠팡파트너스에서
                 쿠키를 사용합니다. 브라우저 설정에서 쿠키를 거부할 수 있으며, 이
                 경우 맞춤형 광고 대신 일반 광고가 표시됩니다.
+              </p>
+              */}
+              <p>
+                본 웹사이트는 Google Analytics에서 쿠키를 사용합니다. 브라우저
+                설정에서 쿠키를 거부할 수 있습니다.
               </p>
             </section>
 
@@ -87,12 +94,14 @@ const Privacy = () => {
                 <li>
                   <strong>Google Analytics:</strong> 웹사이트 트래픽 분석
                 </li>
+                {/* 광고 중단으로 주석 처리
                 <li>
                   <strong>카카오 애드핏:</strong> 광고 제공
                 </li>
                 <li>
                   <strong>쿠팡파트너스:</strong> 제휴 광고 제공
                 </li>
+                */}
                 <li>
                   <strong>Firebase:</strong> 밴픽 기록 저장
                 </li>
@@ -108,6 +117,7 @@ const Privacy = () => {
                   Google 개인정보처리방침
                 </a>
                 을 참조하세요.
+                {/* 광고 중단으로 주석 처리
                 <br />
                 맞춤형 광고 설정은{" "}
                 <a
@@ -128,6 +138,7 @@ const Privacy = () => {
                   쿠팡 광고 설정
                 </a>
                 에서 변경할 수 있습니다.
+                */}
               </p>
             </section>
 
@@ -143,8 +154,6 @@ const Privacy = () => {
           </div>
         </div>
       </div>
-
-      <AdSection />
     </>
   );
 };

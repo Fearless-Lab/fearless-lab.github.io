@@ -8,7 +8,6 @@ import {
 } from "@heroicons/react/24/outline";
 import { useRef } from "react";
 import ScreenshotCarousel from "./components/BanPickSimulation/ScreenshotCarousel";
-import AdSection from "@/components/AdSection";
 
 const About = () => {
   const divRef = useRef<HTMLDivElement | null>(null);
@@ -151,8 +150,6 @@ const About = () => {
           </div>
         </section>
       </div>
-
-      <AdSection />
     </>
   );
 };

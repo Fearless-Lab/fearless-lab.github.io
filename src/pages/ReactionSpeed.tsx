@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Zap, Hourglass, Target, AlertTriangle, Trophy } from "lucide-react";
 import { saveReactionSpeed } from "@/apis/firebase/reactionSpeed";
-import AdSection from "@/components/AdSection";
 
 type GameState =
   | "ready"
@@ -263,8 +262,6 @@ const ReactionSpeed = () => {
           </div>
         </div>
       </div>
-
-      <AdSection />
     </>
   );
 };

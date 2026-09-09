@@ -28,7 +28,7 @@ function PromoModal({ open, onOpenChange }: PromoModalProps) {
       <DialogContent
         showCloseButton={false}
         onOpenAutoFocus={(e) => e.preventDefault()}
-        className="z-[110] w-[90vw] max-w-[min(90vw,36rem,calc(90vh*1.3333))] max-h-[90vh] overflow-hidden rounded-lg bg-[#19191c] p-0 gap-0 border-0 shadow-2xl"
+        className="z-[110] w-[94vw] max-w-[min(94vw,44rem,calc(62vh*1.3333))] sm:max-w-[min(94vw,44rem,calc(62vh*1.3333))] max-h-[66vh] overflow-hidden rounded-lg bg-[#19191c] p-0 gap-0 border-0 shadow-2xl"
       >
         <DialogHeader className="sr-only">
           <DialogTitle>홍보용 모달 제목</DialogTitle>
@@ -54,9 +54,9 @@ function PromoModal({ open, onOpenChange }: PromoModalProps) {
           <img
             src="/sora_modal.webp"
             alt="홍보 이미지"
-            width={1600}
-            height={1200}
-            className="block w-full h-auto aspect-[3548/2661] object-cover cursor-pointer transition-[filter] duration-200 group-hover:blur-[2px] group-hover:brightness-75 group-active:blur-[2px] group-active:brightness-75"
+            width={1448}
+            height={1086}
+            className="block w-full h-auto aspect-[4/3] object-cover cursor-pointer transition-[filter] duration-200 group-hover:blur-[2px] group-hover:brightness-75 group-active:blur-[2px] group-active:brightness-75"
           />
           <span className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-active:opacity-100">
             <span className="text-base font-semibold text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">

@@ -3,7 +3,6 @@ import Infopill from "@commonComponents/Infopill";
 import CommunityDetail from "./components/Community/CommunityDetail";
 import { useParams } from "react-router-dom";
 import SubInfopill from "@/components/SubInfopill";
-import AdSection from "@/components/AdSection";
 import { categoryGuideText } from "@constants/category";
 import { useRef } from "react";
 import { useScrollReveal } from "@/hooks/animation/useScrollReveal";
@@ -33,8 +32,6 @@ const Community = () => {
 
         <CommunityDetail />
       </section>
-
-      <AdSection />
     </>
   );
 };

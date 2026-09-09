@@ -1,4 +1,3 @@
-import AdSection from "@/components/AdSection";
 
 const Terms = () => {
   return (
@@ -106,6 +105,7 @@ const Terms = () => {
               </p>
             </section>
 
+            {/* 카카오 애드핏 / 쿠팡파트너스 광고 중단으로 주석 처리
             <section>
               <h2 className="text-base font-semibold text-white mb-2">
                 제7조 (광고)
@@ -120,6 +120,7 @@ const Terms = () => {
                 수수료를 제공받습니다.
               </p>
             </section>
+            */}
 
             <section>
               <h2 className="text-base font-semibold text-white mb-2">
@@ -133,8 +134,6 @@ const Terms = () => {
           </div>
         </div>
       </div>
-
-      <AdSection />
     </>
   );
 };
