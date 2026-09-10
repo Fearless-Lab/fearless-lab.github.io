@@ -24,7 +24,7 @@ import { useBanPickController } from "@/hooks/banPick/useBanPickController";
 import { BookOpenIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import MuteToggleButton from "./components/BanPickSimulation/MuteToggleButton";
 import VideoGallery from "./components/BanPickSimulation/VideoGallery";
-import SoraBanner from "@commonComponents/SoraBanner";
+// import SoraBanner from "@commonComponents/SoraBanner";
 import BanPickFlowModal from "./components/BanPickSimulation/BanPickFlowModal";
 import ChampNoteModal from "./components/BanPickSimulation/ChampNoteModal";
 import { useVerifyBanPickRoom } from "@/hooks/banPick/useVerifyBanPickRoom";
@@ -459,7 +459,9 @@ const BanPickSimulation = () => {
         </Activity>
       </div>
 
+      {/* 광고 배너 일시 중단으로 주석 처리
       <SoraBanner />
+      */}
 
       <VideoGallery
         videos={[
