@@ -24,6 +24,7 @@ import PromoModal from "./components/PromoModal";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
+const PROMO_ENABLED = false;
 const PROMO_HIDDEN_PATHS = ["/banpicksimulation"];
 
 // 프리렌더 결과가 디렉터리로 배포되어 pathname 끝에 "/"가 붙는 경우가 있어 정규화한다.
@@ -36,6 +37,7 @@ function isPromoHiddenPath(pathname: string) {
 }
 
 function shouldShowPromoModal(pathname: string) {
+  if (!PROMO_ENABLED) return false;
   if (isPromoHiddenPath(pathname)) return false;
 
   const isPrerender = /HeadlessChrome/.test(navigator.userAgent);
