@@ -16,9 +16,11 @@ interface BanPickTimerProps {
   isMyTurn: Boolean;
   isSwapPhase: Boolean;
   isGuest: Boolean;
+  isUnlimited: boolean;
 }
 
 const EXTRA_DELAY = 2; // 0초 이후 추가 대기 시간
+const UNLIMITED_DURATION = 999999999; // 단판(시간 제한 없음) 모드의 단계별 제한 시간
 
 const BanPickTimer = ({
   matchId,
@@ -31,6 +33,7 @@ const BanPickTimer = ({
   isMyTurn,
   isSwapPhase,
   isGuest,
+  isUnlimited,
 }: BanPickTimerProps) => {
   const { remainingTime, setRemainingTime, isMuted } = useBanPickTimerStore();
 
@@ -73,14 +76,13 @@ const BanPickTimer = ({
 
     const interval = setInterval(() => {
       const elapsed = (getServerNow() - startedAt.getTime()) / 1000;
-      const currentPhase = PHASE[currentStep];
+      const duration = isUnlimited
+        ? UNLIMITED_DURATION
+        : PHASE[currentStep].duration;
 
-      const actualRemaining = Math.max(
-        currentPhase.duration + EXTRA_DELAY - elapsed,
-        0
-      );
+      const actualRemaining = Math.max(duration + EXTRA_DELAY - elapsed, 0);
 
-      const displayRemaining = Math.max(currentPhase.duration - elapsed, 0);
+      const displayRemaining = Math.max(duration - elapsed, 0);
       const rounded = Math.round(displayRemaining);
 
       if (prevRef.current !== rounded) {
@@ -116,10 +118,13 @@ const BanPickTimer = ({
     }, 50);
 
     return () => clearInterval(interval);
-  }, [startedAt, currentStep, isMuted]);
+  }, [startedAt, currentStep, isMuted, isUnlimited]);
 
   if (!startedAt || currentStep === null || currentStep >= PHASE.length)
     return <div className="text-xl font-bold">--</div>;
+
+  if (isUnlimited)
+    return <div className="text-3xl font-bold text-white">--:--</div>;
 
   return (
     <div className="relative inline-block text-3xl font-bold text-white">

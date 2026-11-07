@@ -29,8 +29,11 @@ const BanPick = () => {
 
   const [bestOf, setBestOf] = useState(5);
 
+  const isTournamentDraft = selectedMode === "토너먼트 드래프트";
+
   const handleCategoryClick = (mode: string) => {
     setSelectedMode(mode);
+    if (mode !== "토너먼트 드래프트" && bestOf === 1) setBestOf(5);
   };
 
   const handleStart = () => {
@@ -169,7 +172,11 @@ const BanPick = () => {
         </div>
 
         <div className="flex flex-row items-center justify-center gap-4">
-          <BestOfSelector bestOf={bestOf} onSelect={setBestOf} />
+          <BestOfSelector
+            bestOf={bestOf}
+            onSelect={setBestOf}
+            allowSingle={isTournamentDraft}
+          />
           <CTAButton onClick={handleStart}>시작하기</CTAButton>
         </div>
       </section>

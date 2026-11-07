@@ -12,7 +12,7 @@ export const getBanPickQueryParams = () => {
   const bestOfParam = searchParams.get("bestOf");
 
   const bestOf = bestOfParam ? Number(bestOfParam) : null;
-  const validBestOf = bestOf === 3 || bestOf === 5;
+  const validBestOf = bestOf === 1 || bestOf === 3 || bestOf === 5;
 
   // 쿼리 자체가 없음 → 랜딩 페이지
   if (

@@ -146,8 +146,12 @@ const NextSetModal = ({
               <h2 className="text-lg md:text-xl font-semibold">패배 팀 선정</h2>
               <p className="text-gray-400 mt-1 text-sm">
                 이번 세트에서 패배한 팀을 골라주세요
-                <br />
-                패배한 팀이 진영을 선택할 수 있습니다
+                {bestOf !== 1 && (
+                  <>
+                    <br />
+                    패배한 팀이 진영을 선택할 수 있습니다
+                  </>
+                )}
               </p>
             </div>
           </div>

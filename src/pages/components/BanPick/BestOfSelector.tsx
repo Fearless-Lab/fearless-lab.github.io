@@ -5,9 +5,11 @@ import { cn } from "@/lib/utils";
 interface BestOfSelectorProps {
   bestOf: number;
   onSelect: (value: number) => void;
+  allowSingle: boolean;
 }
 
 const BEST_OF_LABELS: Record<number, string> = {
+  1: "단판(시간 무제한)",
   3: "3판 2선",
   5: "5판 3선",
 };
@@ -37,15 +39,23 @@ function highlightNumbers(label: string, bestOf: number) {
   );
 }
 
-export const BestOfSelector = ({ bestOf, onSelect }: BestOfSelectorProps) => {
+export const BestOfSelector = ({
+  bestOf,
+  onSelect,
+  allowSingle,
+}: BestOfSelectorProps) => {
   const currentLabel = BEST_OF_LABELS[bestOf];
+  // 단판은 이전 세트가 없어 피어리스 규칙이 의미 없으므로 토너먼트 드래프트에서만 노출
+  const options = Object.entries(BEST_OF_LABELS).filter(
+    ([key]) => allowSingle || Number(key) !== 1
+  );
 
   return (
     <div className="flex justify-center items-center">
       <Menu as="div" className="relative inline-block text-left">
         <MenuButton
           className={cn(
-            "inline-flex items-center justify-between w-30 px-4 py-2 rounded-lg",
+            "inline-flex items-center justify-between min-w-30 px-4 py-2 rounded-lg whitespace-nowrap",
             "border border-gray-600 text-gray-200 bg-zinc-900/40",
             "hover:border-white",
             "shadow-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400/70"
@@ -59,12 +69,12 @@ export const BestOfSelector = ({ bestOf, onSelect }: BestOfSelectorProps) => {
 
         <MenuItems
           className={cn(
-            "absolute left-1/2 -translate-x-1/2 mt-2 w-30 origin-top rounded-md",
+            "absolute left-1/2 -translate-x-1/2 mt-2 min-w-full w-max origin-top rounded-md whitespace-nowrap",
             "bg-zinc-900/90 border border-gray-700 shadow-lg",
             "focus:outline-none backdrop-blur-sm p-1"
           )}
         >
-          {Object.entries(BEST_OF_LABELS).map(([key, label]) => {
+          {options.map(([key, label]) => {
             const value = Number(key);
             const isActive = bestOf === value;
 
