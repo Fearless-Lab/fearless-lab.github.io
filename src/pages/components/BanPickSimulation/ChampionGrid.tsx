@@ -1,6 +1,7 @@
 import type { Champion } from "@/utils/generateRandomNickname";
 import { preloadSplash } from "@/utils/preload";
-import { PHASE } from "@constants/banPick";
+import { LIVE_PREVIEW_ENABLED, PHASE } from "@constants/banPick";
+import type { RefObject } from "react";
 
 export interface ChampionGridProps {
   searchTerm: string;
@@ -17,6 +18,8 @@ export interface ChampionGridProps {
   mode: string;
   oppoPreviousPicks: Set<string>;
   isGuest: boolean;
+  onPreview: (champ: string) => void;
+  lockedStepRef: RefObject<number | null>;
 }
 
 export default function ChampionGrid({
@@ -34,12 +37,17 @@ export default function ChampionGrid({
   mode,
   oppoPreviousPicks,
   isGuest,
+  onPreview,
+  lockedStepRef,
 }: ChampionGridProps) {
   let isMyTurn = undefined;
   if (currentStep < 20) isMyTurn = myTeam === PHASE[currentStep].team;
 
   const onChampionClick = (champ: string) => {
     if (!isMyTurn || currentSetSelections.has(champ) || isGuest) return;
+
+    // 확정 요청이 처리되는 동안 다른 챔피언이 화면에 노출되지 않도록 막음
+    if (LIVE_PREVIEW_ENABLED && lockedStepRef.current === currentStep) return;
 
     const currentPhaseType = PHASE[currentStep].type;
     const currentPhaseIdx = PHASE[currentStep].index;
@@ -53,6 +61,8 @@ export default function ChampionGrid({
       temp[currentPhaseIdx] = champ;
       setLocalPick([...temp]);
     }
+
+    onPreview(champ);
   };
 
   const filteredChampions = searchTerm
@@ -90,10 +100,11 @@ export default function ChampionGrid({
         if (mode === "fearless" && isGuest) isDisabled = true;
 
         const isSelected =
-          (currentPhaseType === "ban" &&
+          !isGuest &&
+          ((currentPhaseType === "ban" &&
             localBan[currentPhaseIdx] === champ.id) ||
-          (currentPhaseType === "pick" &&
-            localPick[currentPhaseIdx] === champ.id);
+            (currentPhaseType === "pick" &&
+              localPick[currentPhaseIdx] === champ.id));
 
         return (
           <div

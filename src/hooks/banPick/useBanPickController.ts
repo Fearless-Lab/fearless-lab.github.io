@@ -91,6 +91,17 @@ export const useBanPickController = (matchId: string) => {
     });
   };
 
+  // 확정 전 선택 중인 챔피언 공유 (단계별 키로 저장해 늦게 도착한 쓰기가 다음 단계를 덮지 않게 함)
+  const updatePreview = async (
+    currentSet: number,
+    step: number,
+    champName: string
+  ) => {
+    await updateDoc(docRef, {
+      [`sets.${currentSet}.previews.${step}`]: champName,
+    });
+  };
+
   // 모든 밴픽이 끝났을 때 total에 pick을 저장
   const commitTotalPickIfNeeded = async (teamName: string) => {
     const docSnap = await getDoc(docRef);
@@ -241,6 +252,7 @@ export const useBanPickController = (matchId: string) => {
     goToNextStep,
     setStartedAtIfNeeded,
     commitAndAdvance,
+    updatePreview,
     commitTotalPickIfNeeded,
     toggleIsNextSetPreparing,
     createNextSet,

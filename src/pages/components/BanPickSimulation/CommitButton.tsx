@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useRef,
   type Dispatch,
+  type RefObject,
   type SetStateAction,
 } from "react";
 import { twMerge } from "tailwind-merge";
@@ -20,6 +21,7 @@ interface CTAButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   commited: Boolean;
   finished: Boolean;
   setIsHistoryOpen: Dispatch<SetStateAction<boolean>>;
+  lockedStepRef: RefObject<number | null>;
 }
 
 const CommitButton: React.FC<CTAButtonProps> = ({
@@ -35,6 +37,7 @@ const CommitButton: React.FC<CTAButtonProps> = ({
   commited,
   finished,
   setIsHistoryOpen,
+  lockedStepRef,
 }) => {
   const {
     commitAndAdvance,
@@ -85,13 +88,18 @@ const CommitButton: React.FC<CTAButtonProps> = ({
     if (!selected.length) return;
 
     calledRef.current = true;
+    lockedStepRef.current = currentStep;
 
     commitAndAdvance(
       teamName,
       selected,
       phase.type as "pick" | "ban",
       currentStep
-    );
+    ).catch((e) => {
+      console.error(e);
+      calledRef.current = false;
+      lockedStepRef.current = null;
+    });
   };
 
   return (

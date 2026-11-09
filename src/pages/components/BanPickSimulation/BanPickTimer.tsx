@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 import { PHASE } from "@constants/banPick";
 import { useBanPickController } from "@/hooks/banPick/useBanPickController";
 import type { Champion } from "@/utils/generateRandomNickname";
@@ -17,6 +17,8 @@ interface BanPickTimerProps {
   isSwapPhase: Boolean;
   isGuest: Boolean;
   isUnlimited: boolean;
+  previewChamp: string;
+  lockedStepRef: RefObject<number | null>;
 }
 
 const EXTRA_DELAY = 2; // 0초 이후 추가 대기 시간
@@ -34,6 +36,8 @@ const BanPickTimer = ({
   isSwapPhase,
   isGuest,
   isUnlimited,
+  previewChamp,
+  lockedStepRef,
 }: BanPickTimerProps) => {
   const { remainingTime, setRemainingTime, isMuted } = useBanPickTimerStore();
 
@@ -47,6 +51,10 @@ const BanPickTimer = ({
   const calledRef = useRef(false);
   const lastStepRef = useRef<number | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // setInterval 클로저에서 항상 최신 선택을 읽기 위한 ref
+  const previewChampRef = useRef(previewChamp);
+  previewChampRef.current = previewChamp;
 
   const getRandomSelectableChampion = () => {
     const bannedOrPicked = new Set([...currentSetSelections, ...previousPicks]);
@@ -101,12 +109,21 @@ const BanPickTimer = ({
         calledRef.current = true;
 
         if (isMyTurn) {
-          const randomPick = getRandomSelectableChampion();
-          if (PHASE[currentStep].type === "ban") {
-            commitAndAdvance(teamName, "", "ban", currentStep);
-          } else {
-            commitAndAdvance(teamName, randomPick, "pick", currentStep);
-          }
+          // 밴은 선택 중인 챔피언으로 확정, 픽은 확정하지 않았으면 랜덤
+          const isBan = PHASE[currentStep].type === "ban";
+
+          lockedStepRef.current = currentStep;
+
+          commitAndAdvance(
+            teamName,
+            isBan ? previewChampRef.current : getRandomSelectableChampion(),
+            isBan ? "ban" : "pick",
+            currentStep
+          ).catch((e) => {
+            console.error(e);
+            calledRef.current = false;
+            lockedStepRef.current = null;
+          });
         }
 
         if (isSwapPhase) {

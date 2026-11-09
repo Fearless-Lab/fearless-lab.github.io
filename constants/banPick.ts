@@ -23,3 +23,6 @@ export const PHASE = [
 ];
 
 export type Phase = (typeof PHASE)[number];
+
+// 확정 전 선택 중인 챔피언을 상대/관전자에게 실시간 공유할지 여부
+export const LIVE_PREVIEW_ENABLED = true;

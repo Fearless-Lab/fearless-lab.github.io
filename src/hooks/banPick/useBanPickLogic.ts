@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useBanPickInit } from "@/hooks/banPick/useBanPickInit";
 import { useBanPickController } from "./useBanPickController";
 import { initServerOffset } from "@/utils/serverTime";
+import { LIVE_PREVIEW_ENABLED, PHASE } from "@constants/banPick";
 
 interface Teams {
   blue: string;
@@ -133,10 +134,34 @@ export const useBanPickLogic = ({
       const oppBan = setData.ban?.[oppositeTeam];
       const oppPick = setData.pick?.[oppositeTeam];
 
-      setLocalBan(myBan);
-      setLocalPick(myPick);
-      setEnemyBan(oppBan);
-      setEnemyPick(oppPick);
+      // 확정 전 선택(preview)은 화면용 배열에만 반영. 아래 allSelections는 원본으로 계산해야 함
+      const preview = LIVE_PREVIEW_ENABLED
+        ? setData.previews?.[newStep]
+        : undefined;
+      const phase = PHASE[newStep];
+
+      const withPreview = (
+        list: string[],
+        team: string,
+        type: "ban" | "pick"
+      ) => {
+        if (
+          !list ||
+          !preview ||
+          phase?.type !== type ||
+          setData.teams?.[phase.team] !== team
+        )
+          return list;
+
+        const next = [...list];
+        next[phase.index] = preview;
+        return next;
+      };
+
+      setLocalBan(withPreview(myBan, teamName, "ban"));
+      setLocalPick(withPreview(myPick, teamName, "pick"));
+      setEnemyBan(withPreview(oppBan, oppositeTeam, "ban"));
+      setEnemyPick(withPreview(oppPick, oppositeTeam, "pick"));
 
       // 해당 세트 누적 밴픽
       const allSelections = new Set(

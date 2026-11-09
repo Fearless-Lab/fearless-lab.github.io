@@ -12,7 +12,7 @@ import ReadyCheckModal from "./components/BanPickSimulation/ReadyCheckModal";
 import { useBanPickLogic } from "@/hooks/banPick/useBanPickLogic";
 import { getBanPickQueryParams } from "@/utils/getQueryParams";
 import BanPickTimer from "./components/BanPickSimulation/BanPickTimer";
-import { Activity, useState } from "react";
+import { Activity, useRef, useState } from "react";
 import { useChampions } from "@/hooks/banPick/useChampions";
 import BanArea from "./components/BanPickSimulation/BanArea";
 import PickColumn from "./components/BanPickSimulation/PickColumn";
@@ -21,6 +21,7 @@ import NextSetModal from "./components/BanPickSimulation/NextSetModal";
 import HistoryModal from "./components/BanPickSimulation/HistoryModal";
 import { positions, type Position } from "@constants/positions";
 import { useBanPickController } from "@/hooks/banPick/useBanPickController";
+import { LIVE_PREVIEW_ENABLED } from "@constants/banPick";
 import { BookOpenIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import MuteToggleButton from "./components/BanPickSimulation/MuteToggleButton";
 // import VideoGallery from "./components/BanPickSimulation/VideoGallery";
@@ -98,7 +99,10 @@ const BanPickSimulation = () => {
     initialTeam,
   });
 
-  const { commitSwapOrder } = useBanPickController(matchId);
+  const { commitSwapOrder, updatePreview } = useBanPickController(matchId);
+
+  // 확정 요청을 보낸 단계 (처리되는 동안 챔피언 클릭을 막기 위함)
+  const lockedStepRef = useRef<number | null>(null);
 
   // 로컬 UI 상태
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
@@ -148,6 +152,18 @@ const BanPickSimulation = () => {
     teams ?? undefined,
   );
 
+  // 내 차례에 확정 전 골라 둔 챔피언 (밴 시간 초과 시 이 챔피언으로 확정)
+  const previewList = phase?.type === "ban" ? localBan : localPick;
+  const previewChamp =
+    LIVE_PREVIEW_ENABLED && isMyTurn && phase
+      ? previewList?.[phase.index] || ""
+      : "";
+
+  const handlePreview = (champ: string) => {
+    if (!LIVE_PREVIEW_ENABLED || isModalOpen || champ === previewChamp) return;
+    updatePreview(currentSet, currentStep, champ).catch(console.error);
+  };
+
   // 챔피언 그리드 props 구성
   const championGridProps: ChampionGridProps = {
     searchTerm,
@@ -164,6 +180,8 @@ const BanPickSimulation = () => {
     mode,
     oppoPreviousPicks,
     isGuest,
+    onPreview: handlePreview,
+    lockedStepRef,
   };
 
   const handleSwap = (newOrder: (string | undefined)[]) => {
@@ -198,6 +216,8 @@ const BanPickSimulation = () => {
                   isSwapPhase={isSwapPhase}
                   isGuest={isGuest}
                   isUnlimited={bestOf === 1}
+                  previewChamp={previewChamp}
+                  lockedStepRef={lockedStepRef}
                 />
               )}
               <div className="mt-2 flex items-center gap-2">
@@ -295,6 +315,7 @@ const BanPickSimulation = () => {
                   localBan={localBan}
                   matchId={matchId}
                   isGameEnd={isGameEnd}
+                  lockedStepRef={lockedStepRef}
                   commited={commited}
                   finished={finished}
                   setIsHistoryOpen={setIsHistoryOpen}
@@ -371,6 +392,7 @@ const BanPickSimulation = () => {
                 localBan={localBan}
                 matchId={matchId}
                 isGameEnd={isGameEnd}
+                lockedStepRef={lockedStepRef}
                 commited={commited}
                 finished={finished}
                 setIsHistoryOpen={setIsHistoryOpen}
