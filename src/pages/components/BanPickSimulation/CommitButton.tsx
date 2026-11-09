@@ -87,6 +87,9 @@ const CommitButton: React.FC<CTAButtonProps> = ({
     const selected = phase.type === "pick" ? localPick[index] : localBan[index];
     if (!selected.length) return;
 
+    // 타이머가 이미 시간 초과 처리를 보낸 단계면 중복 요청하지 않음
+    if (lockedStepRef.current === currentStep) return;
+
     calledRef.current = true;
     lockedStepRef.current = currentStep;
 

@@ -106,6 +106,9 @@ const BanPickTimer = ({
       }
 
       if (!isGuest && actualRemaining <= 0.05 && !calledRef.current) {
+        // 확정 요청이 처리 중이면 랜덤 픽으로 덮어쓰지 않도록 대기 (실패 시 잠금이 풀리면 이어서 처리)
+        if (isMyTurn && lockedStepRef.current === currentStep) return;
+
         calledRef.current = true;
 
         if (isMyTurn) {
